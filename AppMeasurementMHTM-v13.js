@@ -235,14 +235,12 @@ var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
 var test = window.setInterval(() => {
     if (window.digitalData) {
         console.log('Digital Data is available', window.digitalData);
-        test.clearInterval;
+        clearInterval(test);
         
+        s.pageName = digitalData.page.pageInfo.pageID;
+        //Fire PageLoad Code
+        s.t();
     }
-    
-    
-    s.pageName = digitalData.page.pageInfo.pageID;
-    //Fire PageLoad Code
-    s.t();
     
     console.log('Checking for digitalData...')
 }, 500)
