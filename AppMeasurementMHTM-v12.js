@@ -29,17 +29,12 @@ s.trackingServerSecure="miamiheatlimitedpartnership.sc.omtrdc.net"
 
 /************************* CUSTOM METRICS SECTION **************************/
 
-var test = window.setInterval(() => {
-    if (window.digitalData) {
-        console.log('Digital Data is available', window.digitalData);
-        test.clearInterval();
-        
-    }
-}, 500)
+
+
 //var digitalData = {};
 
 //Page Name Code
-s.pageName = digitalData.page.pageInfo.pageID;
+
 s.eVar30 = digitalData.page.attributes.eventID;
 s.eVar31 = ""; //TM Event Description "May only be in the cart"
 s.eVar32 = digitalData.page.attributes.venueName;
@@ -235,8 +230,23 @@ var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
      //marketingCloudServer: "INSERT-TRACKING-SERVER-HERE",
      //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
 });
+    
+    
+var test = window.setInterval(() => {
+    if (window.digitalData) {
+        console.log('Digital Data is available', window.digitalData);
+        test.clearInterval;
+        
+    }
+    
+    
+    s.pageName = digitalData.page.pageInfo.pageID;
+    //Fire PageLoad Code
+    s.t();
+    
+    console.log('Checking for digitalData...')
+}, 500)
 
-//Fire PageLoad Code
-s.t();
+
     
 });
