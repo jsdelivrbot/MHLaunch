@@ -29,7 +29,13 @@ s.trackingServerSecure="miamiheatlimitedpartnership.sc.omtrdc.net"
 
 /************************* CUSTOM METRICS SECTION **************************/
 
-
+var test = window.setInterval(() => {
+    if (window.digitalData) {
+        console.log('Digital Data is available', window.digitalData);
+        test.clearInterval();
+        
+    }
+}, 500)
 //var digitalData = {};
 
 //Page Name Code
