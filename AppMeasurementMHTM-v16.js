@@ -31,30 +31,6 @@ s.trackingServerSecure="miamiheatlimitedpartnership.sc.omtrdc.net"
 
 
 
-//var digitalData = {};
-
-//Page Name Code
-
-/*
-s.eVar30 = digitalData.page.attributes.eventID;
-s.eVar31 = ""; //TM Event Description "May only be in the cart"
-s.eVar32 = digitalData.page.attributes.venueName;
-s.eVar33 = digitalData.page.attributes.eventDate;
-s.eVar34 = digitalData.page.attributes.eventTime;
-s.eVar35 = digitalData.page.attributes.artistName;
-s.eVar36 = digitalData.page.attributes.artistID;
-s.eVar37 = ""; //TM Tickets Purchased (QTY) "May only be in the cart" / digital-data.cart
-s.eVar38 = ""; //TM Face Value "May only be in the cart"
-s.eVar39 = ""; //TM Currency "May only be in the cart"
-s.eVar40 = ""; //TM Order "May only be in the cart"
-s.eVar41 = ""; //TM Confirmation Code "May only be in the cart"
-s.eVar42 = ""; //TM Purchase Date "May only be in the cart"
-s.eVar43 = ""; //TM Purchase Time "May only be in the cart"
-s.eVar44 = digitalData.page.category.primaryCategory;
-s.eVar45 = digitalData.page.category.subCategory1;
-s.eVar46 = s.pageName;
-s.eVar47 = ""; // TM Inventory Type "May only be in the cart"
-*/
 
 /************************* CODE/DO PLUGINS SECTION **************************/
 
@@ -239,6 +215,25 @@ var test = window.setInterval(() => {
         clearInterval(test);
         
         s.pageName = digitalData.page.pageInfo.pageID;
+        //Ticketmaster Code
+        s.eVar30 = digitalData.page.attributes.eventID;
+        s.eVar31 = ""; //TM Event Description "May only be in the cart"
+        s.eVar32 = digitalData.page.attributes.venueName;
+        s.eVar33 = digitalData.page.attributes.eventDate;
+        s.eVar34 = digitalData.page.attributes.eventTime;
+        s.eVar35 = digitalData.page.attributes.artistName;
+        s.eVar36 = digitalData.page.attributes.artistID;
+        s.eVar37 = ""; //TM Tickets Purchased (QTY) "May only be in the cart" / digital-data.cart
+        s.eVar38 = ""; //TM Face Value "May only be in the cart"
+        s.eVar39 = ""; //TM Currency "May only be in the cart"
+        s.eVar40 = ""; //TM Order "May only be in the cart"
+        s.eVar41 = ""; //TM Confirmation Code "May only be in the cart"
+        s.eVar42 = ""; //TM Purchase Date "May only be in the cart"
+        s.eVar43 = ""; //TM Purchase Time "May only be in the cart"
+        s.eVar44 = digitalData.page.category.primaryCategory;
+        s.eVar45 = digitalData.page.category.subCategory1;
+        s.eVar46 = s.pageName;
+        s.eVar47 = ""; // TM Inventory Type "May only be in the cart"
         //Fire PageLoad Code
         s.t();
     }
