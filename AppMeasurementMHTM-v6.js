@@ -29,18 +29,15 @@ s.trackingServerSecure="miamiheatlimitedpartnership.sc.omtrdc.net"
 
 /************************* CUSTOM METRICS SECTION **************************/
 
-
-var digitalData = {};
-
 //Page Name Code
-s.pageName = digitalData.page["pageInfo"]["pageID"];
-s.eVar30 = digitalData.page.attributes.eventID;
+s.pageName = window.digitalData.page.pageInfo.pageID;
+s.eVar30 = window.digitalData.page.attributes.eventID;
 s.eVar31 = ""; //TM Event Description
-s.eVar32 = digitalData.page.attributes.venueName;
-s.eVar33 = digitalData.page.attributes.eventDate;
-s.eVar34 = digitalData.page.attributes.eventTime;
-s.eVar35 = digitalData.page.attributes.artistName;
-s.eVar36 = digitalData.page.attributes.artistID;
+s.eVar32 = window.digitalData.page.attributes.venueName;
+s.eVar33 = window.digitalData.page.attributes.eventDate;
+s.eVar34 = window.digitalData.page.attributes.eventTime;
+s.eVar35 = window.digitalData.page.attributes.artistName;
+s.eVar36 = window.digitalData.page.attributes.artistID;
 s.eVar37 = ""; //TM Tickets Purchased (QTY)
 s.eVar38 = ""; //TM Face Value
 s.eVar39 = ""; //TM Currency
@@ -48,8 +45,8 @@ s.eVar40 = ""; //TM Order
 s.eVar41 = ""; //TM Confirmation Code
 s.eVar42 = ""; //TM Purchase Date
 s.eVar43 = ""; //TM Purchase Time
-s.eVar44 = digitalData.page.category.primaryCategory;
-s.eVar45 = digitalData.page.category.subCategory1;
+s.eVar44 = window.digitalData.page.category.primaryCategory;
+s.eVar45 = window.digitalData.page.category.subCategory1;
 s.eVar46 = s.pageName;
 s.eVar47 = ""; // TM Inventory Type
 
