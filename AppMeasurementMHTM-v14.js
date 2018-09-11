@@ -35,6 +35,7 @@ s.trackingServerSecure="miamiheatlimitedpartnership.sc.omtrdc.net"
 
 //Page Name Code
 
+/*
 s.eVar30 = digitalData.page.attributes.eventID;
 s.eVar31 = ""; //TM Event Description "May only be in the cart"
 s.eVar32 = digitalData.page.attributes.venueName;
@@ -53,7 +54,7 @@ s.eVar44 = digitalData.page.category.primaryCategory;
 s.eVar45 = digitalData.page.category.subCategory1;
 s.eVar46 = s.pageName;
 s.eVar47 = ""; // TM Inventory Type "May only be in the cart"
-
+*/
 
 /************************* CODE/DO PLUGINS SECTION **************************/
 
