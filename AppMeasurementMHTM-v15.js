@@ -218,7 +218,7 @@ t=i+this.subdomain+".demdex.net/dest5.html"+n,this.iframeHost=this.getIframeHost
 
 
 
-document.addEventListener("load", function(){
+document.addEventListener("DOMContentLoaded", function(){
   // Handler when the DOM is fully loaded
 
 //Call Visitor ID Service
