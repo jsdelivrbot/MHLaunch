@@ -33,8 +33,8 @@ s.trackingServerSecure="miamiheatlimitedpartnership.sc.omtrdc.net"
 var digitalData = {};
 
 //Page Name Code
-s.pageName = digitalData && digitalData.page.pageInfo.pageID;
-s.eVar30 = digitalData.page.attributes.eventID;
+digitalData && digitalData.page.pageInfo.pageID = s.pageName;
+digitalData.page.attributes.eventID = s.eVar30;
 s.eVar31 = ""; //TM Event Description
 s.eVar32 = digitalData.page.attributes.venueName;
 s.eVar33 = digitalData.page.attributes.eventDate;
