@@ -212,20 +212,19 @@ var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
 var test = window.setInterval(() => {
     if (window.digitalData) {
         
-        function getTM(){
-        //Global Ticketmaster Code
-        s.pageName = digitalData.page.pageInfo.pageID;
-        s.eVar30 = digitalData.page.attributes.eventID;
-        s.eVar32 = digitalData.page.attributes.venueName;
-        s.eVar33 = digitalData.page.attributes.eventDate;
-        s.eVar34 = digitalData.page.attributes.eventTime;
-        s.eVar35 = digitalData.page.attributes.artistName;
-        s.eVar36 = digitalData.page.attributes.artistID;
-        s.eVar44 = digitalData.page.category.primaryCategory;
-        s.eVar45 = digitalData.page.category.subCategory1;
-        s.eVar46 = s.pageName;
-        
-        }
+            function getTM(){
+            //Global Ticketmaster Code
+            s.pageName = digitalData.page.pageInfo.pageID;
+            s.eVar30 = digitalData.page.attributes.eventID;
+            s.eVar32 = digitalData.page.attributes.venueName;
+            s.eVar33 = digitalData.page.attributes.eventDate;
+            s.eVar34 = digitalData.page.attributes.eventTime;
+            s.eVar35 = digitalData.page.attributes.artistName;
+            s.eVar36 = digitalData.page.attributes.artistID;
+            s.eVar44 = digitalData.page.category.primaryCategory;
+            s.eVar45 = digitalData.page.category.subCategory1;
+            s.eVar46 = s.pageName;
+            }
         
         if (/Confirmation/.test(digitalData.pageInstanceID) === true){
         getTM();
@@ -240,6 +239,7 @@ var test = window.setInterval(() => {
         s.eVar43 = digitalData.transaction.attributes.orderTime; //TM Purchase Time "May only be in the cart"
         s.eVar47 = digitalData.cart.ticketType; // TM Inventory Type "May only be in the cart"
         console.log('Confirmation Page Code Success', window.digitalData.transaction);
+        clearInterval(test);
         //Fire PageLoad Code
         s.t();
         
@@ -251,12 +251,13 @@ var test = window.setInterval(() => {
         s.eVar39 = digitalData.cart.price.currency; //TM Currency "May only be in the cart"    
         s.eVar41 = ""; //TM Confirmation Code "May only be in the cart"
         s.eVar47 = digitalData.cart.ticketType; // TM Inventory Type "May only be in the cart"
+        clearInterval(test);
         //Fire PageLoad Code
         s.t();
             
         } else {
+        clearInterval(test);
         getTM();
-        
         }
         
     }
