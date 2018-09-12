@@ -250,10 +250,7 @@ var test = window.setInterval(() => {
         s.eVar37 = digitalData.cart.attributes.ticketQuantity; //TM Tickets Purchased (QTY) "May only be in the cart" / digital-data.cart
         s.eVar38 = digitalData.cart.price.basePrice; //TM Face Value "May only be in the cart"
         s.eVar39 = digitalData.cart.price.currency; //TM Currency "May only be in the cart"    
-        s.eVar40 = digitalData.transaction.transactionID; //TM Order "May only be in the cart" "3000-0138-2779-8671-9-09122018" Need to parse Date out
         s.eVar41 = ""; //TM Confirmation Code "May only be in the cart"
-        s.eVar42 = digitalData.transaction.attributes.orderDate; //TM Purchase Date "May only be in the cart"
-        s.eVar43 = digitalData.transaction.attributes.orderTime; //TM Purchase Time "May only be in the cart"
         s.eVar44 = digitalData.page.category.primaryCategory;
         s.eVar45 = digitalData.page.category.subCategory1;
         s.eVar46 = s.pageName;
