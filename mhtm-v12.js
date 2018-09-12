@@ -214,24 +214,7 @@ var test = window.setInterval(() => {
         console.log('Digital Data is available', window.digitalData);
         clearInterval(test);
         
-            function getTM(){
-            //Global Ticketmaster Code
-            s.pageName = digitalData.page.pageInfo.pageID;
-            s.eVar30 = digitalData.page.attributes.eventID;
-            s.eVar32 = digitalData.page.attributes.venueName;
-            s.eVar33 = digitalData.page.attributes.eventDate;
-            s.eVar34 = digitalData.page.attributes.eventTime;
-            s.eVar35 = digitalData.page.attributes.artistName;
-            s.eVar36 = digitalData.page.attributes.artistID;
-            s.eVar44 = digitalData.page.category.primaryCategory;
-            s.eVar45 = digitalData.page.category.subCategory1;
-            s.eVar46 = s.pageName;
-            }
-        
         if (/Confirmation/.test(digitalData.pageInstanceID) === true){
-        //Get Global Ticketmaster Metrics    
-        getTM();
-        
         //Accounting for the change in data after purchase confirmation
         s.eVar7 = digitalData.transaction.profileID; //profile ID/Archtics ID
         s.eVar37 = digitalData.transaction.item[0].quantity;
@@ -243,14 +226,21 @@ var test = window.setInterval(() => {
         s.eVar43 = digitalData.transaction.attributes.orderTime; //TM Purchase Time "May only be in the cart"
         s.eVar47 = digitalData.cart.ticketType; // TM Inventory Type "May only be in the cart"
         console.log('Confirmation Page Code Success', window.digitalData.transaction);
- 
+        //Get Global Ticketmaster Metrics    
+        s.pageName = digitalData.page.pageInfo.pageID;
+        s.eVar30 = digitalData.page.attributes.eventID;
+        s.eVar32 = digitalData.page.attributes.venueName;
+        s.eVar33 = digitalData.page.attributes.eventDate;
+        s.eVar34 = digitalData.page.attributes.eventTime;
+        s.eVar35 = digitalData.page.attributes.artistName;
+        s.eVar36 = digitalData.page.attributes.artistID;
+        s.eVar44 = digitalData.page.category.primaryCategory;
+        s.eVar45 = digitalData.page.category.subCategory1;
+        s.eVar46 = s.pageName;
         //Fire PageLoad Code
         s.t();
         
         } else if (/Checkout/.test(digitalData.pageInstanceID)) {
-        //Get Global Ticketmaster Metrics    
-        getTM();
-        
         s.eVar31 = digitalData.cart.item[0].productInfo.description; //TM Event Description "May only be in the cart"
         s.eVar37 = digitalData.cart.attributes.ticketQuantity; //TM Tickets Purchased (QTY) "May only be in the cart" / digital-data.cart
         s.eVar38 = digitalData.cart.price.basePrice; //TM Face Value "May only be in the cart"
@@ -258,13 +248,33 @@ var test = window.setInterval(() => {
         s.eVar41 = ""; //TM Confirmation Code "May only be in the cart"
         s.eVar47 = digitalData.cart.ticketType; // TM Inventory Type "May only be in the cart"
         console.log('Checkout Page Code Success', window.digitalData.transaction);
-            
+        //Get Global Ticketmaster Metrics    
+        s.pageName = digitalData.page.pageInfo.pageID;
+        s.eVar30 = digitalData.page.attributes.eventID;
+        s.eVar32 = digitalData.page.attributes.venueName;
+        s.eVar33 = digitalData.page.attributes.eventDate;
+        s.eVar34 = digitalData.page.attributes.eventTime;
+        s.eVar35 = digitalData.page.attributes.artistName;
+        s.eVar36 = digitalData.page.attributes.artistID;
+        s.eVar44 = digitalData.page.category.primaryCategory;
+        s.eVar45 = digitalData.page.category.subCategory1;
+        s.eVar46 = s.pageName;
         //Fire PageLoad Code
         s.t();
             
         } else {
         console.log('General Page Code Success', window.digitalData.transaction);
-        getTM();
+        //Get Global Ticketmaster Metrics    
+        s.pageName = digitalData.page.pageInfo.pageID;
+        s.eVar30 = digitalData.page.attributes.eventID;
+        s.eVar32 = digitalData.page.attributes.venueName;
+        s.eVar33 = digitalData.page.attributes.eventDate;
+        s.eVar34 = digitalData.page.attributes.eventTime;
+        s.eVar35 = digitalData.page.attributes.artistName;
+        s.eVar36 = digitalData.page.attributes.artistID;
+        s.eVar44 = digitalData.page.category.primaryCategory;
+        s.eVar45 = digitalData.page.category.subCategory1;
+        s.eVar46 = s.pageName;
         s.t();
         }
         
