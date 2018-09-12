@@ -212,19 +212,25 @@ var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
 var test = window.setInterval(() => {
     if (window.digitalData) {
         
+        function getTM(){
+        //Global Ticketmaster Code
         s.pageName = digitalData.page.pageInfo.pageID;
-        
-        if (/Confirmation/.test(digitalData.pageInstanceID) === true){
-        
-        //Accounting for the change in data after purchase confirmation
-        s.eVar7 = digitalData.transaction.profileID; //profile ID/Archtics ID
         s.eVar30 = digitalData.page.attributes.eventID;
-        s.eVar31 = digitalData.transaction.item[0].productInfo.description;
         s.eVar32 = digitalData.page.attributes.venueName;
         s.eVar33 = digitalData.page.attributes.eventDate;
         s.eVar34 = digitalData.page.attributes.eventTime;
         s.eVar35 = digitalData.page.attributes.artistName;
         s.eVar36 = digitalData.page.attributes.artistID;
+        s.eVar44 = digitalData.page.category.primaryCategory;
+        s.eVar45 = digitalData.page.category.subCategory1;
+        s.eVar46 = s.pageName;
+        
+        }
+        
+        if (/Confirmation/.test(digitalData.pageInstanceID) === true){
+        getTM();
+        //Accounting for the change in data after purchase confirmation
+        s.eVar7 = digitalData.transaction.profileID; //profile ID/Archtics ID
         s.eVar37 = digitalData.transaction.item[0].quantity;
         s.eVar38 = digitalData.transaction.item[0].price.basePrice;
         s.eVar39 = digitalData.transaction.total.currency;
@@ -232,36 +238,27 @@ var test = window.setInterval(() => {
         s.eVar41 = ""; //TM Confirmation Code "May only be in the cart"
         s.eVar42 = digitalData.transaction.attributes.orderDate; //TM Purchase Date "May only be in the cart"
         s.eVar43 = digitalData.transaction.attributes.orderTime; //TM Purchase Time "May only be in the cart"
-        s.eVar44 = digitalData.page.category.primaryCategory;
-        s.eVar45 = digitalData.page.category.subCategory1;
-        s.eVar46 = s.pageName;
         s.eVar47 = digitalData.cart.ticketType; // TM Inventory Type "May only be in the cart"
-        console.log('Digital Data for cart is available', window.digitalData.transaction);
+        console.log('Confirmation Page Code Success', window.digitalData.transaction);
+        //Fire PageLoad Code
+        s.t();
         
         } else if (/Checkout/.test(digitalData.pageInstanceID)) {
-        
+        getTM();
         s.eVar31 = digitalData.cart.item[0].productInfo.description; //TM Event Description "May only be in the cart"
         s.eVar37 = digitalData.cart.attributes.ticketQuantity; //TM Tickets Purchased (QTY) "May only be in the cart" / digital-data.cart
         s.eVar38 = digitalData.cart.price.basePrice; //TM Face Value "May only be in the cart"
         s.eVar39 = digitalData.cart.price.currency; //TM Currency "May only be in the cart"    
         s.eVar41 = ""; //TM Confirmation Code "May only be in the cart"
-        } else {
-        //Ticketmaster Code
-        s.eVar30 = digitalData.page.attributes.eventID;
-        s.eVar32 = digitalData.page.attributes.venueName;
-        s.eVar33 = digitalData.page.attributes.eventDate;
-        s.eVar34 = digitalData.page.attributes.eventTime;
-        s.eVar35 = digitalData.page.attributes.artistName;
-        s.eVar36 = digitalData.page.attributes.artistID;
-        s.eVar44 = digitalData.page.category.primaryCategory;
-        s.eVar45 = digitalData.page.category.subCategory1;
-        s.eVar46 = s.pageName;
         s.eVar47 = digitalData.cart.ticketType; // TM Inventory Type "May only be in the cart"
-        
-        
-        }
         //Fire PageLoad Code
         s.t();
+            
+        } else {
+        getTM();
+        
+        }
+        
     }
     
     console.log('Checking for digitalData...');
