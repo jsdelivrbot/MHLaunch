@@ -259,11 +259,8 @@ var test = window.setInterval(() => {
         s.eVar47 = digitalData.cart.ticketType; // TM Inventory Type "May only be in the cart"
         //Fire PageLoad Code
         s.t();
+        }
     }
     
-    console.log('Checking for digitalData...')
-}, 500)
-
-
-    
-});
+    console.log('Checking for digitalData...');
+}, 500);
