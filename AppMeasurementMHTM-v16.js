@@ -95,7 +95,6 @@ s.getDaysSinceLastVisit=new Function("c",""
 
 /*
  Start ActivityMap Module
-
  The following module enables ActivityMap tracking in Adobe Analytics. ActivityMap
  allows you to view data overlays on your links and content to understand how
  users engage with your web site. If you do not intend to use ActivityMap, you
@@ -113,7 +112,6 @@ b.t||b.s||!a.getAttribute||((c=a.getAttribute("alt"))?b.a=c:(c=a.getAttribute("t
 
 /*
  ============== DO NOT ALTER ANYTHING BELOW THIS LINE ! ===============
-
 AppMeasurement for JavaScript version: 2.9.0
 Copyright 1996-2016 Adobe, Inc. All Rights Reserved
 More info available at http://www.adobe.com/marketing-cloud.html
@@ -184,7 +182,6 @@ function s_pgicq(){var r=window,a=r.s_giq,k,p,n;if(a)for(k=0;k<a.length;k++)p=a[
  ============== DO NOT ALTER ANYTHING BELOW THIS LINE ! ===============
  */
 !function e(t,i,n){function r(s,o){if(!i[s]){if(!t[s]){var l="function"==typeof require&&require;if(!o&&l)return l(s,!0);if(a)return a(s,!0);var u=new Error("Cannot find module '"+s+"'");throw u.code="MODULE_NOT_FOUND",u}var d=i[s]={exports:{}};t[s][0].call(d.exports,function(e){var i=t[s][1][e];return r(i?i:e)},d,d.exports,e,t,i,n)}return i[s].exports}for(var a="function"==typeof require&&require,s=0;s<n.length;s++)r(n[s]);return r}({1:[function(e,t,i){(function(i){function n(){function e(){h.windowLoaded=!0}i.addEventListener?i.addEventListener("load",e):i.attachEvent&&i.attachEvent("onload",e),h.codeLoadEnd=(new Date).getTime()}/** @license ============== DO NOT ALTER ANYTHING BELOW THIS LINE ! ============
-
 Adobe Visitor API for JavaScript version: 3.1.2
 Copyright 1996-2015 Adobe, Inc. All Rights Reserved
 More info available at https://marketing.adobe.com/resources/help/en_US/mcvid/
@@ -211,58 +208,36 @@ var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
     
 var test = window.setInterval(() => {
     if (window.digitalData) {
+        console.log('Digital Data is available', window.digitalData);
+        clearInterval(test);
         
-        if (/Confirmation/.test(digitalData.pageInstanceID) === true){
-        
-        //Accounting for the change in data after purchase confirmation
         s.pageName = digitalData.page.pageInfo.pageID;
-        s.eVar7 = digitalData.transaction.profileID; //profile ID/Archtics ID
-        s.eVar30 = digitalData.page.attributes.eventID;
-        s.eVar31 = digitalData.transaction.item[0].productInfo.description;
-        s.eVar32 = digitalData.page.attributes.venueName;
-        s.eVar33 = digitalData.page.attributes.eventDate;
-        s.eVar34 = digitalData.page.attributes.eventTime;
-        s.eVar35 = digitalData.page.attributes.artistName;
-        s.eVar36 = digitalData.page.attributes.artistID;
-        s.eVar37 = digitalData.transaction.item[0].quantity;
-        s.eVar38 = digitalData.transaction.item[0].price.basePrice;
-        s.eVar39 = digitalData.transaction.total.currency;
-        s.eVar40 = digitalData.transaction.transactionID; //TM Order "May only be in the cart" "3000-0138-2779-8671-9-09122018" Need to parse Date out
-        s.eVar41 = ""; //TM Confirmation Code "May only be in the cart"
-        s.eVar42 = digitalData.transaction.attributes.orderDate; //TM Purchase Date "May only be in the cart"
-        s.eVar43 = digitalData.transaction.attributes.orderTime; //TM Purchase Time "May only be in the cart"
-        s.eVar44 = digitalData.page.category.primaryCategory;
-        s.eVar45 = digitalData.page.category.subCategory1;
-        s.eVar46 = s.pageName;
-        s.eVar47 = digitalData.cart.ticketType; // TM Inventory Type "May only be in the cart"
-        console.log('Digital Data for cart is available', window.digitalData.transaction);
-        s.t();
-        } else {
-
-        s.pageName = digitalData.page.pageInfo.pageID;
-            
         //Ticketmaster Code
         s.eVar30 = digitalData.page.attributes.eventID;
-        s.eVar31 = digitalData.cart.item[0].productInfo.description; //TM Event Description "May only be in the cart"
+        s.eVar31 = ""; //TM Event Description "May only be in the cart"
         s.eVar32 = digitalData.page.attributes.venueName;
         s.eVar33 = digitalData.page.attributes.eventDate;
         s.eVar34 = digitalData.page.attributes.eventTime;
         s.eVar35 = digitalData.page.attributes.artistName;
         s.eVar36 = digitalData.page.attributes.artistID;
-        s.eVar37 = digitalData.cart.attributes.ticketQuantity; //TM Tickets Purchased (QTY) "May only be in the cart" / digital-data.cart
-        s.eVar38 = digitalData.cart.price.basePrice; //TM Face Value "May only be in the cart"
-        s.eVar39 = digitalData.cart.price.currency; //TM Currency "May only be in the cart"    
+        s.eVar37 = ""; //TM Tickets Purchased (QTY) "May only be in the cart" / digital-data.cart
+        s.eVar38 = ""; //TM Face Value "May only be in the cart"
+        s.eVar39 = ""; //TM Currency "May only be in the cart"
+        s.eVar40 = ""; //TM Order "May only be in the cart"
         s.eVar41 = ""; //TM Confirmation Code "May only be in the cart"
+        s.eVar42 = ""; //TM Purchase Date "May only be in the cart"
+        s.eVar43 = ""; //TM Purchase Time "May only be in the cart"
         s.eVar44 = digitalData.page.category.primaryCategory;
         s.eVar45 = digitalData.page.category.subCategory1;
         s.eVar46 = s.pageName;
-        s.eVar47 = digitalData.cart.ticketType; // TM Inventory Type "May only be in the cart"
+        s.eVar47 = ""; // TM Inventory Type "May only be in the cart"
         //Fire PageLoad Code
         s.t();
-        }
     }
     
-    console.log('Checking for digitalData...');
+    console.log('Checking for digitalData...')
 }, 500)
 
+
+    
 });
