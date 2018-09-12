@@ -210,7 +210,9 @@ var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
     
     
 var test = window.setInterval(() => {
-    if (window.digitalData && /Confirmation/.test(digitalData.pageInstanceID) === true) {
+    if (window.digitalData) {
+        
+        if (/Confirmation/.test(digitalData.pageInstanceID) === true){
         
         //Accounting for the change in data after purchase confirmation
         s.pageName = digitalData.page.pageInfo.pageID;
@@ -235,7 +237,7 @@ var test = window.setInterval(() => {
         s.eVar47 = digitalData.cart.ticketType; // TM Inventory Type "May only be in the cart"
         console.log('Digital Data for cart is available', window.digitalData.transaction);
         s.t();
-        } else if (window.digitalData) {
+        } else {
 
         s.pageName = digitalData.page.pageInfo.pageID;
             
