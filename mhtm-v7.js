@@ -263,4 +263,6 @@ var test = window.setInterval(() => {
     }
     
     console.log('Checking for digitalData...');
-}, 500);
+}, 500)
+
+});
