@@ -211,6 +211,8 @@ var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
     
 var test = window.setInterval(() => {
     if (window.digitalData) {
+        console.log('Digital Data is available', window.digitalData);
+        clearInterval(test);
         
             function getTM(){
             //Global Ticketmaster Code
@@ -227,7 +229,9 @@ var test = window.setInterval(() => {
             }
         
         if (/Confirmation/.test(digitalData.pageInstanceID) === true){
+        //Get Global Ticketmaster Metrics    
         getTM();
+        
         //Accounting for the change in data after purchase confirmation
         s.eVar7 = digitalData.transaction.profileID; //profile ID/Archtics ID
         s.eVar37 = digitalData.transaction.item[0].quantity;
@@ -239,25 +243,29 @@ var test = window.setInterval(() => {
         s.eVar43 = digitalData.transaction.attributes.orderTime; //TM Purchase Time "May only be in the cart"
         s.eVar47 = digitalData.cart.ticketType; // TM Inventory Type "May only be in the cart"
         console.log('Confirmation Page Code Success', window.digitalData.transaction);
-        clearInterval(test);
+ 
         //Fire PageLoad Code
         s.t();
         
         } else if (/Checkout/.test(digitalData.pageInstanceID)) {
+        //Get Global Ticketmaster Metrics    
         getTM();
+        
         s.eVar31 = digitalData.cart.item[0].productInfo.description; //TM Event Description "May only be in the cart"
         s.eVar37 = digitalData.cart.attributes.ticketQuantity; //TM Tickets Purchased (QTY) "May only be in the cart" / digital-data.cart
         s.eVar38 = digitalData.cart.price.basePrice; //TM Face Value "May only be in the cart"
         s.eVar39 = digitalData.cart.price.currency; //TM Currency "May only be in the cart"    
         s.eVar41 = ""; //TM Confirmation Code "May only be in the cart"
         s.eVar47 = digitalData.cart.ticketType; // TM Inventory Type "May only be in the cart"
-        clearInterval(test);
+        console.log('Checkout Page Code Success', window.digitalData.transaction);
+            
         //Fire PageLoad Code
         s.t();
             
         } else {
-        clearInterval(test);
+        console.log('General Page Code Success', window.digitalData.transaction);
         getTM();
+        s.t();
         }
         
     }
