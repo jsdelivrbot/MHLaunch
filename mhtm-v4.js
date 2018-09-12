@@ -235,7 +235,7 @@ var test = window.setInterval(() => {
         s.eVar47 = digitalData.cart.ticketType; // TM Inventory Type "May only be in the cart"
         console.log('Digital Data for cart is available', window.digitalData.transaction);
         s.t();
-        } else {
+        } else if (window.digitalData) {
 
         s.pageName = digitalData.page.pageInfo.pageID;
             
