@@ -24,6 +24,6 @@ var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
      //marketingCloudServer: "INSERT-TRACKING-SERVER-HERE",
      //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
     
-     //idSyncAttachIframeOnWindowLoad: true
+     idSyncAttachIframeOnWindowLoad: true
     });
 });
