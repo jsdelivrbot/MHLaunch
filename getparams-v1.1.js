@@ -12,4 +12,4 @@ function getQueryParams(qs) {
     return params;
 }
 
-console.log( getQueryParams(parent.document.location.search) );
+console.log( getQueryParams(parent.document.location.search).artistid );
