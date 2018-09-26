@@ -1077,9 +1077,9 @@ return f = null, m.init(), m
                 , subdomain: null
                 , url: null
                 , getUrl: function () {
-                    var t, i = "//fast."
+                    var t, i = "http//fast."
                         , n = "?d_nsid=" + e.idSyncContainerID + "#" + encodeURIComponent(u.location.href);
-                    return this.subdomain || (this.subdomain = "nosubdomainreturned"), e.loadSSL && (i = e.idSyncSSLUseAkamai ? "//fast." : "https://")
+                    return this.subdomain || (this.subdomain = "nosubdomainreturned"), e.loadSSL && (i = e.idSyncSSLUseAkamai ? "http//fast." : "https://")
                         , t = i + this.subdomain + ".demdex.net/dest5.html" + n, this.iframeHost = this.getIframeHost(t), this.id = "destination_publishing_iframe_" + this.subdomain + "_" + e.idSyncContainerID, t
                 }
                 , checkDPIframeSrc: function () {
@@ -1482,7 +1482,7 @@ return f = null, m.init(), m
 //Call Visitor ID Service
 var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
      trackingServer: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServer
-     trackingServerSecure: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServerSecure
+     //trackingServerSecure: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServerSecure
 
      // To enable CNAME support, add the following configuration variables
      // If you are not using CNAME, DO NOT include these variables
