@@ -33,12 +33,9 @@ s.trackingServerSecure="miamiheatlimitedpartnership.sc.omtrdc.net"
 s.usePlugins=true
 function s_doPlugins(s) {
     
-    
-    s.pageName = typeof parent.s_Obj.pageName != "undefined" ? parent.s_Obj.pageName : "" || typeof window.frames.digitalData.pageInstanceID != "undefined" ? pparent.digitalData.pageInstanceID : "";
-    s.eVar46 = s.pageName;
-    s.prop1 = "test";
+   
 	/* Time Parting */
-	s.prop14=s.eVar14=s.getTimeParting('n', '-4');; // Set day
+	s.prop14=s.eVar14=s.getTimeParting('n', '-4'); // Set day
     
     
     
