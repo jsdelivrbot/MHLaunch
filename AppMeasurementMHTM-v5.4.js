@@ -23,7 +23,7 @@ s.linkTrackEvents="None"
 changes to how your visitor data is collected.  Changes should only be
 made when instructed to do so by your account manager.*/
 s.visitorNamespace="miamiheatlimitedpartnership"
-//s.trackingServer="miamiheatlimitedpartnership.sc.omtrdc.net"
+s.trackingServer="miamiheatlimitedpartnership.sc.omtrdc.net"
 s.trackingServerSecure="miamiheatlimitedpartnership.sc.omtrdc.net"
 
 /************************* CODE/DO PLUGINS SECTION **************************/
@@ -257,6 +257,6 @@ var test = window.setInterval(() => {
 });
 */
 
-s.pageName = typeof parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail != "undefined" ? parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail : "";
+parent.s.pageName = typeof parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail != "undefined" ? parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail : "";
 
-s.t();
+parent.s.t();
