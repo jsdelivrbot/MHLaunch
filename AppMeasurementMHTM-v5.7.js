@@ -259,4 +259,6 @@ var test = window.setInterval(() => {
 
 s.pageName = typeof parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail != "undefined" ? parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail : "";
 console.log('new version 9.26.18 1:26 PM');
+g = typeof parent.frames.document.URL != "undefined" ? parent.frames.document.URL : "";
+r = typeof parent.document.referrer != "undefined" ? parent.document.referrer : "";
 s.t();
