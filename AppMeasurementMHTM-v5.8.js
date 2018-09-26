@@ -258,7 +258,7 @@ var test = window.setInterval(() => {
 */
 
 s.pageName = typeof parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail != "undefined" ? parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail : "";
-console.log('new version 9.26.18 3:18 PM');
+console.log('new version 9.26.18 3:38 PM');
 s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
 s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
 s.t();
