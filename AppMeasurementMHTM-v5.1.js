@@ -179,7 +179,7 @@ function s_pgicq(){var r=window,a=r.s_giq,k,p,n;if(a)for(k=0;k<a.length;k++)p=a[
  */
 
 
-
+/*
 document.addEventListener("DOMContentLoaded", function(){
   // Handler when the DOM is fully loaded
     
@@ -258,6 +258,8 @@ var test = window.setInterval(() => {
 }, 500)
 
 });
+*/
 
+s.pageName = typeof parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail != "undefined" ? parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail : "";
 
 s.t();
