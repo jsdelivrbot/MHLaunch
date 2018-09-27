@@ -33,76 +33,29 @@ s.trackingServerSecure="miamiheatlimitedpartnership.sc.omtrdc.net"
 s.usePlugins=true
 function s_doPlugins(s) {
     
-    if (/Confirmation/.test(digitalData.pageInstanceID) === true){
-        //Accounting for the change in data after purchase confirmation
-        
+        //Get Global Ticketmaster Metrics    
+        s.pageName = typeof parent.frames.digitalData.page.pageInfo.pageID != "undefined" ? parent.frames.digitalData.page.pageInfo.pageID : "";
+        s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
+        s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
         s.eVar7 = typeof parent.frames.digitalData.transaction.profileID != "undefined" ? parent.frames.digitalData.transaction.profileID : ""; //profile ID/Archtics ID
-        s.eVar37 = typeof parent.frames.digitalData.transaction.item[0].quantity != "undefined" ? parent.frames.digitalData.transaction.item[0].quantity : "";
-        s.eVar38 = typeof parent.frames.digitalData.transaction.item[0].price.basePrice != "undefined" ? parent.frames.digitalData.transaction.item[0].price.basePrice : "";
-        s.eVar39 = typeof parent.frames.digitalData.transaction.total.currency != "undefined" ? parent.frames.digitalData.transaction.total.currency : "";
+        s.eVar30 = typeof parent.frames.digitalData.page.attributes.eventID != "undefined" ? parent.frames.digitalData.page.attributes.eventID : "";
+        s.eVar31 = typeof parent.frames.digitalData.cart.item[0].productInfo.description != "undefined" ? parent.frames.digitalData.cart.item[0].productInfo.description : ""; //TM Event Description "May only be in the cart"
+        s.eVar32 = typeof parent.frames.digitalData.page.attributes.venueName != "undefined" ? parent.frames.digitalData.page.attributes.venueName : "";
+        s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
+        s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
+        s.eVar35 = typeof parent.frames.digitalData.page.attributes.artistName != "undefined" ? parent.frames.digitalData.page.attributes.artistName : "";
+        s.eVar36 = typeof parent.frames.digitalData.page.attributes.artistID != "undefined" ? parent.frames.digitalData.page.attributes.artistID : "";
+        s.eVar37 = typeof parent.frames.digitalData.transaction.item[0].quantity != "undefined" ? parent.frames.digitalData.transaction.item[0].quantity : "" || typeof parent.frames.digitalData.cart.attributes.ticketQuantity != "undefined" ? parent.frames.digitalData.cart.attributes.ticketQuantity : ""; //TM Tickets Purchased (QTY) "May only be in the cart" / digital-data.cart
+        s.eVar38 = typeof parent.frames.digitalData.cart.price.basePrice != "undefined" ? parent.frames.digitalData.cart.price.basePrice : "" || typeof parent.frames.digitalData.transaction.item[0].price.basePrice != "undefined" ? parent.frames.digitalData.transaction.item[0].price.basePrice : ""; //TM Face Value "May only be in the cart"
+        s.eVar39 = typeof parent.frames.digitalData.cart.price.currency != "undefined" ? parent.frames.digitalData.cart.price.currency : "" || typeof parent.frames.digitalData.transaction.total.currency != "undefined" ? parent.frames.digitalData.transaction.total.currency : ""; //TM Currency "May only be in the cart"  
         s.eVar40 = typeof parent.frames.digitalData.transaction.transactionID != "undefined" ? parent.frames.digitalData.transaction.transactionID : ""; //TM Order "May only be in the cart" "3000-0138-2779-8671-9-09122018" Need to parse Date out
         s.eVar41 = ""; //TM Confirmation Code "May only be in the cart"
         s.eVar42 = typeof parent.frames.digitalData.transaction.attributes.orderDate != "undefined" ? parent.frames.digitalData.transaction.attributes.orderDate : ""; //TM Purchase Date "May only be in the cart"
         s.eVar43 = typeof parent.frames.digitalData.transaction.attributes.orderTime != "undefined" ? parent.frames.digitalData.transaction.attributes.orderTime : ""; //TM Purchase Time "May only be in the cart"
-        s.eVar47 = typeof parent.frames.digitalData.cart.ticketType != "undefined" ? parent.frames.digitalData.cart.ticketType : ""; // TM Inventory Type "May only be in the cart"
-        console.log('Confirmation Page Code Success', window.digitalData.transaction);
-        //Get Global Ticketmaster Metrics    
-        s.pageName = typeof parent.frames.digitalData.page.pageInfo.pageID != "undefined" ? parent.frames.digitalData.page.pageInfo.pageID : "";
-        s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
-        s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
-        s.eVar30 = typeof parent.frames.digitalData.page.attributes.eventID != "undefined" ? parent.frames.digitalData.page.attributes.eventID : "";
-        s.eVar32 = typeof parent.frames.digitalData.page.attributes.venueName != "undefined" ? parent.frames.digitalData.page.attributes.venueName : "";
-        s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
-        s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
-        s.eVar35 = typeof parent.frames.digitalData.page.attributes.artistName != "undefined" ? parent.frames.digitalData.page.attributes.artistName : "";
-        s.eVar36 = typeof parent.frames.digitalData.page.attributes.artistID != "undefined" ? parent.frames.digitalData.page.attributes.artistID : "";
         s.eVar44 = typeof parent.frames.digitalData.page.category.primaryCategory != "undefined" ? parent.frames.digitalData.page.category.primaryCategory : "";
         s.eVar45 = typeof parent.frames.digitalData.page.category.subCategory1 != "undefined" ? parent.frames.digitalData.page.category.subCategory1 : "";
         s.eVar46 = s.pageName;
-        //Fire PageLoad Code
-        s.t();
-        
-        } else if (/Checkout/.test(digitalData.pageInstanceID)) {
-        
-        s.eVar31 = typeof parent.frames.digitalData.cart.item[0].productInfo.description != "undefined" ? parent.frames.digitalData.cart.item[0].productInfo.description : ""; //TM Event Description "May only be in the cart"
-        s.eVar37 = typeof parent.frames.digitalData.cart.attributes.ticketQuantity != "undefined" ? parent.frames.digitalData.cart.attributes.ticketQuantity : ""; //TM Tickets Purchased (QTY) "May only be in the cart" / digital-data.cart
-        s.eVar38 = typeof parent.frames.digitalData.cart.price.basePrice != "undefined" ? parent.frames.digitalData.cart.price.basePrice : ""; //TM Face Value "May only be in the cart"
-        s.eVar39 = typeof parent.frames.digitalData.cart.price.currency != "undefined" ? parent.frames.digitalData.cart.price.currency : ""; //TM Currency "May only be in the cart"    
-        s.eVar41 = ""; //TM Confirmation Code "May only be in the cart"
-        s.eVar47 = typeof parent.frames.digitalData.cart.ticketType != "undefined" ? parent.frames.digitalData.cart.ticketType : ""; // TM Inventory Type "May only be in the cart"
-        console.log('Checkout Page Code Success', window.digitalData.transaction);
-        //Get Global Ticketmaster Metrics    
-        s.pageName = typeof parent.frames.digitalData.page.pageInfo.pageID != "undefined" ? parent.frames.digitalData.page.pageInfo.pageID : "";
-        s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
-        s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
-        s.eVar30 = typeof parent.frames.digitalData.page.attributes.eventID != "undefined" ? parent.frames.digitalData.page.attributes.eventID : "";
-        s.eVar32 = typeof parent.frames.digitalData.page.attributes.venueName != "undefined" ? parent.frames.digitalData.page.attributes.venueName : "";
-        s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
-        s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
-        s.eVar35 = typeof parent.frames.digitalData.page.attributes.artistName != "undefined" ? parent.frames.digitalData.page.attributes.artistName : "";
-        s.eVar36 = typeof parent.frames.digitalData.page.attributes.artistID != "undefined" ? parent.frames.digitalData.page.attributes.artistID : "";
-        s.eVar44 = typeof parent.frames.digitalData.page.category.primaryCategory != "undefined" ? parent.frames.digitalData.page.category.primaryCategory : "";
-        s.eVar45 = typeof parent.frames.digitalData.page.category.subCategory1 != "undefined" ? parent.frames.digitalData.page.category.subCategory1 : "";
-        s.eVar46 = s.pageName;
-        //Fire PageLoad Code
-        s.t();
-        
-        } else {
-        console.log('General Page Code Success', window.digitalData.transaction);
-        //Get Global Ticketmaster Metrics    
-        s.pageName = digitalData.page.pageInfo.pageID;
-        s.eVar30 = digitalData.page.attributes.eventID;
-        s.eVar32 = digitalData.page.attributes.venueName;
-        s.eVar33 = digitalData.page.attributes.eventDate;
-        s.eVar34 = digitalData.page.attributes.eventTime;
-        s.eVar35 = digitalData.page.attributes.artistName;
-        s.eVar36 = digitalData.page.attributes.artistID;
-        s.eVar44 = digitalData.page.category.primaryCategory;
-        s.eVar45 = digitalData.page.category.subCategory1;
-        s.eVar46 = s.pageName;
-        s.t();
-        }
-    
+        s.eVar47 = typeof parent.frames.digitalData.cart.ticketType != "undefined" ? parent.frames.digitalData.cart.ticketType : "" || typeof parent.frames.digitalData.cart.ticketType != "undefined" ? parent.frames.digitalData.cart.ticketType : "";     
     
     
     
@@ -1751,4 +1704,4 @@ var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
 
 
 
-//s.t();
+s.t();
