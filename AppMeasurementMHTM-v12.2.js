@@ -36,7 +36,7 @@ function s_doPlugins(s) {
     if (/Confirmation/.test(digitalData.pageInstanceID) === true){
         //Accounting for the change in data after purchase confirmation
         
-        s.eVar7 = typeof parent.frames.digitalData.transaction.profileID; != "undefined" ? parent.frames.digitalData.transaction.profileID; : ""; //profile ID/Archtics ID
+        s.eVar7 = typeof parent.frames.digitalData.transaction.profileID != "undefined" ? parent.frames.digitalData.transaction.profileID : ""; //profile ID/Archtics ID
         s.eVar37 = typeof parent.frames.digitalData.transaction.item[0].quantity != "undefined" ? parent.frames.digitalData.transaction.item[0].quantity : "";
         s.eVar38 = typeof parent.frames.digitalData.transaction.item[0].price.basePrice != "undefined" ? parent.frames.digitalData.transaction.item[0].price.basePrice : "";
         s.eVar39 = typeof parent.frames.digitalData.transaction.total.currency != "undefined" ? parent.frames.digitalData.transaction.total.currency : "";
