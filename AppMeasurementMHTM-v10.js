@@ -33,7 +33,9 @@ s.trackingServerSecure="miamiheatlimitedpartnership.sc.omtrdc.net"
 s.usePlugins=true
 function s_doPlugins(s) {
     
-   
+    s.pageName = typeof parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail != "undefined" ? parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail : "";
+    s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
+    s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
 	/* Time Parting */
 	s.prop14=s.eVar14=s.getTimeParting('n', '-4'); // Set day
     
@@ -257,8 +259,5 @@ var test = window.setInterval(() => {
 });
 */
 
-s.pageName = typeof parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail != "undefined" ? parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail : "";
-console.log('new version 9.26.18 3:38 PM');
-s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
-s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
+
 s.t();
