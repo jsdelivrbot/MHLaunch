@@ -33,40 +33,6 @@ s.trackingServerSecure="miamiheatlimitedpartnership.sc.omtrdc.net"
 s.usePlugins=true
 function s_doPlugins(s) {
     
-    /*
-        //Get Global Ticketmaster Metrics    
-        s.pageName = typeof parent.frames.digitalData.page.pageInfo.pageID != "undefined" ? parent.frames.digitalData.page.pageInfo.pageID : "";
-        s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
-        s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
-        //s.eVar7 = typeof parent.frames.digitalData.transaction.profileID != "undefined" ? parent.frames.digitalData.transaction.profileID : ""; //profile ID/Archtics ID
-        s.eVar30 = typeof parent.frames.digitalData.page.attributes.eventID != "undefined" ? parent.frames.digitalData.page.attributes.eventID : "";
-        //s.eVar31 = typeof parent.frames.digitalData.cart.item[0].productInfo.description != "undefined" ? parent.frames.digitalData.cart.item[0].productInfo.description : ""; //TM Event Description "May only be in the cart"
-        s.eVar32 = typeof parent.frames.digitalData.page.attributes.venueName != "undefined" ? parent.frames.digitalData.page.attributes.venueName : "";
-        s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
-        s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
-        s.eVar35 = typeof parent.frames.digitalData.page.attributes.artistName != "undefined" ? parent.frames.digitalData.page.attributes.artistName : "";
-        s.eVar36 = typeof parent.frames.digitalData.page.attributes.artistID != "undefined" ? parent.frames.digitalData.page.attributes.artistID : "";
-        //s.eVar37 = typeof parent.frames.digitalData.transaction.item[0].quantity != "undefined" ? parent.frames.digitalData.transaction.item[0].quantity : "" || typeof parent.frames.digitalData.cart.attributes.ticketQuantity != "undefined" ? parent.frames.digitalData.cart.attributes.ticketQuantity : ""; //TM Tickets Purchased (QTY) "May only be in the cart" / digital-data.cart
-        //s.eVar38 = typeof parent.frames.digitalData.cart.price.basePrice != "undefined" ? parent.frames.digitalData.cart.price.basePrice : "" || typeof parent.frames.digitalData.transaction.item[0].price.basePrice != "undefined" ? parent.frames.digitalData.transaction.item[0].price.basePrice : ""; //TM Face Value "May only be in the cart"
-        //s.eVar39 = typeof parent.frames.digitalData.cart.price.currency != "undefined" ? parent.frames.digitalData.cart.price.currency : "" || typeof parent.frames.digitalData.transaction.total.currency != "undefined" ? parent.frames.digitalData.transaction.total.currency : ""; //TM Currency "May only be in the cart"  
-        //s.eVar40 = typeof parent.frames.digitalData.transaction.transactionID != "undefined" ? parent.frames.digitalData.transaction.transactionID : ""; //TM Order "May only be in the cart" "3000-0138-2779-8671-9-09122018" Need to parse Date out
-        //s.eVar41 = ""; //TM Confirmation Code "May only be in the cart"
-        //s.eVar42 = typeof parent.frames.digitalData.transaction.attributes.orderDate != "undefined" ? parent.frames.digitalData.transaction.attributes.orderDate : ""; //TM Purchase Date "May only be in the cart"
-        //s.eVar43 = typeof parent.frames.digitalData.transaction.attributes.orderTime != "undefined" ? parent.frames.digitalData.transaction.attributes.orderTime : ""; //TM Purchase Time "May only be in the cart"
-        s.eVar44 = typeof parent.frames.digitalData.page.category.primaryCategory != "undefined" ? parent.frames.digitalData.page.category.primaryCategory : "";
-        s.eVar45 = typeof parent.frames.digitalData.page.category.subCategory1 != "undefined" ? parent.frames.digitalData.page.category.subCategory1 : "";
-        s.eVar46 = s.pageName;
-        // s.eVar47 = typeof parent.frames.digitalData.cart.ticketType != "undefined" ? parent.frames.digitalData.cart.ticketType : "" || typeof parent.frames.digitalData.cart.ticketType != "undefined" ? parent.frames.digitalData.cart.ticketType : "";     
-    */
-    
-    
-    
-    /*
-    s.pageName = typeof parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail != "undefined" ? parent.frames.TM.Tracking.satellite.data.pageLevelData.pageDetail : "";
-    s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
-    s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
-    */
-    
 	/* Time Parting */
 	s.prop14=s.eVar14=s.getTimeParting('n', '-4'); // Set day
     
@@ -235,20 +201,61 @@ var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
     
      //idSyncAttachIframeOnWindowLoad: true
     });
+    
+//TM Clean Values   
+function cleanName(strName) {
+	
+	strName = strName.replace(/TM_US/g,"tmus");
+	strName = strName.replace(/_/g," ");/* comment changed underscore to hyphen*/
+	strName = strName.replace(/-/g,"");/* comment out for hyphen delimeter to stay*/
+	strName = strName.replace(/: /g,":");
+	strName = strName.replace(/tm us/g,"tmus");
+	strName = strName.replace(/\.php/g,"");
+	strName = strName.replace(/\.do/g,"");
+	strName = strName.replace(/\.jsp/g,"");
+	strName = strName.replace(/\.aspx/g,"");
+	strName = strName.replace(/\.html/g,"");
+	strName = strName.replace(/\.htm/g,"");
+	strName = strName.replace(/\.cgi/g,"");
+	strName = strName.replace(/ /g,"-");
+    strName = strName.replace(/'/g,"");
+	strName = strName.toLowerCase();
+	
+	
+	if (strName.indexOf("?") > -1) {
+		 
+		aryNoParam = strName.split("?");
+		strName = aryNoParam[0];
+		 
+	}
+	if (strName.indexOf("#") > -1) {
+		 
+		aryNoHash = strName.split("#");
+		strName = aryNoHash[0];
+		 
+	}
+	 
+	return strName;
+}
       
 
 //TM Variables
 var tmpageName = typeof parent.frames.digitalData.page.pageInfo.pageID != "undefined" ? parent.frames.digitalData.page.pageInfo.pageID : "";
-var valPageName = tmpageName.toLowerCase().split(" ").join("");
+var valPageName = cleanName(tmpageName);
+
+var tmchannel = typeof parent.frames.digitalData.page.pageInfo.pageChannel != "undefined" ? parent.frames.digitalData.page.pageInfo.pageChannel : "";
+var valch = cleanName(valPageName);
         
         if (/Confirmation/.test(valPageName) === true || /Checkout/.test(valPageName) === true){
         //Accounting for the change in data after purchase confirmation
         s.pageName = valPageName;
+        s.channel = valch;
+        s.server = parent.frames.document.location.host;
         s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
         s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
         s.eVar7 = typeof parent.frames.digitalData.transaction.profileID != "undefined" ? parent.frames.digitalData.transaction.profileID : ""; //profile ID/Archtics ID
         s.eVar30 = typeof parent.frames.digitalData.page.attributes.eventID != "undefined" ? parent.frames.digitalData.page.attributes.eventID : "";
-        s.eVar31 = typeof parent.frames.digitalData.cart.item[0].productInfo.description != "undefined" ? parent.frames.digitalData.cart.item[0].productInfo.description : ""; //TM Event Description "May only be in the cart"
+        s.eVar31 = typeof parent.frames.digitalData.digitalData.page.attributes.eventName != "undefined" ? parent.frames.digitalData.page.attributes.eventName : ""; //TM Event Name "May only be in the cart"
         s.eVar32 = typeof parent.frames.digitalData.page.attributes.venueName != "undefined" ? parent.frames.digitalData.page.attributes.venueName : "";
         s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
         s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
@@ -274,9 +281,12 @@ var valPageName = tmpageName.toLowerCase().split(" ").join("");
         console.log('General Page Code Success');
         //Get Global Ticketmaster Metrics    
         s.pageName = valPageName;
+        s.channel = valch;
+        s.server = parent.frames.document.location.host;
         s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
         s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
         s.eVar30 = typeof parent.frames.digitalData.page.attributes.eventID != "undefined" ? parent.frames.digitalData.page.attributes.eventID : "";
+        s.eVar31 = typeof parent.frames.digitalData.digitalData.page.attributes.eventName != "undefined" ? parent.frames.digitalData.page.attributes.eventName : ""; //TM Event Name "May only be in the cart"
         s.eVar32 = typeof parent.frames.digitalData.page.attributes.venueName != "undefined" ? parent.frames.digitalData.page.attributes.venueName : "";
         s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
         s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
