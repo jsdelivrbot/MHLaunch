@@ -82,9 +82,9 @@ function cleanName(strName) {
         return params;
     }    
     
-    if (getQueryParams(parent.frames.document.location.search).camefrom !== "undefined") {
+    try (getQueryParams(parent.frames.document.location.search).camefrom !== "undefined") {
         var cfcparam = typeof getQueryParams(parent.frames.document.location.search).camefrom != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom : "";	//Internal Tracking Code Came From Codes
-    } else {
+    } catch (err) {
         console.log('no came from code query param')
     }
       
@@ -171,7 +171,12 @@ var valeventid = typeof parent.frames.digitalData.page.attributes.eventID != "un
         s.server = parent.frames.document.location.host;
         s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
         s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
-        s.eVar15 = cfcparam;
+        s.eVar15 = cfcparam;    //Internal Tracking Code
+        s.eVar16 = "";	//Campaign Source (utm)
+        s.eVar17 = "";	//Campaign Channel (utm)
+        s.eVar18 = "";	//Campaign Name (utm)
+        s.eVar19 = "";	//Campaign Paid Search Term (utm)
+        s.eVar20 = "";	//Campaign Content (utm)
         s.eVar30 = valeventid;
         s.eVar31 = valevent; //TM Event Name "May only be in the cart"
         s.eVar32 = valvenue;
@@ -241,37 +246,7 @@ function s_doPlugins(s) {
     //Actual value of ECID/MCID
     
     
-    /*
-    try {
-    s.eVar16 = typeof getQueryParams(parent.frames.document.location.search).utm_source != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_source : ""; //Campaign Source (utm)
-    } catch (err) {
-        console.log('no campaign source (utm)')
-    }
     
-    try {
-    s.eVar17 = typeof getQueryParams(parent.frames.document.location.search).camefrom.utm_medium != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom.utm_medium : "";	//Campaign Channel (utm)
-    } catch (err) {
-        console.log('no campaign channel (utm)')
-    }
-    
-    try {
-    s.eVar18 = typeof getQueryParams(parent.frames.document.location.search).camefrom.utm_campaign != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom.utm_campaign : "";	//Campaign Name (utm)
-    } catch (err) {
-        console.log('no campaign name (utm)')
-    }
-    
-    try {
-    s.eVar19 = typeof getQueryParams(parent.frames.document.location.search).camefrom.utm_term != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom.utm_term : "";	//Campaign Paid Search Term (utm)
-    } catch (err) {
-        console.log('no campaign term (utm)')
-    }
-    
-    try {
-    s.eVar20 = typeof getQueryParams(parent.frames.document.location.search).camefrom.utm_content != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom.utm_content : "";//Campaign Content (utm)
-    } catch (err) {
-        console.log('no campaign content (utm)')
-    }
-    */
     
     
 }
