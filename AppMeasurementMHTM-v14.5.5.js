@@ -66,6 +66,27 @@ function cleanName(strName) {
 	 
 	return strName;
 }
+
+
+/* Get UTM Variables */
+    function getQueryParams(qs) {
+        qs = qs.replace(/\+/g, " ").toLowerCase();
+        var params = {},
+            re = /[?&]?([^=]+)=([^&]*)/g,
+            tokens;
+
+        while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]).toLowerCase();
+        }
+        
+        return params;
+    }    
+    
+    if (getQueryParams(parent.frames.document.location.search).camefrom !== "undefined") {
+        return var cfcparam = typeof getQueryParams(parent.frames.document.location.search).camefrom != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom : "";	//Internal Tracking Code Came From Codes
+    } else {
+        console.log('no came from code query param')
+    }
       
 
 //TM Variables
@@ -150,6 +171,7 @@ var valeventid = typeof parent.frames.digitalData.page.attributes.eventID != "un
         s.server = parent.frames.document.location.host;
         s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
         s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
+        s.eVar15 = cfcparam;
         s.eVar30 = valeventid;
         s.eVar31 = valevent; //TM Event Name "May only be in the cart"
         s.eVar32 = valvenue;
@@ -216,27 +238,8 @@ function s_doPlugins(s) {
     /* Marketing Cloud ID -- Must be in Do Plugins */
     s.eVar10= visitor.getAnalyticsVisitorID("1E701A795B111F550A495EAF@AdobeOrg");
     s.prop10= "D=v10";
-    //s.prop10=s.eVar10= (typeof(Visitor) != "undefined" ? "VisitorAPI Present" : "VisitorAPI Missing");
+    //Actual value of ECID/MCID
     
-    /* Get UTM Variables */
-    function getQueryParams(qs) {
-        qs = qs.replace(/\+/g, " ").toLowerCase();
-        var params = {},
-            re = /[?&]?([^=]+)=([^&]*)/g,
-            tokens;
-
-        while (tokens = re.exec(qs)) {
-        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]).toLowerCase();
-        }
-        
-        return params;
-    }    
-    
-    if (getQueryParams(parent.frames.document.location.search).camefrom !== "undefined") {
-        return s.eVar15 = typeof getQueryParams(parent.frames.document.location.search).camefrom != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom : "";	//Internal Tracking Code Came From Codes
-    } else {
-        console.log('no came from code')
-    }
     
     /*
     try {
