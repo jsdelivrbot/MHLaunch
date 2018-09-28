@@ -215,7 +215,14 @@ function s_doPlugins(s) {
     s.eVar10= visitor.getAnalyticsVisitorID("1E701A795B111F550A495EAF@AdobeOrg");
     s.prop10= "D=v10";
     //s.prop10=s.eVar10= (typeof(Visitor) != "undefined" ? "VisitorAPI Present" : "VisitorAPI Missing");
-
+    
+    /* Get UTM Variables */
+    s.eVar15 = s.Util.getQueryParam("CAMEFROM");	//Internal Tracking Code Came From Codes
+    s.eVar16 = s.Util.getQueryParam("utm_source");//Campaign Source (utm)
+    s.eVar17 = s.Util.getQueryParam("utm_medium");	//Campaign Channel (utm)
+    s.eVar18 = s.Util.getQueryParam("utm_campaign");	//Campaign Name (utm)
+    s.eVar19 = s.Util.getQueryParam("utm_term");	//Campaign Paid Search Term (utm)
+    s.eVar20 = s.Util.getQueryParam("utm_content");//Campaign Content (utm)
     
     
 }
