@@ -245,10 +245,13 @@ var tmpageName = typeof parent.frames.digitalData.page.pageInfo.pageID != "undef
 var valPageName = cleanName(tmpageName);
 //Channel
 var tmchannel = typeof parent.frames.digitalData.page.pageInfo.pageChannel != "undefined" ? parent.frames.digitalData.page.pageInfo.pageChannel : "";
-var valch = cleanName(tmchannel) + 'test 9-2018';
+var valch = cleanName(tmchannel) + '| test 9-2018';
 //Event Name
 var tmevent = typeof parent.frames.digitalData.page.attributes.eventName != "undefined" ? parent.frames.digitalData.page.attributes.eventName : "";
 var valevent = cleanName(tmevent);
+//Artist Name
+var tmartist = typeof parent.frames.digitalData.page.attributes.artistName != "undefined" ? parent.frames.digitalData.page.attributes.artistName : "";
+var valartist = cleanName(tmartist);
         
         if (/Confirmation/.test(valPageName) === true || /Checkout/.test(valPageName) === true){
         //Accounting for the change in data after purchase confirmation
@@ -263,7 +266,7 @@ var valevent = cleanName(tmevent);
         s.eVar32 = typeof parent.frames.digitalData.page.attributes.venueName != "undefined" ? parent.frames.digitalData.page.attributes.venueName : "";
         s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
         s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
-        s.eVar35 = typeof parent.frames.digitalData.page.attributes.artistName != "undefined" ? parent.frames.digitalData.page.attributes.artistName : "";
+        s.eVar35 = valartist;
         s.eVar36 = typeof parent.frames.digitalData.page.attributes.artistID != "undefined" ? parent.frames.digitalData.page.attributes.artistID : "";
         s.eVar37 = typeof parent.frames.digitalData.transaction.item[0].quantity != "undefined" ? parent.frames.digitalData.transaction.item[0].quantity : "" || typeof parent.frames.digitalData.cart.attributes.ticketQuantity != "undefined" ? parent.frames.digitalData.cart.attributes.ticketQuantity : ""; //TM Tickets Purchased (QTY) "May only be in the cart" / digital-data.cart
         s.eVar38 = typeof parent.frames.digitalData.cart.price.basePrice != "undefined" ? parent.frames.digitalData.cart.price.basePrice : "" || typeof parent.frames.digitalData.transaction.item[0].price.basePrice != "undefined" ? parent.frames.digitalData.transaction.item[0].price.basePrice : ""; //TM Face Value "May only be in the cart"
@@ -294,7 +297,7 @@ var valevent = cleanName(tmevent);
         s.eVar32 = typeof parent.frames.digitalData.page.attributes.venueName != "undefined" ? parent.frames.digitalData.page.attributes.venueName : "";
         s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
         s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
-        s.eVar35 = typeof parent.frames.digitalData.page.attributes.artistName != "undefined" ? parent.frames.digitalData.page.attributes.artistName : "";
+        s.eVar35 = valartist;
         s.eVar36 = typeof parent.frames.digitalData.page.attributes.artistID != "undefined" ? parent.frames.digitalData.page.attributes.artistID : "";
         s.eVar44 = typeof parent.frames.digitalData.page.category.primaryCategory != "undefined" ? parent.frames.digitalData.page.category.primaryCategory : "";
         s.eVar45 = typeof parent.frames.digitalData.page.category.subCategory1 != "undefined" ? parent.frames.digitalData.page.category.subCategory1 : "";
