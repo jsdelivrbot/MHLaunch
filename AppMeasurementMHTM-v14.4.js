@@ -88,14 +88,18 @@ var valprimcat = cleanName(tmprimcat);
 //Sub Category
 var tmsubcat = typeof parent.frames.digitalData.page.category.subCategory1 != "undefined" ? parent.frames.digitalData.page.category.subCategory1 : "";
 var valsubcat = cleanName(tmsubcat);
-//Ticket QTY
-var valtktqty = typeof parent.frames.digitalData.transaction.item[0].quantity != "undefined" ? parent.frames.digitalData.transaction.item[0].quantity : "" || typeof parent.frames.digitalData.cart.attributes.ticketQuantity != "undefined" ? parent.frames.digitalData.cart.attributes.ticketQuantity : "";
 //event ID
 var valeventid = typeof parent.frames.digitalData.page.attributes.eventID != "undefined" ? parent.frames.digitalData.page.attributes.eventID : "";
-//Total Price
-var valtotal =typeof parent.frames.digitalData.transaction.total.transactionTotal != "undefined" ? parent.frames.digitalData.transaction.total.transactionTotal : "";
+
         
     if (/checkout/.test(parent.frames.document.location.pathname) === true){
+        //Ticket QTY
+        var valtktqty = typeof parent.frames.digitalData.cart.attributes.ticketQuantity != "undefined" ? parent.frames.digitalData.cart.attributes.ticketQuantity : "" || typeof parent.frames.digitalData.transaction.item[0].quantity != "undefined" ? parent.frames.digitalData.transaction.item[0].quantity : "";
+        //Total Price
+        var valtotal =typeof parent.frames.digitalData.transaction.total.transactionTotal != "undefined" ? parent.frames.digitalData.transaction.total.transactionTotal : "";
+        //Ticket Type
+        var valtkttype = typeof parent.frames.digitalData.cart.ticketType != "undefined" ? parent.frames.digitalData.cart.ticketType : "";
+
         //Accounting for the change in data after purchase confirmation
         s.pageName = valPageName;
         s.channel = valch;
