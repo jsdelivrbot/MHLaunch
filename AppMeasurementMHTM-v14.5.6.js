@@ -83,7 +83,7 @@ function cleanName(strName) {
     }    
     
     if (getQueryParams(parent.frames.document.location.search).camefrom !== "undefined") {
-        return var cfcparam = typeof getQueryParams(parent.frames.document.location.search).camefrom != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom : "";	//Internal Tracking Code Came From Codes
+        var cfcparam = typeof getQueryParams(parent.frames.document.location.search).camefrom != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom : "";	//Internal Tracking Code Came From Codes
     } else {
         console.log('no came from code query param')
     }
