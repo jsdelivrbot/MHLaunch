@@ -89,7 +89,7 @@ var valprimcat = cleanName(tmprimcat);
 var tmsubcat = typeof parent.frames.digitalData.page.category.subCategory1 != "undefined" ? parent.frames.digitalData.page.category.subCategory1 : "";
 var valsubcat = cleanName(tmsubcat);
         
-    if (/Confirmation/.test(valPageName) === true || /Checkout/.test(valPageName) === true){
+    if (/checkout/.test(parent.frames.document.location.pathname) === true){
         //Accounting for the change in data after purchase confirmation
         s.pageName = valPageName;
         s.channel = valch;
