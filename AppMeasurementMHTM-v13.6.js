@@ -240,11 +240,15 @@ function cleanName(strName) {
       
 
 //TM Variables
+//PageName
 var tmpageName = typeof parent.frames.digitalData.page.pageInfo.pageID != "undefined" ? parent.frames.digitalData.page.pageInfo.pageID : "";
 var valPageName = cleanName(tmpageName);
-
+//Channel
 var tmchannel = typeof parent.frames.digitalData.page.pageInfo.pageChannel != "undefined" ? parent.frames.digitalData.page.pageInfo.pageChannel : "";
-var valch = cleanName(valPageName);
+var valch = cleanName(tmchannel) + 'test 9-2018';
+//Event Name
+var tmevent = typeof parent.frames.digitalData.digitalData.page.attributes.eventName != "undefined" ? parent.frames.digitalData.page.attributes.eventName : "";
+var valevent = cleanName(tmevent);
         
         if (/Confirmation/.test(valPageName) === true || /Checkout/.test(valPageName) === true){
         //Accounting for the change in data after purchase confirmation
@@ -255,7 +259,7 @@ var valch = cleanName(valPageName);
         s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
         s.eVar7 = typeof parent.frames.digitalData.transaction.profileID != "undefined" ? parent.frames.digitalData.transaction.profileID : ""; //profile ID/Archtics ID
         s.eVar30 = typeof parent.frames.digitalData.page.attributes.eventID != "undefined" ? parent.frames.digitalData.page.attributes.eventID : "";
-        s.eVar31 = typeof parent.frames.digitalData.digitalData.page.attributes.eventName != "undefined" ? parent.frames.digitalData.page.attributes.eventName : ""; //TM Event Name "May only be in the cart"
+        s.eVar31 = valevent; //TM Event Name "May only be in the cart"
         s.eVar32 = typeof parent.frames.digitalData.page.attributes.venueName != "undefined" ? parent.frames.digitalData.page.attributes.venueName : "";
         s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
         s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
@@ -286,7 +290,7 @@ var valch = cleanName(valPageName);
         s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
         s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
         s.eVar30 = typeof parent.frames.digitalData.page.attributes.eventID != "undefined" ? parent.frames.digitalData.page.attributes.eventID : "";
-        s.eVar31 = typeof parent.frames.digitalData.digitalData.page.attributes.eventName != "undefined" ? parent.frames.digitalData.page.attributes.eventName : ""; //TM Event Name "May only be in the cart"
+        s.eVar31 = valevent; //TM Event Name "May only be in the cart"
         s.eVar32 = typeof parent.frames.digitalData.page.attributes.venueName != "undefined" ? parent.frames.digitalData.page.attributes.venueName : "";
         s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
         s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
