@@ -247,7 +247,7 @@ var valPageName = cleanName(tmpageName);
 var tmchannel = typeof parent.frames.digitalData.page.pageInfo.pageChannel != "undefined" ? parent.frames.digitalData.page.pageInfo.pageChannel : "";
 var valch = cleanName(tmchannel) + 'test 9-2018';
 //Event Name
-var tmevent = typeof parent.frames.digitalData.digitalData.page.attributes.eventName != "undefined" ? parent.frames.digitalData.page.attributes.eventName : "";
+var tmevent = typeof parent.frames.digitalData.page.attributes.eventName != "undefined" ? parent.frames.digitalData.page.attributes.eventName : "";
 var valevent = cleanName(tmevent);
         
         if (/Confirmation/.test(valPageName) === true || /Checkout/.test(valPageName) === true){
