@@ -241,7 +241,7 @@ var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
 var tmpageName = typeof parent.frames.digitalData.page.pageInfo.pageID != "undefined" ? parent.frames.digitalData.page.pageInfo.pageID : "";
 var valPageName = tmpageName.toLowerCase().split(" ").join("");
         
-        if (/Confirmation/.test(digitalData.pageInstanceID) === true || /Checkout/.test(digitalData.pageInstanceID) === true){
+        if (/Confirmation/.test(valPageName) === true || /Checkout/.test(valPageName) === true){
         //Accounting for the change in data after purchase confirmation
         s.pageName = valPageName;
         s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
