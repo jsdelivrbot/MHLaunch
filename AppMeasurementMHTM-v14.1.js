@@ -28,19 +28,6 @@ s.trackingServerSecure="miamiheatlimitedpartnership.sc.omtrdc.net"
 
 /************************* CODE/DO PLUGINS SECTION **************************/
 
-
-//Call Visitor ID Service
-var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
-     trackingServer: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServer
-     //trackingServerSecure: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServerSecure
-
-     // To enable CNAME support, add the following configuration variables
-     // If you are not using CNAME, DO NOT include these variables
-     //marketingCloudServer: "INSERT-TRACKING-SERVER-HERE",
-     //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
-    
-     //idSyncAttachIframeOnWindowLoad: true
-    });
     
 //TM Clean Values   
 function cleanName(strName) {
@@ -157,6 +144,19 @@ var valsubcat = cleanName(tmsubcat);
 /* Plugin Config */
 s.usePlugins=true
 function s_doPlugins(s) {
+
+     //Call Visitor ID Service
+     var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
+     trackingServer: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServer
+     //trackingServerSecure: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServerSecure
+
+     // To enable CNAME support, add the following configuration variables
+     // If you are not using CNAME, DO NOT include these variables
+     //marketingCloudServer: "INSERT-TRACKING-SERVER-HERE",
+     //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
+    
+     //idSyncAttachIframeOnWindowLoad: true
+    });
     
 	/* Time Parting */
 	s.eVar14=s.getTimeParting('n', '-4'); // Set day
