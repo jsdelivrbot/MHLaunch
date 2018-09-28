@@ -226,19 +226,19 @@ function s_doPlugins(s) {
             tokens;
 
         while (tokens = re.exec(qs)) {
-            params[decodeURIComponent(tokens[1])]
-                = decodeURIComponent(tokens[2]).toLowerCase();
+        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]).toLowerCase();
         }
         
         return params;
     }    
     
-    try {
-    s.eVar15 = typeof getQueryParams(parent.frames.document.location.search).camefrom != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom : "";	//Internal Tracking Code Came From Codes
-    } catch (err) {
+    if (getQueryParams(parent.frames.document.location.search).camefrom !== "undefined") {
+        return s.eVar15 = typeof getQueryParams(parent.frames.document.location.search).camefrom != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom : "";	//Internal Tracking Code Came From Codes
+    } else {
         console.log('no came from code')
     }
     
+    /*
     try {
     s.eVar16 = typeof getQueryParams(parent.frames.document.location.search).utm_source != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_source : ""; //Campaign Source (utm)
     } catch (err) {
@@ -268,7 +268,7 @@ function s_doPlugins(s) {
     } catch (err) {
         console.log('no campaign content (utm)')
     }
-    
+    */
     
     
 }
