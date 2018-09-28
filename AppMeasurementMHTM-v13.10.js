@@ -34,10 +34,12 @@ s.usePlugins=true
 function s_doPlugins(s) {
     
 	/* Time Parting */
-	s.prop14=s.eVar14=s.getTimeParting('n', '-4'); // Set day
+	s.eVar14=s.getTimeParting('n', '-4'); // Set day
+    s.prop14= "D=v14";
     
     /* Marketing Cloud ID -- Must be in Do Plugins */
-    s.prop10=s.eVar10= visitor.getAnalyticsVisitorID("1E701A795B111F550A495EAF@AdobeOrg")
+    s.eVar10= visitor.getAnalyticsVisitorID("1E701A795B111F550A495EAF@AdobeOrg");
+    s.prop10= "D=v10";
     //s.prop10=s.eVar10= (typeof(Visitor) != "undefined" ? "VisitorAPI Present" : "VisitorAPI Missing");
 
     
