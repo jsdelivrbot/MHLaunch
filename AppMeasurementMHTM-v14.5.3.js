@@ -220,51 +220,51 @@ function s_doPlugins(s) {
     
     /* Get UTM Variables */
     function getQueryParams(qs) {
-        qs = qs.replace(/\+/g, " ");
+        qs = qs.replace(/\+/g, " ").toLowerCase();
         var params = {},
             re = /[?&]?([^=]+)=([^&]*)/g,
             tokens;
 
         while (tokens = re.exec(qs)) {
             params[decodeURIComponent(tokens[1])]
-                = decodeURIComponent(tokens[2]);
+                = decodeURIComponent(tokens[2]).toLowerCase();
         }
-
-        return params.toLowerCase();
+        
+        return params;
     }    
     
     try {
-    s.eVar15 = getQueryParams(parent.frames.document.location.search).camefrom;	//Internal Tracking Code Came From Codes
+    s.eVar15 = typeof getQueryParams(parent.frames.document.location.search).camefrom != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom : "";	//Internal Tracking Code Came From Codes
     } catch (err) {
         console.log('no came from code')
     }
     
     try {
-    s.eVar16 = getQueryParams(parent.frames.document.location.search).camefrom.utm_source;//Campaign Source (utm)
+    s.eVar16 = typeof getQueryParams(parent.frames.document.location.search).utm_source != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_source : ""; //Campaign Source (utm)
     } catch (err) {
         console.log('no campaign source (utm)')
     }
     
     try {
-    s.eVar17 = getQueryParams(parent.frames.document.location.search).camefrom.utm_medium;	//Campaign Channel (utm)
+    s.eVar17 = typeof getQueryParams(parent.frames.document.location.search).camefrom.utm_medium != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom.utm_medium : "";	//Campaign Channel (utm)
     } catch (err) {
         console.log('no campaign channel (utm)')
     }
     
     try {
-    s.eVar18 = getQueryParams(parent.frames.document.location.search).camefrom.utm_campaign;	//Campaign Name (utm)
+    s.eVar18 = typeof getQueryParams(parent.frames.document.location.search).camefrom.utm_campaign != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom.utm_campaign : "";	//Campaign Name (utm)
     } catch (err) {
         console.log('no campaign name (utm)')
     }
     
     try {
-    s.eVar19 = getQueryParams(parent.frames.document.location.search).camefrom.utm_term;	//Campaign Paid Search Term (utm)
+    s.eVar19 = typeof getQueryParams(parent.frames.document.location.search).camefrom.utm_term != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom.utm_term : "";	//Campaign Paid Search Term (utm)
     } catch (err) {
         console.log('no campaign term (utm)')
     }
     
     try {
-    s.eVar20 = getQueryParams(parent.frames.document.location.search).camefrom.utm_content;//Campaign Content (utm)
+    s.eVar20 = typeof getQueryParams(parent.frames.document.location.search).camefrom.utm_content != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom.utm_content : "";//Campaign Content (utm)
     } catch (err) {
         console.log('no campaign content (utm)')
     }
