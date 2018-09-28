@@ -46,6 +46,8 @@ function cleanName(strName) {
 	strName = strName.replace(/\.cgi/g,"");
 	strName = strName.replace(/ /g,"-");
     strName = strName.replace(/'/g,"");
+    strName = strName.replace(/’s/g,"-s");
+    strName = strName.replace(/vs./g,"vs");
 	strName = strName.toLowerCase();
 	
 	
@@ -217,12 +219,56 @@ function s_doPlugins(s) {
     //s.prop10=s.eVar10= (typeof(Visitor) != "undefined" ? "VisitorAPI Present" : "VisitorAPI Missing");
     
     /* Get UTM Variables */
-    s.eVar15 = s.Util.getQueryParam("CAMEFROM");	//Internal Tracking Code Came From Codes
-    s.eVar16 = s.Util.getQueryParam("utm_source");//Campaign Source (utm)
-    s.eVar17 = s.Util.getQueryParam("utm_medium");	//Campaign Channel (utm)
-    s.eVar18 = s.Util.getQueryParam("utm_campaign");	//Campaign Name (utm)
-    s.eVar19 = s.Util.getQueryParam("utm_term");	//Campaign Paid Search Term (utm)
-    s.eVar20 = s.Util.getQueryParam("utm_content");//Campaign Content (utm)
+    function getQueryParams(qs) {
+        qs = qs.replace(/\+/g, " ");
+        var params = {},
+            re = /[?&]?([^=]+)=([^&]*)/g,
+            tokens;
+
+        while (tokens = re.exec(qs)) {
+            params[decodeURIComponent(tokens[1])]
+                = decodeURIComponent(tokens[2]);
+        }
+
+        return params.toLowerCase();
+    }    
+    
+    try {
+    s.eVar15 = getQueryParams(parent.frames.document.location.search).camefrom;	//Internal Tracking Code Came From Codes
+    } catch (err) {
+        console.log('no came from code')
+    }
+    
+    try {
+    s.eVar16 = getQueryParams(parent.frames.document.location.search).camefrom.utm_source;//Campaign Source (utm)
+    } catch (err) {
+        console.log('no campaign source (utm)')
+    }
+    
+    try {
+    s.eVar17 = getQueryParams(parent.frames.document.location.search).camefrom.utm_medium;	//Campaign Channel (utm)
+    } catch (err) {
+        console.log('no campaign channel (utm)')
+    }
+    
+    try {
+    s.eVar18 = getQueryParams(parent.frames.document.location.search).camefrom.utm_campaign;	//Campaign Name (utm)
+    } catch (err) {
+        console.log('no campaign name (utm)')
+    }
+    
+    try {
+    s.eVar19 = getQueryParams(parent.frames.document.location.search).camefrom.utm_term;	//Campaign Paid Search Term (utm)
+    } catch (err) {
+        console.log('no campaign term (utm)')
+    }
+    
+    try {
+    s.eVar20 = getQueryParams(parent.frames.document.location.search).camefrom.utm_content;//Campaign Content (utm)
+    } catch (err) {
+        console.log('no campaign content (utm)')
+    }
+    
     
     
 }
