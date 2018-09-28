@@ -94,13 +94,14 @@ var valeventid = typeof parent.frames.digitalData.page.attributes.eventID != "un
         
     if (/checkout/.test(parent.frames.document.location.pathname) === true){
         //Ticket QTY
-        var valtktqty = typeof parent.frames.digitalData.cart.attributes.ticketQuantity != "undefined" ? parent.frames.digitalData.cart.attributes.ticketQuantity : "" || typeof parent.frames.digitalData.transaction.item[0].quantity != "undefined" ? parent.frames.digitalData.transaction.item[0].quantity : "";
+        var valtktqty = typeof parent.frames.digitalData.transaction.item[0].quantity != "undefined" ? parent.frames.digitalData.transaction.item[0].quantity : "" || typeof parent.frames.digitalData.cart.attributes.ticketQuantity != "undefined" ? parent.frames.digitalData.cart.attributes.ticketQuantity : "";
         //Total Price
         var valtotal =typeof parent.frames.digitalData.transaction.total.transactionTotal != "undefined" ? parent.frames.digitalData.transaction.total.transactionTotal : "";
         //Ticket Type
         var valtkttype = typeof parent.frames.digitalData.cart.ticketType != "undefined" ? parent.frames.digitalData.cart.ticketType : "";
+        var valorderID = typeof parent.frames.digitalData.transaction.orderID != "undefined" ? parent.frames.digitalData.transaction.orderID : ""; //TM Order ID - specific to after payment
 
-        //Accounting for the change in data after purchase confirmation
+        //Purchase Confirmation Page
         s.pageName = valPageName;
         s.channel = valch;
         s.server = typeof parent.frames.document.location.host != "undefined" ? parent.frames.document.location.host : "";
@@ -117,14 +118,23 @@ var valeventid = typeof parent.frames.digitalData.page.attributes.eventID != "un
         s.eVar37 = valtktqty; //TM Tickets Purchased (QTY) "May only be in the cart" / digital-data.cart
         s.eVar38 = typeof parent.frames.digitalData.cart.price.basePrice != "undefined" ? parent.frames.digitalData.cart.price.basePrice : "" || typeof parent.frames.digitalData.transaction.item[0].price.basePrice != "undefined" ? parent.frames.digitalData.transaction.item[0].price.basePrice : ""; //TM Face Value "May only be in the cart"
         s.eVar39 = typeof parent.frames.digitalData.cart.price.currency != "undefined" ? parent.frames.digitalData.cart.price.currency : "" || typeof parent.frames.digitalData.transaction.total.currency != "undefined" ? parent.frames.digitalData.transaction.total.currency : ""; //TM Currency "May only be in the cart"  
-        s.eVar40 = typeof parent.frames.digitalData.transaction.transactionID != "undefined" ? parent.frames.digitalData.transaction.transactionID : ""; //TM Order "May only be in the cart" "3000-0138-2779-8671-9-09122018" Need to parse Date out
-        s.eVar41 = ""; //TM Confirmation Code "May only be in the cart"
+        s.eVar40 = valorderID; //TM Order ID - specific to after payment
+        s.eVar41 = typeof parent.frames.digitalData.transaction.transactionID != "undefined" ? parent.frames.digitalData.transaction.transactionID : "";//TM Confirmation Code "3000-0138-2779-8671-9-09122018" Need to parse Date out
         s.eVar42 = typeof parent.frames.digitalData.transaction.attributes.orderDate != "undefined" ? parent.frames.digitalData.transaction.attributes.orderDate : ""; //TM Purchase Date "May only be in the cart"
         s.eVar43 = typeof parent.frames.digitalData.transaction.attributes.orderTime != "undefined" ? parent.frames.digitalData.transaction.attributes.orderTime : ""; //TM Purchase Time "May only be in the cart"
         s.eVar44 = valprimcat;
         s.eVar45 = valsubcat;
         s.eVar46 = "D=pageName";
-        s.eVar47 = typeof parent.frames.digitalData.cart.ticketType != "undefined" ? parent.frames.digitalData.cart.ticketType : "" || typeof parent.frames.digitalData.cart.ticketType != "undefined" ? parent.frames.digitalData.cart.ticketType : "";  
+        s.eVar47 = valtkttype;
+        
+        /* ---- Product eCommerce Code ---- */
+        var prodString = ';'+valeventid+'_'+valevent+';'+valtktqty+';'+valtotal; //";ProductName;Qty;total_price"
+        s.products= prodString;
+        //s.state="XX"
+        //s.zip="00000"
+        s.purchaseID=valorderID;
+        s.events="purchase";
+ 
         s.t();
 
         console.log('Transactional Page Code Success: ' + valPageName);
@@ -148,6 +158,34 @@ var valeventid = typeof parent.frames.digitalData.page.attributes.eventID != "un
         s.eVar44 = valprimcat;
         s.eVar45 = valsubcat;
         s.eVar46 = "D=pageName";
+
+        //Prod View
+        s.products =';'+valeventid+'_'+valevent+';'+''+';';
+        //s.state="XX"
+        //s.zip="00000"
+        s.events="prodView";
+        
+        
+        //Checkout
+        /*
+        function checkout(){
+
+        var checkoutqty = parent.frames.document.getElementsByClassName('qty-picker__number qty-picker__number--lg')[0].innerText;
+                    
+                s.products=';'+valeventid+'-'+valevent+';'+checkoutqty+';'+'';;
+                //s.state="XX"
+                //s.zip="00000"
+                s.events="scCheckout";
+                s.linkTrackVars = "events,products";  
+                s.linkTrackEvents = "scCheckout"; 
+                s.tl('this', 'o', 'click to checkout')
+                console.log("sc checkout event test");
+        }
+
+        parent.frames.document.getElementById("offer-card-buy-button").onclick=checkout();
+        */
+        
+        
         console.log('General Page Code Success: ' + valPageName);
         s.t();
         }
