@@ -82,11 +82,42 @@ function cleanName(strName) {
         return params;
     }    
     
-    try (getQueryParams(parent.frames.document.location.search).camefrom !== "undefined") {
+    if (getQueryParams(parent.frames.document.location.search).camefrom !== "undefined") {
         var cfcparam = typeof getQueryParams(parent.frames.document.location.search).camefrom != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom : "";	//Internal Tracking Code Came From Codes
-    } catch (err) {
+    } else {
         console.log('no came from code query param')
     }
+
+    if (getQueryParams(parent.frames.document.location.search).utm_source !== "undefined") {
+        var sourceparam = typeof getQueryParams(parent.frames.document.location.search).utm_source != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_source : ""; //Campaign Source (utm)
+    } else {
+        console.log('no campaign source (utm)')
+    }
+
+    if (getQueryParams(parent.frames.document.location.search).utm_medium !== "undefined") {
+        var mediumparam = typeof getQueryParams(parent.frames.document.location.search).utm_medium != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_medium : ""; //Campaign Medium (utm)
+    } else {
+        console.log('no campaign medium (utm)')
+    }
+
+    if (getQueryParams(parent.frames.document.location.search).utm_campaign !== "undefined") {
+        var campaignparam = typeof getQueryParams(parent.frames.document.location.search).utm_campaign != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_campaign : ""; //Campaign Source (utm)
+    } else {
+        console.log('no campaign name (utm)')
+    }
+
+    if (getQueryParams(parent.frames.document.location.search).utm_term !== "undefined") {
+        var termparam = typeof getQueryParams(parent.frames.document.location.search).utm_term != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_term : "";	//Campaign Paid Search Term (utm)
+    } else {
+        console.log('no campaign name (utm)')
+    }
+
+    if (getQueryParams(parent.frames.document.location.search).utm_content !== "undefined") {
+        var contentparam = typeof getQueryParams(parent.frames.document.location.search).utm_content != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_content : "";//Campaign Content (utm)
+    } else {
+        console.log('no campaign name (utm)')
+    }
+   
       
 
 //TM Variables
@@ -172,11 +203,11 @@ var valeventid = typeof parent.frames.digitalData.page.attributes.eventID != "un
         s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
         s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
         s.eVar15 = cfcparam;    //Internal Tracking Code
-        s.eVar16 = "";	//Campaign Source (utm)
-        s.eVar17 = "";	//Campaign Channel (utm)
-        s.eVar18 = "";	//Campaign Name (utm)
-        s.eVar19 = "";	//Campaign Paid Search Term (utm)
-        s.eVar20 = "";	//Campaign Content (utm)
+        s.eVar16 = sourceparam;	//Campaign Source (utm)
+        s.eVar17 = mediumparam;	//Campaign Channel (utm)
+        s.eVar18 = campaignparam;	//Campaign Name (utm)
+        s.eVar19 = termparam;	//Campaign Paid Search Term (utm)
+        s.eVar20 = contentparam;	//Campaign Content (utm)
         s.eVar30 = valeventid;
         s.eVar31 = valevent; //TM Event Name "May only be in the cart"
         s.eVar32 = valvenue;
