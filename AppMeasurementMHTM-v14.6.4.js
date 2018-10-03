@@ -289,12 +289,16 @@ try {
         //s.eVar44 = valprimcat; //Not included in Season Ticket Flow
         //s.eVar45 = valsubcat; //Not included in Season Ticket Flow
         s.eVar46 = "D=pageName";
-
-        if (parent.frames.digitalData.user !== false){
-            s.eVar7 = typeof parent.frames.digitalData.user[0].profile[0].profileInfo.profileID != "undefined" ? parent.frames.digitalData.user[0].profile[0].profileInfo.profileID : ""; 
-        } else {
-            console.log('Season Ticket - No Profile ID');
-        }
+        s.eVar47 = cleanName(typeof parent.frames.digitalData.page.attributes.eventType != "undefined" ? parent.frames.digitalData.page.attributes.eventType : "");
+        
+            try {
+            if (parent.frames.digitalData.user !== false){
+                s.eVar7 = typeof parent.frames.digitalData.user[0].profile[0].profileInfo.profileID != "undefined" ? parent.frames.digitalData.user[0].profile[0].profileInfo.profileID : ""; 
+                } 
+            }
+            catch (err) {
+                console.log('Season Ticket - No Profile ID');
+            }
         
         console.log('Season Ticket Page Code Success: ' + valPageName);
         s.t();
