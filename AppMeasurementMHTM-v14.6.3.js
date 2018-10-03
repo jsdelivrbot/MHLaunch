@@ -290,7 +290,7 @@ try {
         //s.eVar45 = valsubcat; //Not included in Season Ticket Flow
         s.eVar46 = "D=pageName";
 
-        if (login_submitted !== false){
+        if (parent.frames.digitalData.user !== false){
             s.eVar7 = typeof parent.frames.digitalData.user[0].profile[0].profileInfo.profileID != "undefined" ? parent.frames.digitalData.user[0].profile[0].profileInfo.profileID : ""; 
         } else {
             console.log('Season Ticket - No Profile ID');
