@@ -144,7 +144,6 @@ var valeventid = typeof parent.frames.digitalData.page.attributes.eventID != "un
 //Artist ID
 var tmartistID = typeof parent.frames.digitalData.page.attributes.artistID != "undefined" ? parent.frames.digitalData.page.attributes.artistID : "";
 var valartistID = cleanName(tmartistID);
-var tmpID = typeof parent.frames.digitalData.user[0].profile[0].profileInfo.profileID != "undefined" ? parent.frames.digitalData.user[0].profile[0].profileInfo.profileID : "" || parent.frames.digitalData.transaction.profileID != "undefined" ? parent.frames.digitalData.transaction.profileID : ""; //profile ID/Archtics ID
 
 try {
     //Primary Category
@@ -154,7 +153,7 @@ try {
     var tmsubcat = typeof parent.frames.digitalData.page.category.subCategory1 != "undefined" ? parent.frames.digitalData.page.category.subCategory1 : "";
     var valsubcat = cleanName(tmsubcat);
     //Profile ID
-    var tmpID = typeof parent.frames.digitalData.user[0].profile[0].profileInfo.profileID != "undefined" ? parent.frames.digitalData.user[0].profile[0].profileInfo.profileID : "" || parent.frames.digitalData.transaction.profileID != "undefined" ? parent.frames.digitalData.transaction.profileID : ""; //profile ID/Archtics ID
+    var tmpID = typeof parent.frames.digitalData.transaction.profileID != "undefined" ? parent.frames.digitalData.transaction.profileID : ""; //profile ID/Archtics ID
     
 
     
@@ -209,7 +208,9 @@ try {
         console.log('Test Product String: ' + ';'+valeventid+'-'+valevent+';'+valtktqty+';'+valtotal);
         
     } else {
-
+        
+        if (/am.ticketmaster.com/.test(parent.frames.document.location.href) === true) {
+            
         //Get Global Ticketmaster Metrics    
         s.pageName = valPageName;
         s.channel = valch;
@@ -258,11 +259,10 @@ try {
 
         parent.frames.document.getElementById("offer-card-buy-button").onclick=checkout();
         */
-        
-        
         console.log('General Page Code Success: ' + valPageName);
         s.t();
         }
+    }   
 } catch (err) {
     if (/oss.ticketmaster.com/.test(parent.frames.document.location.href) === true) {
         
@@ -272,7 +272,7 @@ try {
         s.server = parent.frames.document.location.host;
         s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
         s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
-        s.eVar7 = typeof tmpID != "undefined" ? tmpID : ""; //profile ID/Archtics ID
+        //profile ID/Archtics ID
         s.eVar15 = cfcparam;    //Internal Tracking Code
         s.eVar16 = sourceparam;	//Campaign Source (utm)
         s.eVar17 = mediumparam;	//Campaign Channel (utm)
@@ -289,12 +289,17 @@ try {
         //s.eVar44 = valprimcat; //Not included in Season Ticket Flow
         //s.eVar45 = valsubcat; //Not included in Season Ticket Flow
         s.eVar46 = "D=pageName";
+
+        if (login_submitted !== false){
+            s.eVar7 = typeof parent.frames.digitalData.user[0].profile[0].profileInfo.profileID != "undefined" ? parent.frames.digitalData.user[0].profile[0].profileInfo.profileID : ""; 
+        } else {
+            console.log('Season Ticket - No Profile ID');
+        }
         
         console.log('Season Ticket Page Code Success: ' + valPageName);
         s.t();
         	
     }
-
 }
 
 /* Plugin Config */
