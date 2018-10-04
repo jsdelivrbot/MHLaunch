@@ -4,6 +4,8 @@
 Copyright 1996-2015 Adobe, Inc. All Rights Reserved
 More info available at http://www.omniture.com */
 
+console.log('Account Manager Test - Heat Selected 10.4.18');
+
 var s_account="heatglobaldev";
 var s=s_gi(s_account);
 /************************** CONFIG SECTION **************************/
@@ -171,9 +173,9 @@ try {
         //Purchase Confirmation Page
         s.pageName = valPageName;
         s.channel = valch;
-        s.server = typeof parent.frames.document.location.host != "undefined" ? parent.frames.document.location.host : "";
-        s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
-        s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
+        s.server = parent.frames.document.location.host;
+        s.pageURL = typeof parent.frames.document.URL != "undefined" ? parent.frames.document.URL : "";
+        s.referrer = typeof parent.frames.document.referrer != "undefined" ? parent.frames.document.referrer : "";
         s.eVar7 = typeof tmpID != "undefined" ? tmpID : ""; //profile ID/Archtics ID
         s.eVar30 = valeventid;
         s.eVar31 = valevent; //TM Event Name "May only be in the cart"
@@ -215,8 +217,8 @@ try {
         s.pageName = valPageName;
         s.channel = valch;
         s.server = parent.frames.document.location.host;
-        s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
-        s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
+        s.pageURL = typeof parent.frames.document.URL != "undefined" ? parent.frames.document.URL : "";
+        s.referrer = typeof parent.frames.document.referrer != "undefined" ? parent.frames.document.referrer : "";
         s.eVar15 = cfcparam;    //Internal Tracking Code
         s.eVar16 = sourceparam;	//Campaign Source (utm)
         s.eVar17 = mediumparam;	//Campaign Channel (utm)
@@ -270,8 +272,8 @@ try {
         s.pageName = valPageName;
         s.channel = valch;
         s.server = parent.frames.document.location.host;
-        s.pageURL = typeof parent.frames.digitalData.pageUrl != "undefined" ? parent.frames.digitalData.pageUrl : "";
-        s.referrer = typeof parent.frames.digitalData.pageReferrer != "undefined" ? parent.frames.digitalData.pageReferrer : "";
+        s.pageURL = typeof parent.frames.document.URL != "undefined" ? parent.frames.document.URL : "";
+        s.referrer = typeof parent.frames.document.referrer != "undefined" ? parent.frames.document.referrer : "";
         //profile ID/Archtics ID
         s.eVar15 = cfcparam;    //Internal Tracking Code
         s.eVar16 = sourceparam;	//Campaign Source (utm)
