@@ -1,10 +1,11 @@
-//TM Version 1 - This version works for single tickets. Adding OSS Conditions for Season Tickets 10.2.28
+//10.2.28 - TM Version 1 - This version works for single tickets. Adding OSS Conditions for Season Tickets 
+// 10.5.18 - Added DOM Scraping for Purchase Funnel Flow
 
 /* SiteCatalyst code version: H.27.5. 'Just to add metrics'
 Copyright 1996-2015 Adobe, Inc. All Rights Reserved
 More info available at http://www.omniture.com */
 
-console.log('Account Manager Test - Heat Selected 10.4.18');
+console.log('Account Manager Test - Heat Selected 10.5.18');
 
 var s_account="heatglobaldev";
 var s=s_gi(s_account);
@@ -272,7 +273,7 @@ try {
         s.pageName = valPageName;
         s.channel = valch;
         s.server = parent.frames.document.location.host;
-        s.pageURL = typeof parent.frames.document.URL != "undefined" ? parent.frames.document.URL : "";
+        s.pageURL = typeof parent.frames.document.URL != "undefined" ? parent.frames.document.URL : "" || _satellite.URL();
         s.referrer = typeof parent.frames.document.referrer != "undefined" ? parent.frames.document.referrer : "";
         //profile ID/Archtics ID
         s.eVar15 = cfcparam;    //Internal Tracking Code
@@ -301,6 +302,44 @@ try {
             catch (err) {
                 console.log('Season Ticket - No Profile ID');
             }
+        
+        
+        
+            //Try Purchase Flow Data
+            try {    
+                    var seasontktType = parent.frames.jQuery('#cart-table > tbody > tr td').eq(46).text().trim(); //Half vs Full Season
+                    var seasonPrice = typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[1] != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[1] : "" || typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text() != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text() : ""; //$500.00;
+                    var seasonQty = typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[0].trim() != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[0].trim() : "";  // 1 ticket vs 2 ticktes, etc.
+                    seasonQty = parseInt(seasonQty);
+                    
+                    if (Number.isInteger(seasonQty) !== true) {
+                        seasonQty = '1'
+                    }
+                    
+                    var seasontktName = parent.frames.jQuery('#cart-table > tbody > tr td').eq(1).find('b').text(); //"2018-19 Half Season Plan B"
+                    var seasontktDetails = parent.frames.jQuery('#cart-table > tbody > tr td').eq(45).text().split('Row').join(' Row').split('Seat').join(' Seat').split(' - ').join('-'); //"Section 401 Row 2 Seat 3-4"
+
+                    var seasonProdString = ';'+seasontktName + '_' + seasontktDetails +';'+ seasonQty + ';' + seasonPrice.split('$').join('') +';'
+                    
+                     if (parent.frames.document.location.host === "oss.ticketmaster.com" && /cart\/review/.test(parent.frames.document.location.href) === true) {
+                        
+                        s.products = seasonProdString;
+                        //s.state="XX"
+                        //s.zip="00000"
+                        s.events="scOpen";
+                        console.log('scOpen test confirmed');
+                            }                
+                
+                    console.log('test worked---->' + seasontktType);
+                    console.log('test worked---->' + seasonPrice);
+                    console.log('test worked---->' + seasonQty);
+                    console.log('test worked---->' + seasontktName);
+                    console.log('test worked---->' + seasontktDetails);
+                    console.log('test prodstring---->' +  ';'+seasontktName + '_' + seasontktDetails +';'+ seasonQty + ';' + seasonPrice.split('$').join('') +';'  );
+
+                } catch(err) {
+                    console.log('no season ticket product data');
+                }
         
         console.log('Season Ticket Page Code Success: ' + valPageName);
         s.t();
