@@ -53,7 +53,8 @@ function cleanName(strName) {
     strName = strName.replace(/'/g,"");
     strName = strName.replace(/’s/g,"-s");
     strName = strName.replace(/vs./g,"vs");
-    strName = strName.split('*').join('').replace('+','-plus');
+    strName = strName.split("*").join("").replace("+","-plus");
+    strName = strName.replace(/201819/g,"2018-19");
 	strName = strName.toLowerCase();
 	
 	
@@ -273,7 +274,7 @@ try {
         s.pageName = valPageName;
         s.channel = valch;
         s.server = parent.frames.document.location.host;
-        s.pageURL = typeof parent.frames.document.URL != "undefined" ? parent.frames.document.URL : "" || _satellite.URL();
+        s.pageURL = typeof parent.frames.document.URL != "undefined" ? parent.frames.document.URL : "" || parent.frames._satellite.URL();
         s.referrer = typeof parent.frames.document.referrer != "undefined" ? parent.frames.document.referrer : "";
         //profile ID/Archtics ID
         s.eVar15 = cfcparam;    //Internal Tracking Code
@@ -309,6 +310,7 @@ try {
             try {    
                     var seasontktType = parent.frames.jQuery('#cart-table > tbody > tr td').eq(46).text().trim(); //Half vs Full Season
                     var seasonPrice = typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[1] != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[1] : "" || typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text() != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text() : ""; //$500.00;
+                    seasonPrice = seasonPrice.split('$').join('').trim();
                     var seasonQty = typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[0].trim() != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[0].trim() : "";  // 1 ticket vs 2 ticktes, etc.
                     seasonQty = parseInt(seasonQty);
                     
@@ -320,6 +322,7 @@ try {
                     var seasontktDetails = parent.frames.jQuery('#cart-table > tbody > tr td').eq(45).text().split('Row').join(' Row').split('Seat').join(' Seat').split(' - ').join('-'); //"Section 401 Row 2 Seat 3-4"
 
                     var seasonProdString = ';'+seasontktName + '_' + seasontktDetails +';'+ seasonQty + ';' + seasonPrice.split('$').join('') +';'
+                    seasonProdString = cleanName(seasonProdString);
                     
                      if (parent.frames.document.location.host === "oss.ticketmaster.com" && /cart\/review/.test(parent.frames.document.location.href) === true) {
                         
@@ -335,7 +338,7 @@ try {
                     console.log('test worked---->' + seasonQty);
                     console.log('test worked---->' + seasontktName);
                     console.log('test worked---->' + seasontktDetails);
-                    console.log('test prodstring---->' +  ';'+seasontktName + '_' + seasontktDetails +';'+ seasonQty + ';' + seasonPrice.split('$').join('') +';'  );
+                    console.log('test prodstring---->' + seasonProdString);
 
                 } catch(err) {
                     console.log('no season ticket product data');
