@@ -194,6 +194,7 @@ function s_doPlugins(s) {
     
     //Get Parent Document Data TM
     s.server = parent.frames.document.location.host;
+    s.pageURL = parent.frames.document.location.href.split('?')[0];
     s.eVar2 = "D=g";
     s.prop2 = "D=v2";
     s.referrer = typeof parent.frames.document.referrer != "undefined" ? parent.frames.document.referrer : "";
