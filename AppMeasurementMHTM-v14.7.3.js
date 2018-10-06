@@ -1,5 +1,5 @@
 //10.2.28 - TM Version 1 - This version works for single tickets. Adding OSS Conditions for Season Tickets 
-// 10.5.18 - Added DOM Scraping for Purchase Funnel Flow
+// 10.5.18 - Added DOM Scraping for Purchase Funnel Flow. Last working version was 14.7.3
 
 /* SiteCatalyst code version: H.27.5. 'Just to add metrics'
 Copyright 1996-2015 Adobe, Inc. All Rights Reserved
