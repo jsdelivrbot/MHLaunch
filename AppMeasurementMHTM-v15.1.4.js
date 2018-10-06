@@ -1,12 +1,12 @@
 //  10.2.28 - TM Version 1 - This version works for single tickets. Adding OSS Conditions for Season Tickets 
 //  10.5.18 - Added DOM Scraping for Purchase Funnel Flow
-//  10.6.18 - Moved All Custom Code to Bottom of Page to give a chance for all plugins and services to load.
+//  10.6.18 - Moved All Custom Code to Bottom of Page to give a chance for all plugins and services to load. Modified prodView data to account for weird values.
 
 /* SiteCatalyst code version: H.27.5. 'Just to add metrics'
 Copyright 1996-2015 Adobe, Inc. All Rights Reserved
 More info available at http://www.omniture.com */
 
-console.log('Account Manager Test - Heat Selected 10.6.18');
+console.log('Account Manager Test - Heat Selected 10.6.18 v2');
 
 var s_account="heatglobaldev";
 var s=s_gi(s_account);
@@ -180,34 +180,28 @@ s.usePlugins=true
 function s_doPlugins(s) {
 
 //Call Visitor ID Service
-     var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
-     trackingServer: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServer
-     //trackingServerSecure: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServerSecure
-
-     // To enable CNAME support, add the following configuration variables
-     // If you are not using CNAME, DO NOT include these variables
-     //marketingCloudServer: "INSERT-TRACKING-SERVER-HERE",
-     //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
-    
-     idSyncAttachIframeOnWindowLoad: true
-    });
-    
-    //Get Parent Document Data TM
-    s.server = parent.frames.document.location.host;
-    s.pageURL = parent.frames.document.location.href.split('?')[0];
-    s.eVar2 = "D=g";
-    s.prop2 = "D=v2";
-    s.referrer = typeof parent.frames.document.referrer != "undefined" ? parent.frames.document.referrer : "";
-    
-    
-	/* Time Parting */
-	s.eVar14=s.getTimeParting('n', '-4'); // Set day
-    s.prop14= "D=v14";
-    
-    /* Marketing Cloud ID -- Must be in Do Plugins */
-    s.eVar10= visitor.getAnalyticsVisitorID("1E701A795B111F550A495EAF@AdobeOrg");
-    s.prop10= "D=v10";
-    //Actual value of ECID/MCID
+var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
+    trackingServer: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServer
+    //trackingServerSecure: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServerSecure
+    // To enable CNAME support, add the following configuration variables
+    // If you are not using CNAME, DO NOT include these variables
+    //marketingCloudServer: "INSERT-TRACKING-SERVER-HERE",
+    //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
+    idSyncAttachIframeOnWindowLoad: true
+});
+//Get Parent Document Data TM
+s.server = parent.frames.document.location.host;
+s.pageURL = parent.frames.document.location.href.split('?')[0];
+s.eVar2 = "D=g";
+s.prop2 = "D=v2";
+s.referrer = typeof parent.frames.document.referrer != "undefined" ? parent.frames.document.referrer : "";
+/* Time Parting */
+s.eVar14 = s.getTimeParting('n', '-4'); // Set day
+s.prop14 = "D=v14";
+/* Marketing Cloud ID -- Must be in Do Plugins */
+s.eVar10 = visitor.getAnalyticsVisitorID("1E701A795B111F550A495EAF@AdobeOrg");
+s.prop10 = "D=v10";
+//Actual value of ECID/MCID
 
 }
 s.doPlugins=s_doPlugins
@@ -216,97 +210,99 @@ s.doPlugins=s_doPlugins
     
 //TM Clean Values   
 function cleanName(strName) {
-	
-	strName = strName.replace(/TM_US/g,"tmus");
-	strName = strName.replace(/_/g," ");/* comment changed underscore to hyphen*/
-	strName = strName.replace(/-/g,"");/* comment out for hyphen delimeter to stay*/
-	strName = strName.replace(/: /g,":");
-	strName = strName.replace(/tm us/g,"tmus");
-	strName = strName.replace(/\.php/g,"");
-	strName = strName.replace(/\.do/g,"");
-	strName = strName.replace(/\.jsp/g,"");
-	strName = strName.replace(/\.aspx/g,"");
-	strName = strName.replace(/\.html/g,"");
-	strName = strName.replace(/\.htm/g,"");
-	strName = strName.replace(/\.cgi/g,"");
-	strName = strName.replace(/ /g,"-");
-    strName = strName.replace(/'/g,"");
-    strName = strName.replace(/’s/g,"-s");
-    strName = strName.replace(/vs./g,"vs");
-    strName = strName.split("*").join("").replace("+","-plus");
-    strName = strName.replace(/201819/g,"2018-19");
-	strName = strName.toLowerCase();
-	
-	
-	if (strName.indexOf("?") > -1) {
-		 
-		aryNoParam = strName.split("?");
-		strName = aryNoParam[0];
-		 
-	}
-	if (strName.indexOf("#") > -1) {
-		 
-		aryNoHash = strName.split("#");
-		strName = aryNoHash[0];
-		 
-	}
-	 
-	return strName;
+    strName = strName.replace(/[\n\r]/g, "");
+    strName = strName.replace(/\t/g, "-");
+    strName = strName.replace(/TM_US/g, "tmus");
+    strName = strName.replace(/_/g, " "); /* comment changed underscore to hyphen*/
+    strName = strName.replace(/-/g, ""); /* comment out for hyphen delimeter to stay*/
+    strName = strName.replace(/: /g, ":");
+    strName = strName.replace(/tm us/g, "tmus");
+    strName = strName.replace(/\.php/g, "");
+    strName = strName.replace(/\.do/g, "");
+    strName = strName.replace(/\.jsp/g, "");
+    strName = strName.replace(/\.aspx/g, "");
+    strName = strName.replace(/\.html/g, "");
+    strName = strName.replace(/\.htm/g, "");
+    strName = strName.replace(/\.cgi/g, "");
+    //Specific to Ticketmaster and Season Tickets More than Ticketmaster
+    strName = strName.replace(/'/g, "");
+    strName = strName.replace(/’s/g, "-s");
+    strName = strName.replace(/vs./g, "vs");
+    strName = strName.split("*").join("").replace("+", "-plus");
+    strName = strName.replace(/201819/g, "2018-19");
+    strName = strName.replace(/,/g, "");
+    strName = strName.replace(/ /g, "-");
+    strName = strName.replace(/--/g, "-");
+    //Flex Plans
+    strName = strName.replace(/ -show-eventsvariousamericanairlines-arenacontinue/g, "");
+    //Gameday Bus Orders
+    strName = strName.replace(/americanairlines-arenacontinue/g, "");
+    //Add Space Between Days for Bus Orders
+    strName = strName.replace(/mon/g, "-mon");
+    strName = strName.replace(/tue/g, "-tue");
+    strName = strName.replace(/wed/g, "-wed");
+    strName = strName.replace(/thu/g, "-thu");
+    strName = strName.replace(/fri/g, "-fri");
+    strName = strName.replace(/sat/g, "-sat");
+    strName = strName.replace(/sun/g, "-sun");
+    strName = strName.toLowerCase();
+    if (strName.indexOf("?") > -1) {
+        aryNoParam = strName.split("?");
+        strName = aryNoParam[0];
+    }
+    if (strName.indexOf("#") > -1) {
+        aryNoHash = strName.split("#");
+        strName = aryNoHash[0];
+    }
+    return strName;
 }
-
-
 /* Get UTM Variables */
-    function getQueryParams(qs) {
-        qs = qs.replace(/\+/g, " ").toLowerCase();
-        var params = {},
-            re = /[?&]?([^=]+)=([^&]*)/g,
-            tokens;
-
-        while (tokens = re.exec(qs)) {
+function getQueryParams(qs) {
+    qs = qs.replace(/\+/g, " ").toLowerCase();
+    var params = {}
+        , re = /[?&]?([^=]+)=([^&]*)/g
+        , tokens;
+    while (tokens = re.exec(qs)) {
         params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]).toLowerCase();
-        }
-        
-        return params;
-    }    
-    
-    if (getQueryParams(parent.frames.document.location.search).camefrom !== "undefined") {
-        var cfcparam = typeof getQueryParams(parent.frames.document.location.search).camefrom != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom : "";	//Internal Tracking Code Came From Codes
-    } else {
-        console.log('no came from code query param')
     }
-
-    if (getQueryParams(parent.frames.document.location.search).utm_source !== "undefined") {
-        var sourceparam = typeof getQueryParams(parent.frames.document.location.search).utm_source != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_source : ""; //Campaign Source (utm)
-    } else {
-        console.log('no campaign source (utm)')
-    }
-
-    if (getQueryParams(parent.frames.document.location.search).utm_medium !== "undefined") {
-        var mediumparam = typeof getQueryParams(parent.frames.document.location.search).utm_medium != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_medium : ""; //Campaign Medium (utm)
-    } else {
-        console.log('no campaign medium (utm)')
-    }
-
-    if (getQueryParams(parent.frames.document.location.search).utm_campaign !== "undefined") {
-        var campaignparam = typeof getQueryParams(parent.frames.document.location.search).utm_campaign != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_campaign : ""; //Campaign Source (utm)
-    } else {
-        console.log('no campaign name (utm)')
-    }
-
-    if (getQueryParams(parent.frames.document.location.search).utm_term !== "undefined") {
-        var termparam = typeof getQueryParams(parent.frames.document.location.search).utm_term != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_term : "";	//Campaign Paid Search Term (utm)
-    } else {
-        console.log('no campaign name (utm)')
-    }
-
-    if (getQueryParams(parent.frames.document.location.search).utm_content !== "undefined") {
-        var contentparam = typeof getQueryParams(parent.frames.document.location.search).utm_content != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_content : "";//Campaign Content (utm)
-    } else {
-        console.log('no campaign name (utm)')
-    }
-   
-      
-
+    return params;
+}
+if (getQueryParams(parent.frames.document.location.search).camefrom !== "undefined") {
+    var cfcparam = typeof getQueryParams(parent.frames.document.location.search).camefrom != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom : ""; //Internal Tracking Code Came From Codes
+}
+else {
+    console.log('no came from code query param')
+}
+if (getQueryParams(parent.frames.document.location.search).utm_source !== "undefined") {
+    var sourceparam = typeof getQueryParams(parent.frames.document.location.search).utm_source != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_source : ""; //Campaign Source (utm)
+}
+else {
+    console.log('no campaign source (utm)')
+}
+if (getQueryParams(parent.frames.document.location.search).utm_medium !== "undefined") {
+    var mediumparam = typeof getQueryParams(parent.frames.document.location.search).utm_medium != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_medium : ""; //Campaign Medium (utm)
+}
+else {
+    console.log('no campaign medium (utm)')
+}
+if (getQueryParams(parent.frames.document.location.search).utm_campaign !== "undefined") {
+    var campaignparam = typeof getQueryParams(parent.frames.document.location.search).utm_campaign != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_campaign : ""; //Campaign Source (utm)
+}
+else {
+    console.log('no campaign name (utm)')
+}
+if (getQueryParams(parent.frames.document.location.search).utm_term !== "undefined") {
+    var termparam = typeof getQueryParams(parent.frames.document.location.search).utm_term != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_term : ""; //Campaign Paid Search Term (utm)
+}
+else {
+    console.log('no campaign name (utm)')
+}
+if (getQueryParams(parent.frames.document.location.search).utm_content !== "undefined") {
+    var contentparam = typeof getQueryParams(parent.frames.document.location.search).utm_content != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_content : ""; //Campaign Content (utm)
+}
+else {
+    console.log('no campaign name (utm)')
+}
 //TM Variables
 //PageName
 var tmpageName = typeof parent.frames.digitalData.page.pageInfo.pageID != "undefined" ? parent.frames.digitalData.page.pageInfo.pageID : "" || typeof parent.frames.digitalData.page.pageInfo.pageName != "undefined" ? parent.frames.digitalData.page.pageInfo.pageName : "";
@@ -328,7 +324,7 @@ var valeventid = typeof parent.frames.digitalData.page.attributes.eventID != "un
 //Artist ID
 var tmartistID = typeof parent.frames.digitalData.page.attributes.artistID != "undefined" ? parent.frames.digitalData.page.attributes.artistID : "";
 var valartistID = cleanName(tmartistID);
-
+//Single Ticket Purchase Flow Try Catch
 try {
     //Primary Category
     var tmprimcat = typeof parent.frames.digitalData.page.category.primaryCategory != "undefined" ? parent.frames.digitalData.page.category.primaryCategory : "";
@@ -336,22 +332,82 @@ try {
     //Sub Category
     var tmsubcat = typeof parent.frames.digitalData.page.category.subCategory1 != "undefined" ? parent.frames.digitalData.page.category.subCategory1 : "";
     var valsubcat = cleanName(tmsubcat);
-    //Profile ID
-    var tmpID = typeof parent.frames.digitalData.transaction.profileID != "undefined" ? parent.frames.digitalData.transaction.profileID : ""; //profile ID/Archtics ID
-    
+    try {
+        if (!parent.frames.digitalData.user) {
+            console.log('Season Ticket - User Not Logged In - No Object---->' + parent.frames.digitalData.user);
+        }
+        else {
+            s.eVar7 = typeof parent.frames.digitalData.user[0].profile[0].profileInfo.profileID != "undefined" ? parent.frames.digitalData.user[0].profile[0].profileInfo.profileID : "";
+        }
+    }
+    catch (err) {
+        console.log('tm data - user is not logged in')
+    }
+    if (/ticketmaster.com/.test(parent.frames.document.location.href)) {
+        //Get Global Ticketmaster Metrics    
+        s.pageName = valPageName;
+        s.channel = valch;
+        s.eVar15 = cfcparam; //Internal Tracking Code
+        s.eVar16 = sourceparam; //Campaign Source (utm)
+        s.eVar17 = mediumparam; //Campaign Channel (utm)
+        s.eVar18 = campaignparam; //Campaign Name (utm)
+        s.eVar19 = termparam; //Campaign Paid Search Term (utm)
+        s.eVar20 = contentparam; //Campaign Content (utm)
+        s.eVar30 = valeventid;
+        s.eVar31 = valevent; //TM Event Name "May only be in the cart"
+        s.eVar32 = valvenue;
+        s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
+        s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
+        s.eVar35 = valartist;
+        s.eVar36 = valartistID;
+        s.eVar44 = valprimcat;
+        s.eVar45 = valsubcat;
+        s.eVar46 = "D=pageName";
+        //Prod View Single Season Ticket Flow Try Catch
+        try {
+            if (/event/.test(parent.frames.document.location.pathname)) {
+                //Prod View
+                /* ---- Product eCommerce Code ---- */
+                var prodString = ';' + valeventid + '_' + valevent + ';' + ';' + ';' + ';' + ';'; //";ProductName;Qty;total_price"
+                s.products = prodString;
+                //s.state="XX"
+                //s.zip="00000"
+                //s.purchaseID=valorderID;
+                s.events = "prodView";
+                //Checkout
+                /*
+                function checkout(){
 
-    
-    
-    if (/checkout/.test(parent.frames.document.location.pathname) === true){
+                var checkoutqty = parent.frames.document.getElementsByClassName('qty-picker__number qty-picker__number--lg')[0].innerText;
+
+                        s.products=';'+valeventid+'-'+valevent+';'+checkoutqty+';'+'';;
+                        //s.state="XX"
+                        //s.zip="00000"
+                        s.events="scCheckout";
+                        s.linkTrackVars = "events,products";  
+                        s.linkTrackEvents = "scCheckout"; 
+                        s.tl('this', 'o', 'click to checkout')
+                        console.log("sc checkout event test");
+                }
+
+                parent.frames.document.getElementById("offer-card-buy-button").onclick=checkout();
+                */
+            }
+        }
+        catch (err) {
+            console.log('tm data - single purchase flow prodview failed')
+        }
+        console.log('General Page Code Success: ' + valPageName);
+        s.t();
+    }
+    else if (/checkout/.test(parent.frames.document.location.pathname) === true) {
         //Ticket QTY
         var valtktqty = typeof parent.frames.digitalData.transaction.item[0].quantity != "undefined" ? parent.frames.digitalData.transaction.item[0].quantity : "" || typeof parent.frames.digitalData.cart.attributes.ticketQuantity != "undefined" ? parent.frames.digitalData.cart.attributes.ticketQuantity : "";
         //Total Price
-        var valtotal =typeof parent.frames.digitalData.transaction.total.transactionTotal != "undefined" ? parent.frames.digitalData.transaction.total.transactionTotal : "";
+        var valtotal = typeof parent.frames.digitalData.transaction.total.transactionTotal != "undefined" ? parent.frames.digitalData.transaction.total.transactionTotal : "";
         //Ticket Type
         var valtkttype = typeof parent.frames.digitalData.cart.ticketType != "undefined" ? parent.frames.digitalData.cart.ticketType : "";
         var valorderID = typeof parent.frames.digitalData.transaction.orderID != "undefined" ? parent.frames.digitalData.transaction.orderID : ""; //TM Order ID - specific to after payment
-        
-
         //Purchase Confirmation Page
         s.pageName = valPageName;
         s.channel = valch;
@@ -367,91 +423,40 @@ try {
         s.eVar38 = typeof parent.frames.digitalData.cart.price.basePrice != "undefined" ? parent.frames.digitalData.cart.price.basePrice : "" || typeof parent.frames.digitalData.transaction.item[0].price.basePrice != "undefined" ? parent.frames.digitalData.transaction.item[0].price.basePrice : ""; //TM Face Value "May only be in the cart"
         s.eVar39 = typeof parent.frames.digitalData.cart.price.currency != "undefined" ? parent.frames.digitalData.cart.price.currency : "" || typeof parent.frames.digitalData.transaction.total.currency != "undefined" ? parent.frames.digitalData.transaction.total.currency : ""; //TM Currency "May only be in the cart"  
         s.eVar40 = valorderID; //TM Order ID - specific to after payment
-        s.eVar41 = typeof parent.frames.digitalData.transaction.transactionID != "undefined" ? parent.frames.digitalData.transaction.transactionID : "";//TM Confirmation Code "3000-0138-2779-8671-9-09122018" Need to parse Date out
+        s.eVar41 = typeof parent.frames.digitalData.transaction.transactionID != "undefined" ? parent.frames.digitalData.transaction.transactionID : ""; //TM Confirmation Code "3000-0138-2779-8671-9-09122018" Need to parse Date out
         s.eVar42 = typeof parent.frames.digitalData.transaction.attributes.orderDate != "undefined" ? parent.frames.digitalData.transaction.attributes.orderDate : ""; //TM Purchase Date "May only be in the cart"
         s.eVar43 = typeof parent.frames.digitalData.transaction.attributes.orderTime != "undefined" ? parent.frames.digitalData.transaction.attributes.orderTime : ""; //TM Purchase Time "May only be in the cart"
         s.eVar44 = valprimcat;
         s.eVar45 = valsubcat;
         s.eVar46 = "D=pageName";
         s.eVar47 = valtkttype;
-        
         /* ---- Product eCommerce Code ---- */
-        var prodString = ';'+valeventid+'_'+valevent+';'+valtktqty+';'+valtotal; //";ProductName;Qty;total_price"
-        s.products= prodString;
+        var prodString = ';' + valeventid + '_' + valevent + ';' + valtktqty + ';' + valtotal; //";ProductName;Qty;total_price"
+        s.products = prodString;
         //s.state="XX"
         //s.zip="00000"
-        s.purchaseID=valorderID;
-        s.events="purchase";
- 
+        s.purchaseID = valorderID;
+        s.events = "purchase";
         s.t();
-
         console.log('Transactional Page Code Success: ' + valPageName);
-        console.log('Test Product String: ' + ';'+valeventid+'-'+valevent+';'+valtktqty+';'+valtotal);
-        
-    } else if (/am.ticketmaster.com/.test(parent.frames.document.location.href) === true) {
-            
-        //Get Global Ticketmaster Metrics    
-        s.pageName = valPageName;
-        s.channel = valch;
-        s.eVar15 = cfcparam;    //Internal Tracking Code
-        s.eVar16 = sourceparam;	//Campaign Source (utm)
-        s.eVar17 = mediumparam;	//Campaign Channel (utm)
-        s.eVar18 = campaignparam;	//Campaign Name (utm)
-        s.eVar19 = termparam;	//Campaign Paid Search Term (utm)
-        s.eVar20 = contentparam;	//Campaign Content (utm)
-        s.eVar30 = valeventid;
-        s.eVar31 = valevent; //TM Event Name "May only be in the cart"
-        s.eVar32 = valvenue;
-        s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
-        s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
-        s.eVar35 = valartist;
-        s.eVar36 = valartistID;
-        s.eVar44 = valprimcat;
-        s.eVar45 = valsubcat;
-        s.eVar46 = "D=pageName";
-
-        //Prod View
-        s.products =';'+valeventid+'_'+valevent+';'+''+';';
-        //s.state="XX"
-        //s.zip="00000"
-        s.events="prodView";
-        
-        
-        //Checkout
-        /*
-        function checkout(){
-
-        var checkoutqty = parent.frames.document.getElementsByClassName('qty-picker__number qty-picker__number--lg')[0].innerText;
-                    
-                s.products=';'+valeventid+'-'+valevent+';'+checkoutqty+';'+'';;
-                //s.state="XX"
-                //s.zip="00000"
-                s.events="scCheckout";
-                s.linkTrackVars = "events,products";  
-                s.linkTrackEvents = "scCheckout"; 
-                s.tl('this', 'o', 'click to checkout')
-                console.log("sc checkout event test");
-        }
-
-        parent.frames.document.getElementById("offer-card-buy-button").onclick=checkout();
-        */
-        console.log('General Page Code Success: ' + valPageName);
-        s.t();
-        } 
-   
-} catch (err) {
+        console.log('Test Product String: ' + ';' + valeventid + '-' + valevent + ';' + valtktqty + ';' + valtotal);
+    }
+}
+catch (err) {
+    console.log('tm data - no single purchase flow data')
+}
+//Season Ticket Purchase Flow Try Catch
+try {
     if (/oss.ticketmaster.com/.test(parent.frames.document.location.href) === true) {
-        
         //Get Global Ticketmaster Metrics    
         s.pageName = valPageName;
         s.channel = valch;
-        
-        s.eVar15 = cfcparam;    //Internal Tracking Code
-        s.eVar16 = sourceparam;	//Campaign Source (utm)
-        s.eVar17 = mediumparam;	//Campaign Channel (utm)
-        s.eVar18 = campaignparam;	//Campaign Name (utm)
-        s.eVar19 = termparam;	//Campaign Paid Search Term (utm)
-        s.eVar20 = contentparam;	//Campaign Content (utm)
+        s.eVar15 = cfcparam; //Internal Tracking Code
+        s.eVar16 = sourceparam; //Campaign Source (utm)
+        s.eVar17 = mediumparam; //Campaign Channel (utm)
+        s.eVar18 = campaignparam; //Campaign Name (utm)
+        s.eVar19 = termparam; //Campaign Paid Search Term (utm)
+        s.eVar20 = contentparam; //Campaign Content (utm)
         s.eVar30 = valeventid;
         s.eVar31 = valevent //TM Event Name "May only be in the cart"
         s.eVar32 = valvenue;
@@ -463,117 +468,89 @@ try {
         //s.eVar45 = valsubcat; //Not included in Season Ticket Flow
         s.eVar46 = "D=pageName";
         s.eVar47 = cleanName(typeof parent.frames.digitalData.page.attributes.eventType != "undefined" ? parent.frames.digitalData.page.attributes.eventType : "");
-        
-            try {
+        try {
             //profile ID/Archtics ID
-            if (parent.frames.digitalData.user !== false){
-                s.eVar7 = typeof parent.frames.digitalData.user[0].profile[0].profileInfo.profileID != "undefined" ? parent.frames.digitalData.user[0].profile[0].profileInfo.profileID : ""; 
-                } 
-            }
-            catch (err) {
-                console.log('Season Ticket - No Profile ID');
-            }
-        
-        
-        
-            //Try Purchase Flow Data
-            try {    
-                    var seasontktType = parent.frames.jQuery('#cart-table > tbody > tr td').eq(46).text().trim(); //Half vs Full Season
-                    var seasonPrice = typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[1] != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[1] : "" || typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text() != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text() : ""; //$500.00;
-                    seasonPrice = seasonPrice.split('$').join('').trim();
-                    var seasonQty = typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[0].trim() != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[0].trim() : "";  // 1 ticket vs 2 ticktes, etc.
-                    seasonQty = parseInt(seasonQty);
-                    
-                    if (Number.isInteger(seasonQty) !== true) {
-                        seasonQty = '1'
-                    }
-                    
-                    var seasontktName = parent.frames.jQuery('#cart-table > tbody > tr td').eq(1).find('b').text(); //"2018-19 Half Season Plan B"
-                    var seasontktDetails = parent.frames.jQuery('#cart-table > tbody > tr td').eq(45).text().split('Row').join(' Row').split('Seat').join(' Seat').split(' - ').join('-'); //"Section 401 Row 2 Seat 3-4"
-
-                    var seasonProdString = ';'+seasontktName + '_' + seasontktDetails +';'+ seasonQty + ';' + seasonPrice.split('$').join('') +';'
-                    seasonProdString = cleanName(seasonProdString);
-                    
-                                        
-                     if (parent.frames.document.location.host === "oss.ticketmaster.com" && /cart\/review/.test(parent.frames.document.location.href) === true) {
-                        
-                        s.products = seasonProdString;
-                        //s.state="XX"
-                        //s.zip="00000"
-                        s.events="scOpen";
-                        console.log('scOpen test confirmed');
-
-                        console.log('test worked---->' + seasontktType);
-                        console.log('test worked---->' + seasonPrice);
-                        console.log('test worked---->' + seasonQty);
-                        console.log('test worked---->' + seasontktName);
-                        console.log('test worked---->' + seasontktDetails);
-                        console.log('test prodstring---->' + seasonProdString);
-                            }
-
-                    if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) === true) {
-                        //Custom ProdView String 
-                        
-                        //prodView Code
-                        var datatable = jQuery('#datatables > tbody > tr > td > table').toArray();
-
-                        var i;
-                        var str = [];
-                                for (i = 0; i < datatable.length; i++) {
-
-                                    var item = datatable[i].innerText;
-                                        item = item.toLowerCase().split('show')[0].trim().split(' ').join('-');
-                                        viewString = ';'+item+';'+';'+';'+';'; 
-
-                                        str.push(viewString); //pushes constructed string
-                                        var seasonprodViewString = str.join(",");                                            
-
-                                }
-                        
-                        s.products = seasonprodViewString;
-                        //seasonProdString = cleanName(seasonProdString);;
-                        //s.state="XX"
-                        //s.zip="00000"
-                        s.events="prodView";
-                        
-                        console.log('prodView test confirmed----->' + seasonprodViewString);
-                        
-                            }
-                
-                    
-
-                } catch(err) {
-                    console.log('no season ticket product data');
+            if (parent.frames.document.location.host === "oss.ticketmaster.com" && /cart\/review/.test(parent.frames.document.location.href) === true) {
+                if (!parent.frames.digitalData.user) {
+                    console.log('Season Ticket - User Not Logged In - No Object---->' + parent.frames.digitalData.user);
                 }
-        
-        console.log('Season Ticket Page Code Success: ' + valPageName);
-        s.t();
-        	
-    } else {
+                else {
+                    s.products = seasonProdString;
+                    //s.state="XX"
+                    //s.zip="00000"
+                    s.events = "scOpen";
+                    console.log('scOpen test confirmed');
+                    console.log('test worked---->' + seasontktType);
+                    console.log('test worked---->' + seasonPrice);
+                    console.log('test worked---->' + seasonQty);
+                    console.log('test worked---->' + seasontktName);
+                    console.log('test worked---->' + seasontktDetails);
+                    console.log('test prodstring---->' + seasonProdString);
+                }
+                s.eVar7 = typeof parent.frames.digitalData.user[0].profile[0].profileInfo.profileID != "undefined" ? parent.frames.digitalData.user[0].profile[0].profileInfo.profileID : "";
+            }
+        }
+        catch (err) {
+            console.log('Season Ticket - User Not Logged In and no product data shown');
+        }
+        //Try Purchase Flow Data
+        try {
+            var seasontktType = parent.frames.jQuery('#cart-table > tbody > tr td').eq(46).text().trim(); //Half vs Full Season
+            var seasonPrice = typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[1] != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[1] : "" || typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text() != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text() : ""; //$500.00;
+            seasonPrice = seasonPrice.split('$').join('').trim();
+            var seasonQty = typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[0].trim() != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[0].trim() : ""; // 1 ticket vs 2 ticktes, etc.
+            seasonQty = parseInt(seasonQty);
+            if (Number.isInteger(seasonQty) !== true) {
+                seasonQty = '1'
+            }
+            var seasontktName = parent.frames.jQuery('#cart-table > tbody > tr td').eq(1).find('b').text(); //"2018-19 Half Season Plan B"
+            var seasontktDetails = parent.frames.jQuery('#cart-table > tbody > tr td').eq(45).text().split('Row').join(' Row').split('Seat').join(' Seat').split(' - ').join('-'); //"Section 401 Row 2 Seat 3-4"
+            var seasonProdString = ';' + seasontktName + '_' + seasontktDetails + ';' + seasonQty + ';' + seasonPrice.split('$').join('') + ';'
+            seasonProdString = cleanName(seasonProdString);
+            if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) === true) {
+                //Custom ProdView String 
+                //prodView Code
+                var datatable = jQuery('#datatables > tbody > tr > td > table').toArray();
+                var i;
+                var str = [];
+                for (i = 0; i < datatable.length; i++) {
+                    var item = datatable[i].innerText;
+                    item = item.toLowerCase().trim();
+                    viewString = ';' + item + ';' + ';' + ';' + ';';
+                    str.push(viewString); //pushes constructed string
+                    var seasonprodViewString = str.join(",");
+                    seasonprodViewString = cleanName(seasonprodViewString);
+                }
+                s.products = seasonprodViewString;
+                //seasonProdString = cleanName(seasonProdString);;
+                //s.state="XX"
+                //s.zip="00000"
+                s.events = "prodView";
+                console.log('prodView test confirmed----->' + seasonprodViewString);
+            }
             //Check if Event Detail Page to Send Prodview
-        
             if (/ticketmaster.com/.test(parent.frames.document.location.href) && /event/.test(parent.frames.document.location.pathname)) {
                 //Add Prod View Data
                 /* ---- Product eCommerce Code ---- */
-                var prodString = ';'+valeventid+'_'+valevent+';'+';'+';'+';'+';'; //";ProductName;Qty;total_price"
-                s.products= prodString;
+                var prodString = ';' + valeventid + '_' + valevent + ';' + ';' + ';' + ';' + ';'; //";ProductName;Qty;total_price"
+                s.products = prodString;
                 //s.state="XX"
                 //s.zip="00000"
                 //s.purchaseID=valorderID;
-                s.events="prodView";
+                s.events = "prodView";
             }
-            
-            
-            
+        }
+        catch (err) {
+            console.log('no season ticket product data');
             //Generic Global Page Code if nothing is met
             s.pageName = valPageName;
             s.channel = valch;
-            s.eVar15 = cfcparam;    //Internal Tracking Code
-            s.eVar16 = sourceparam;	//Campaign Source (utm)
-            s.eVar17 = mediumparam;	//Campaign Channel (utm)
-            s.eVar18 = campaignparam;	//Campaign Name (utm)
-            s.eVar19 = termparam;	//Campaign Paid Search Term (utm)
-            s.eVar20 = contentparam;	//Campaign Content (utm)
+            s.eVar15 = cfcparam; //Internal Tracking Code
+            s.eVar16 = sourceparam; //Campaign Source (utm)
+            s.eVar17 = mediumparam; //Campaign Channel (utm)
+            s.eVar18 = campaignparam; //Campaign Name (utm)
+            s.eVar19 = termparam; //Campaign Paid Search Term (utm)
+            s.eVar20 = contentparam; //Campaign Content (utm)
             s.eVar30 = valeventid;
             s.eVar31 = valevent; //TM Event Name "May only be in the cart"
             s.eVar32 = valvenue;
@@ -586,7 +563,13 @@ try {
             s.eVar46 = "D=pageName";
             s.eVar47 = valtkttype;
             console.log('Last Chance Generic Page Code Success: ' + valPageName);
-        s.t();
+            s.t();
         }
+        console.log('Season Ticket Page Code Success: ' + valPageName);
+        s.t();
+    }
+}
+catch (err) {
+    console.log('tm data - no season purchase flow data')
 }
 
