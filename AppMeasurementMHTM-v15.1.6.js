@@ -544,7 +544,15 @@ try {
         }
         catch (err) {
             console.log('no season ticket product data');
-            //Generic Global Page Code if nothing is met
+            console.log('tm data - season ticket code failed: ' + valPageName);        
+        }
+        console.log('Season Ticket Page Code Success: ' + valPageName);
+        s.t();
+    }
+}
+catch (err) {
+    console.log('tm data - no season purchase flow data')
+    //Generic Global Page Code if nothing is met
             s.pageName = valPageName;
             s.channel = valch;
             s.eVar15 = cfcparam; //Internal Tracking Code
@@ -566,12 +574,5 @@ try {
             s.eVar47 = valtkttype;
             console.log('Last Chance Generic Page Code Success: ' + valPageName);
             s.t();
-        }
-        console.log('Season Ticket Page Code Success: ' + valPageName);
-        s.t();
-    }
-}
-catch (err) {
-    console.log('tm data - no season purchase flow data')
 }
 
