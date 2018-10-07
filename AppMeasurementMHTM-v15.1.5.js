@@ -6,7 +6,7 @@
 Copyright 1996-2015 Adobe, Inc. All Rights Reserved
 More info available at http://www.omniture.com */
 
-console.log('Account Manager Test - Heat Selected 10.6.18 v2');
+console.log('Account Manager Test - Heat Selected 10.6.18');
 
 var s_account="heatglobaldev";
 var s=s_gi(s_account);
@@ -210,6 +210,7 @@ s.doPlugins=s_doPlugins
     
 //TM Clean Values   
 function cleanName(strName) {
+    strName = strName.toString();
     strName = strName.replace(/[\n\r]/g, "");
     strName = strName.replace(/\t/g, "-");
     strName = strName.replace(/TM_US/g, "tmus");
@@ -324,6 +325,7 @@ var valeventid = typeof parent.frames.digitalData.page.attributes.eventID != "un
 //Artist ID
 var tmartistID = typeof parent.frames.digitalData.page.attributes.artistID != "undefined" ? parent.frames.digitalData.page.attributes.artistID : "";
 var valartistID = cleanName(tmartistID);
+
 //Single Ticket Purchase Flow Try Catch
 try {
     //Primary Category
@@ -343,7 +345,7 @@ try {
     catch (err) {
         console.log('tm data - user is not logged in')
     }
-    if (/ticketmaster.com/.test(parent.frames.document.location.href)) {
+    if (/ticketmaster.com/.test(parent.frames.document.location.href) && /oss.ticketmaster.com/.test(parent.frames.document.location.href) !== true) {
         //Get Global Ticketmaster Metrics    
         s.pageName = valPageName;
         s.channel = valch;
@@ -363,40 +365,40 @@ try {
         s.eVar44 = valprimcat;
         s.eVar45 = valsubcat;
         s.eVar46 = "D=pageName";
-        //Prod View Single Season Ticket Flow Try Catch
-        try {
-            if (/event/.test(parent.frames.document.location.pathname)) {
-                //Prod View
-                /* ---- Product eCommerce Code ---- */
-                var prodString = ';' + valeventid + '_' + valevent + ';' + ';' + ';' + ';' + ';'; //";ProductName;Qty;total_price"
-                s.products = prodString;
-                //s.state="XX"
-                //s.zip="00000"
-                //s.purchaseID=valorderID;
-                s.events = "prodView";
-                //Checkout
-                /*
-                function checkout(){
-
-                var checkoutqty = parent.frames.document.getElementsByClassName('qty-picker__number qty-picker__number--lg')[0].innerText;
-
-                        s.products=';'+valeventid+'-'+valevent+';'+checkoutqty+';'+'';;
+                //Prod View Single Season Ticket Flow Try Catch
+                try {
+                    if (/event/.test(parent.frames.document.location.pathname)) {
+                        //Prod View
+                        /* ---- Product eCommerce Code ---- */
+                        var prodString = ';' + valeventid + '_' + valevent + ';' + ';' + ';' + ';' + ';'; //";ProductName;Qty;total_price"
+                        s.products = prodString;
                         //s.state="XX"
                         //s.zip="00000"
-                        s.events="scCheckout";
-                        s.linkTrackVars = "events,products";  
-                        s.linkTrackEvents = "scCheckout"; 
-                        s.tl('this', 'o', 'click to checkout')
-                        console.log("sc checkout event test");
-                }
+                        //s.purchaseID=valorderID;
+                        s.events = "prodView";
+                        //Checkout
+                        /*
+                        function checkout(){
 
-                parent.frames.document.getElementById("offer-card-buy-button").onclick=checkout();
-                */
-            }
-        }
-        catch (err) {
-            console.log('tm data - single purchase flow prodview failed')
-        }
+                        var checkoutqty = parent.frames.document.getElementsByClassName('qty-picker__number qty-picker__number--lg')[0].innerText;
+
+                                s.products=';'+valeventid+'-'+valevent+';'+checkoutqty+';'+'';;
+                                //s.state="XX"
+                                //s.zip="00000"
+                                s.events="scCheckout";
+                                s.linkTrackVars = "events,products";  
+                                s.linkTrackEvents = "scCheckout"; 
+                                s.tl('this', 'o', 'click to checkout')
+                                console.log("sc checkout event test");
+                        }
+
+                        parent.frames.document.getElementById("offer-card-buy-button").onclick=checkout();
+                        */
+                    }
+                }
+                catch (err) {
+                    console.log('tm data - single purchase flow prodview failed')
+                }
         console.log('General Page Code Success: ' + valPageName);
         s.t();
     }
