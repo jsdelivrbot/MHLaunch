@@ -495,10 +495,11 @@ if (parent.frames.document.location.host === "oss.ticketmaster.com" && /cart\/re
 }
 
 //Season Ticket Cart Page View -- https://oss.ticketmaster.com/aps/heat/EN/buy/browse
-if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) === true || /promotion/.test(parent.frames.document.location.href) === true ) {
+if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) === true) {
             //Browse Screen ProdView
             try {
-                var datatable = jQuery("#listing #datatables > tbody > tr > td > table > tbody > tr:not([id^='events-list'])").toArray();
+                    var data1 = parent.frames.document.getElementById('datatables');
+                    var datatable = data1.querySelectorAll('tbody > tr > td > table > tbody > tr:not(#events-list-18FS)');
                     var i;
                     var str = [];
                     for (i = 0; i < datatable.length; i++) {
@@ -517,16 +518,43 @@ if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/bro
                         s.products = realseasonprodViewString;
                         //s.state="XX"
                         //s.zip="00000"
-                        //Season Ticket Product View
+                        ////Season Ticket Product View
                         s.events = "prodView";
                         //console.log('prodView test confirmed----->' + seasonprodViewString);
                         //console.log('prodView test confirmed----->' + scProdName);
                         console.log('tm data - browse screen prodview string try catch success');
-                        }
+                    }
                 } catch(err){
                 console.log('tm data - browse screen prodview string try catch failed');
-                //Promo Screen ProdView
-                var promodatatable = jQuery('#datatables-promo > tbody > tr').toArray();
+                }
+    
+                //Get Global Ticketmaster Metrics    
+                s.pageName = valPageName;
+                s.channel = valch;
+                s.eVar30 = valeventid;
+                s.eVar31 = valevent //TM Event Name "May only be in the cart"
+                s.eVar32 = valvenue;
+                s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
+                s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
+                s.eVar35 = valartist;
+                s.eVar36 = valartistID;
+                //s.eVar44 = valprimcat; //Not included in Season Ticket Flow
+                //s.eVar45 = valsubcat; //Not included in Season Ticket Flow
+                s.eVar46 = "D=pageName";
+                s.eVar47 = cleanName(typeof parent.frames.digitalData.page.attributes.eventType != "undefined" ? parent.frames.digitalData.page.attributes.eventType : "");
+                console.log('tm data - season ticket browse page code success');
+                s.t();
+    }
+    
+    
+//Season Ticket Cart Page View -- https://oss.ticketmaster.com/aps/heat/EN/buy/browse
+if (parent.frames.document.location.host === "oss.ticketmaster.com" && /promotion/.test(parent.frames.document.location.href) === true) {
+            //Browse Screen ProdView
+            try {
+                
+                    //Promo Screen ProdView
+                    var promosel = parent.frames.document.getElementById('datatables-promo');
+                    var promodatatable = promosel.querySelectorAll('tbody > tr > td > table > tbody > tr');
                     var i;
                     var str = [];
                     for (i = 0; i < promodatatable.length; i++) {
@@ -546,11 +574,12 @@ if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/bro
                         //s.zip="00000"
                         //Season Ticket Product View
                         s.events = "prodView";
-                        console.log('tm data - promo screen prodview string try catch failed')
+                        
                           }
-               
                     
-                }
+                    } catch(err){
+                console.log('tm data - promo screen prodview string try catch failed');
+                        }
     
                 //Get Global Ticketmaster Metrics    
                 s.pageName = valPageName;
@@ -566,7 +595,7 @@ if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/bro
                 //s.eVar45 = valsubcat; //Not included in Season Ticket Flow
                 s.eVar46 = "D=pageName";
                 s.eVar47 = cleanName(typeof parent.frames.digitalData.page.attributes.eventType != "undefined" ? parent.frames.digitalData.page.attributes.eventType : "");
-                console.log('tm data - season ticket browse page code success');
+                console.log('tm data - season ticket promo page code success');
                 s.t();
     }  
 
