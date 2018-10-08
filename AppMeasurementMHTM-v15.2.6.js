@@ -251,6 +251,8 @@ function cleanName(strName) {
     strName = strName.replace(/ -show-eventsvariousamericanairlines-arenacontinue/g, "");
     //Gameday Bus Orders
     strName = strName.replace(/americanairlines-arenacontinue/g, "");
+    //Browse String
+    strName = strName.replace(/-2018-19full/g, "");
     //Add Space Between Days for Bus Orders
     strName = strName.replace(/mon/g, "-mon");
     strName = strName.replace(/tue/g, "-tue");
