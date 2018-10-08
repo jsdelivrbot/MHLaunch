@@ -600,26 +600,28 @@ if (parent.frames.document.location.host === "oss.ticketmaster.com" && /promotio
     }  
 
 //Season Ticket General Page View -- https://oss.ticketmaster.com/aps/heat/EN/buy/browse
-if (parent.frames.document.location.host === "oss.ticketmaster.com" || parent.frames.document.location.host === "am.ticketmaster.com" && /cart\/review/.test(parent.frames.document.location.href) !== true && /buy\/browse/.test(parent.frames.document.location.href) !== true && /checkout\/confirmation/.test(parent.frames.document.location.href) !== true && /promotion/.test(parent.frames.document.location.href) !== true) {
-    try {
-        //Get Global Ticketmaster Metrics    
-        s.pageName = valPageName;
-        s.channel = valch;
-        s.eVar30 = valeventid;
-        s.eVar31 = valevent //TM Event Name "May only be in the cart"
-        s.eVar32 = valvenue;
-        s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
-        s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
-        s.eVar35 = valartist;
-        s.eVar36 = valartistID;
-        //s.eVar44 = valprimcat; //Not included in Season Ticket Flow
-        //s.eVar45 = valsubcat; //Not included in Season Ticket Flow
-        s.eVar46 = "D=pageName";
-        s.eVar47 = cleanName(typeof parent.frames.digitalData.page.attributes.eventType != "undefined" ? parent.frames.digitalData.page.attributes.eventType : "");
-        console.log('tm data - season ticket general page code success');
-        s.t();
-    }
-    catch (err) {
-        console.log('tm data - season ticket general page code failed');
+if (parent.frames.document.location.host === "oss.ticketmaster.com" || parent.frames.document.location.host === "am.ticketmaster.com"){
+    if (/cart\/review/.test(parent.frames.document.location.href) !== true && /buy\/browse/.test(parent.frames.document.location.href) !== true && /checkout\/confirmation/.test(parent.frames.document.location.href) !== true && /promotion/.test(parent.frames.document.location.href) !== true){
+        try {
+            //Get Global Ticketmaster Metrics    
+            s.pageName = valPageName;
+            s.channel = valch;
+            s.eVar30 = valeventid;
+            s.eVar31 = valevent //TM Event Name "May only be in the cart"
+            s.eVar32 = valvenue;
+            s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
+            s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
+            s.eVar35 = valartist;
+            s.eVar36 = valartistID;
+            //s.eVar44 = valprimcat; //Not included in Season Ticket Flow
+            //s.eVar45 = valsubcat; //Not included in Season Ticket Flow
+            s.eVar46 = "D=pageName";
+            s.eVar47 = cleanName(typeof parent.frames.digitalData.page.attributes.eventType != "undefined" ? parent.frames.digitalData.page.attributes.eventType : "");
+            console.log('tm data - season ticket general page code success');
+            s.t();
+        }
+        catch (err) {
+            console.log('tm data - season ticket general page code failed');
+        }
     }
 }
