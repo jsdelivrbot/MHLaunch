@@ -509,47 +509,46 @@ if (parent.frames.document.location.host === "oss.ticketmaster.com" && /cart\/re
 if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) === true) {
     try {
         var datatable = jQuery("#listing #datatables > tbody > tr > td > table > tbody > tr:not([id^='events-list'])").toArray();
-        var i;
-        var str = [];
-        for (i = 0; i < datatable.length; i++) {
-            var item = datatable[i];
-            item = item.innerText.toLowerCase().trim();
-            //Breakout String More
-            var breakout1 = item.split(/[\n\r]/g);
-            //For Event Description
-            var breakout3 = item.split('events');
-            var scProdName = breakout1;
-            var scDesc = breakout3.toString().split('season')[0].trim().replace(/[\n\r]/g, "-").replace(' ', '-').replace(' ', '-').replace(' ', '-').replace(' - ', '-').split('	')[0];
-            var viewString = ';' + scProdName + '_' + scDesc + ';' + ';' + ';' + ';' + ';';
-            str.push(viewString); //pushes constructed string
-            var seasonprodViewString = str.join(",");
-            var realseasonprodViewString = cleanName(seasonprodViewString);
-            s.products = realseasonprodViewString;
-            //s.state="XX"
-            //s.zip="00000"
-            //Season Ticket Product View
-            s.events = "prodView";
-            //console.log('prodView test confirmed----->' + seasonprodViewString);
-            //console.log('prodView test confirmed----->' + scProdName);
-        }
-        //Get Global Ticketmaster Metrics    
-        s.pageName = valPageName;
-        s.channel = valch;
-        s.eVar30 = valeventid;
-        s.eVar31 = valevent //TM Event Name "May only be in the cart"
-        s.eVar32 = valvenue;
-        s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
-        s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
-        s.eVar35 = valartist;
-        s.eVar36 = valartistID;
-        //s.eVar44 = valprimcat; //Not included in Season Ticket Flow
-        //s.eVar45 = valsubcat; //Not included in Season Ticket Flow
-        s.eVar46 = "D=pageName";
-        s.eVar47 = cleanName(typeof parent.frames.digitalData.page.attributes.eventType != "undefined" ? parent.frames.digitalData.page.attributes.eventType : "");
-        console.log('tm data - season ticket browse page code success');
-        s.t();
-    }
-    catch (err) {
+            var i;
+            var str = [];
+            for (i = 0; i < datatable.length; i++) {
+                var item = datatable[i];
+                item = item.innerText.toLowerCase().trim();
+                //Breakout String More
+                var breakout1 = item.split(/[\n\r]/g);
+                //For Event Description
+                var breakout3 = item.split('events');
+                var scProdName = breakout1;
+                var scDesc = breakout3.toString().split('season')[0].trim().replace(/[\n\r]/g, "-").replace(' ', '-').replace(' ', '-').replace(' ', '-').replace(' - ', '-').split('	')[0];
+                var viewString = ';' + scProdName + '_' + scDesc + ';' + ';' + ';' + ';' + ';';
+                str.push(viewString); //pushes constructed string
+                var seasonprodViewString = str.join(",");
+                var realseasonprodViewString = cleanName(seasonprodViewString);
+                s.products = realseasonprodViewString;
+                //s.state="XX"
+                //s.zip="00000"
+                //Season Ticket Product View
+                s.events = "prodView";
+                //console.log('prodView test confirmed----->' + seasonprodViewString);
+                //console.log('prodView test confirmed----->' + scProdName);
+                }
+                //Get Global Ticketmaster Metrics    
+                s.pageName = valPageName;
+                s.channel = valch;
+                s.eVar30 = valeventid;
+                s.eVar31 = valevent //TM Event Name "May only be in the cart"
+                s.eVar32 = valvenue;
+                s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
+                s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
+                s.eVar35 = valartist;
+                s.eVar36 = valartistID;
+                //s.eVar44 = valprimcat; //Not included in Season Ticket Flow
+                //s.eVar45 = valsubcat; //Not included in Season Ticket Flow
+                s.eVar46 = "D=pageName";
+                s.eVar47 = cleanName(typeof parent.frames.digitalData.page.attributes.eventType != "undefined" ? parent.frames.digitalData.page.attributes.eventType : "");
+                console.log('tm data - season ticket browse page code success');
+                s.t();
+    }   catch (err) {
         console.log('tm data - season ticket browse page code failed');
     }
 }
