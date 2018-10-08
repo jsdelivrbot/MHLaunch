@@ -456,8 +456,8 @@ catch (err) {
 }
 /************************* SEASON TICKET SECTION **************************/
 //Season Ticket Cart Page View -- https://oss.ticketmaster.com/aps/heat/EN/cart/review
-try {
-    if (parent.frames.document.location.host === "oss.ticketmaster.com" && /cart\/review/.test(parent.frames.document.location.href) === true) {
+if (parent.frames.document.location.host === "oss.ticketmaster.com" && /cart\/review/.test(parent.frames.document.location.href) === true) {
+    try {
         //Method 1 - Product Data Season Tickets
         var seasontktType = parent.frames.jQuery('#cart-table > tbody > tr td').eq(46).text().trim(); //Half vs Full Season
         var seasonPrice = typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[1] != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[1] : "" || typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text() != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text() : ""; //$500.00;
@@ -500,14 +500,14 @@ try {
         console.log('test prodstring---->' + seasonProdString);
         s.t();
     }
-}
-catch (err) {
-    console.log('tm data - prodview shopping cart data not fired');
+    catch (err) {
+        console.log('tm data - prodview shopping cart data not fired');
+    }
 }
 
-
-try {
-    if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) === true) {
+//Season Ticket Cart Page View -- https://oss.ticketmaster.com/aps/heat/EN/buy/browse
+if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) === true) {
+    try {
         var datatable = jQuery("#listing #datatables > tbody > tr > td > table > tbody > tr:not([id^='events-list'])").toArray();
         var i;
         var str = [];
@@ -549,15 +549,14 @@ try {
         console.log('tm data - season ticket browse page code success');
         s.t();
     }
-}
-catch (err) {
-    console.log('tm data - season ticket browse page code failed');
+    catch (err) {
+        console.log('tm data - season ticket browse page code failed');
+    }
 }
 
-
-try {
-    if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) !== true && /buy\/browse/.test(parent.frames.document.location.href) !== true && /checkout\/confirmation/.test(parent.frames.document.location.href) !== true) {
-        
+//Season Ticket General Page View -- https://oss.ticketmaster.com/aps/heat/EN/buy/browse
+if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) !== true && /buy\/browse/.test(parent.frames.document.location.href) !== true && /checkout\/confirmation/.test(parent.frames.document.location.href) !== true) {
+    try {
         //Get Global Ticketmaster Metrics    
         s.pageName = valPageName;
         s.channel = valch;
@@ -575,9 +574,7 @@ try {
         console.log('tm data - season ticket general page code success');
         s.t();
     }
+    catch (err) {
+        console.log('tm data - season ticket general page code failed');
+    }
 }
-catch (err) {
-    console.log('tm data - season ticket general page code failed');
-}
-
-
