@@ -507,31 +507,35 @@ if (parent.frames.document.location.host === "oss.ticketmaster.com" && /cart\/re
 
 //Season Ticket Cart Page View -- https://oss.ticketmaster.com/aps/heat/EN/buy/browse
 if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) === true) {
-    try {
-        var datatable = jQuery("#listing #datatables > tbody > tr > td > table > tbody > tr:not([id^='events-list'])").toArray();
-            var i;
-            var str = [];
-            for (i = 0; i < datatable.length; i++) {
-                var item = datatable[i];
-                item = item.innerText.toLowerCase().trim();
-                //Breakout String More
-                var breakout1 = item.split(/[\n\r]/g);
-                //For Event Description
-                var breakout3 = item.split('events');
-                var scProdName = breakout1;
-                var scDesc = breakout3.toString().split('season')[0].trim().replace(/[\n\r]/g, "-").replace(' ', '-').replace(' ', '-').replace(' ', '-').replace(' - ', '-').split('	')[0];
-                var viewString = ';' + scProdName + '_' + scDesc + ';' + ';' + ';' + ';' + ';';
-                str.push(viewString); //pushes constructed string
-                var seasonprodViewString = str.join(",");
-                var realseasonprodViewString = cleanName(seasonprodViewString);
-                s.products = realseasonprodViewString;
-                //s.state="XX"
-                //s.zip="00000"
-                //Season Ticket Product View
-                s.events = "prodView";
-                //console.log('prodView test confirmed----->' + seasonprodViewString);
-                //console.log('prodView test confirmed----->' + scProdName);
+            try {
+                var datatable = jQuery("#listing #datatables > tbody > tr > td > table > tbody > tr:not([id^='events-list'])").toArray();
+                    var i;
+                    var str = [];
+                    for (i = 0; i < datatable.length; i++) {
+                        var item = datatable[i];
+                        item = item.innerText.toLowerCase().trim();
+                        //Breakout String More
+                        var breakout1 = item.split(/[\n\r]/g);
+                        //For Event Description
+                        var breakout3 = item.split('events');
+                        var scProdName = breakout1;
+                        var scDesc = breakout3.toString().split('season')[0].trim().replace(/[\n\r]/g, "-").replace(' ', '-').replace(' ', '-').replace(' ', '-').replace(' - ', '-').split('	')[0];
+                        var viewString = ';' + scProdName + '_' + scDesc + ';' + ';' + ';' + ';' + ';';
+                        str.push(viewString); //pushes constructed string
+                        var seasonprodViewString = str.join(",");
+                        var realseasonprodViewString = cleanName(seasonprodViewString);
+                        s.products = realseasonprodViewString;
+                        //s.state="XX"
+                        //s.zip="00000"
+                        //Season Ticket Product View
+                        s.events = "prodView";
+                        //console.log('prodView test confirmed----->' + seasonprodViewString);
+                        //console.log('prodView test confirmed----->' + scProdName);
+                        }
+                } catch(err){
+                    console.log('prodview string try catch failed')
                 }
+    
                 //Get Global Ticketmaster Metrics    
                 s.pageName = valPageName;
                 s.channel = valch;
@@ -548,10 +552,7 @@ if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/bro
                 s.eVar47 = cleanName(typeof parent.frames.digitalData.page.attributes.eventType != "undefined" ? parent.frames.digitalData.page.attributes.eventType : "");
                 console.log('tm data - season ticket browse page code success');
                 s.t();
-    }   catch (err) {
-        console.log('tm data - season ticket browse page code failed');
-    }
-}
+    }  
 
 //Season Ticket General Page View -- https://oss.ticketmaster.com/aps/heat/EN/buy/browse
 if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) !== true && /buy\/browse/.test(parent.frames.document.location.href) !== true && /checkout\/confirmation/.test(parent.frames.document.location.href) !== true) {
