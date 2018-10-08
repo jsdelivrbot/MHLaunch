@@ -7,7 +7,7 @@
 Copyright 1996-2015 Adobe, Inc. All Rights Reserved
 More info available at http://www.omniture.com */
 
-console.log('Account Manager Test - Heat Selected 10.7.18');
+console.log('Account Manager Test - Heat Selected 10.6.18');
 
 var s_account="heatglobaldev";
 var s=s_gi(s_account);
@@ -177,57 +177,54 @@ var r=e("./child/ChildVisitor"),a=e("./child/Message"),s=e("./child/makeChildMes
 t=i+this.subdomain+".demdex.net/dest5.html"+n,this.iframeHost=this.getIframeHost(t),this.id="destination_publishing_iframe_"+this.subdomain+"_"+e.idSyncContainerID,t},checkDPIframeSrc:function(){var t="?d_nsid="+e.idSyncContainerID+"#"+encodeURIComponent(u.location.href);"string"==typeof e.dpIframeSrc&&e.dpIframeSrc.length&&(this.id="destination_publishing_iframe_"+(e._subdomain||this.subdomain||(new Date).getTime())+"_"+e.idSyncContainerID,this.iframeHost=this.getIframeHost(e.dpIframeSrc),this.url=e.dpIframeSrc+t)},idCallNotProcesssed:null,doAttachIframe:!1,startedAttachingIframe:!1,iframeHasLoaded:null,iframeIdChanged:null,newIframeCreated:null,originalIframeHasLoadedAlready:null,regionChanged:!1,timesRegionChanged:0,sendingMessages:!1,messages:[],messagesPosted:[],messagesReceived:[],messageSendingInterval:n.POST_MESSAGE_ENABLED?null:100,jsonForComparison:[],jsonDuplicates:[],jsonWaiting:[],jsonProcessed:[],canSetThirdPartyCookies:!0,receivedThirdPartyCookiesNotification:!1,readyToAttachIframe:function(){return!e.idSyncDisable3rdPartySyncing&&(this.doAttachIframe||e._doAttachIframe)&&(this.subdomain&&"nosubdomainreturned"!==this.subdomain||e._subdomain)&&this.url&&!this.startedAttachingIframe},attachIframe:function(){function e(){n=u.createElement("iframe"),n.sandbox="allow-scripts allow-same-origin",n.title="Adobe ID Syncing iFrame",n.id=i.id,n.name=i.id+"_name",n.style.cssText="display: none; width: 0; height: 0;",n.src=i.url,i.newIframeCreated=!0,t(),u.body.appendChild(n)}function t(){n.addEventListener("load",function(){n.className="aamIframeLoaded",i.iframeHasLoaded=!0,i.requestToProcess()})}this.startedAttachingIframe=!0;var i=this,n=u.getElementById(this.id);n?"IFRAME"!==n.nodeName?(this.id+="_2",this.iframeIdChanged=!0,e()):(this.newIframeCreated=!1,"aamIframeLoaded"!==n.className?(this.originalIframeHasLoadedAlready=!1,t()):(this.originalIframeHasLoadedAlready=!0,this.iframeHasLoaded=!0,this.iframe=n,this.requestToProcess())):e(),this.iframe=n},requestToProcess:function(t){function i(){a.jsonForComparison.push(t),a.jsonWaiting.push(t),a.processSyncOnPage(t)}var r,a=this;if(t===Object(t)&&t.ibs)if(r=JSON.stringify(t.ibs||[]),this.jsonForComparison.length){var s,o,l,u=!1;for(s=0,o=this.jsonForComparison.length;s<o;s++)if(l=this.jsonForComparison[s],r===JSON.stringify(l.ibs||[])){u=!0;break}u?this.jsonDuplicates.push(t):i()}else i();if((this.receivedThirdPartyCookiesNotification||!n.POST_MESSAGE_ENABLED||this.iframeHasLoaded)&&this.jsonWaiting.length){var d=this.jsonWaiting.shift();this.process(d),this.requestToProcess()}!e.idSyncDisableSyncs&&this.iframeHasLoaded&&this.messages.length&&!this.sendingMessages&&(this.throttleTimerSet||(this.throttleTimerSet=!0,setTimeout(function(){a.messageSendingInterval=n.POST_MESSAGE_ENABLED?null:150},this.THROTTLE_START)),this.sendingMessages=!0,this.sendMessages())},getRegionAndCheckIfChanged:function(t,i){var n=e._getField(l),r=t.d_region||t.dcs_region;return n?r&&(e._setFieldExpire(l,i),e._setField(l,r),parseInt(n,10)!==r&&(this.regionChanged=!0,this.timesRegionChanged++,e._setField(s,""),e._setField(o,""),n=r)):(n=r,n&&(e._setFieldExpire(l,i),e._setField(l,n))),n||(n=""),n},processSyncOnPage:function(e){var t,i,n,r;if((t=e.ibs)&&t instanceof Array&&(i=t.length))for(n=0;n<i;n++)r=t[n],r.syncOnPage&&this.checkFirstPartyCookie(r,"","syncOnPage")},process:function(e){var t,i,n,r,s,o=encodeURIComponent,l="",u=!1;if((t=e.ibs)&&t instanceof Array&&(i=t.length))for(u=!0,n=0;n<i;n++)r=t[n],s=[o("ibs"),o(r.id||""),o(r.tag||""),a.encodeAndBuildRequest(r.url||[],","),o(r.ttl||""),"",l,r.fireURLSync?"true":"false"],r.syncOnPage||(this.canSetThirdPartyCookies?this.addMessage(s.join("|")):r.fireURLSync&&this.checkFirstPartyCookie(r,s.join("|")));u&&this.jsonProcessed.push(e)},checkFirstPartyCookie:function(t,i,r){var a="syncOnPage"===r,l=a?s:o;e._readVisitor();var u,d,c=e._getField(l),f=!1,g=!1,p=Math.ceil((new Date).getTime()/n.MILLIS_PER_DAY);c?(u=c.split("*"),d=this.pruneSyncData(u,t.id,p),f=d.dataPresent,g=d.dataValid,f&&g||this.fireSync(a,t,i,u,l,p)):(u=[],this.fireSync(a,t,i,u,l,p))},pruneSyncData:function(e,t,i){var n,r,a,s=!1,o=!1;for(r=0;r<e.length;r++)n=e[r],a=parseInt(n.split("-")[1],10),n.match("^"+t+"-")?(s=!0,i<a?o=!0:(e.splice(r,1),r--)):i>=a&&(e.splice(r,1),r--);return{dataPresent:s,dataValid:o}},manageSyncsSize:function(e){if(e.join("*").length>this.MAX_SYNCS_LENGTH)for(e.sort(function(e,t){return parseInt(e.split("-")[1],10)-parseInt(t.split("-")[1],10)});e.join("*").length>this.MAX_SYNCS_LENGTH;)e.shift()},fireSync:function(t,i,n,r,a,s){var o=this;if(t){if("img"===i.tag){var l,u,d,c,f=i.url,g=e.loadSSL?"https:":"http:";for(l=0,u=f.length;l<u;l++){d=f[l],c=/^\/\//.test(d);var p=new Image;p.addEventListener("load",function(t,i,n,r){return function(){o.onPagePixels[t]=null,e._readVisitor();var s,l=e._getField(a),u=[];if(l){s=l.split("*");var d,c,f;for(d=0,c=s.length;d<c;d++)f=s[d],f.match("^"+i.id+"-")||u.push(f)}o.setSyncTrackingData(u,i,n,r)}}(this.onPagePixels.length,i,a,s)),p.src=(c?g:"")+d,this.onPagePixels.push(p)}}}else this.addMessage(n),this.setSyncTrackingData(r,i,a,s)},addMessage:function(t){var i=encodeURIComponent,r=i(e._enableErrorReporting?"---destpub-debug---":"---destpub---");this.messages.push((n.POST_MESSAGE_ENABLED?"":r)+t)},setSyncTrackingData:function(t,i,n,r){t.push(i.id+"-"+(r+Math.ceil(i.ttl/60/24))),this.manageSyncsSize(t),e._setField(n,t.join("*"))},sendMessages:function(){var e,t=this,i="",r=encodeURIComponent;this.regionChanged&&(i=r("---destpub-clear-dextp---"),this.regionChanged=!1),this.messages.length?n.POST_MESSAGE_ENABLED?(e=i+r("---destpub-combined---")+this.messages.join("%01"),this.postMessage(e),this.messages=[],this.sendingMessages=!1):(e=this.messages.shift(),this.postMessage(i+e),setTimeout(function(){t.sendMessages()},this.messageSendingInterval)):this.sendingMessages=!1},postMessage:function(e){r.postMessage(e,this.url,this.iframe.contentWindow),this.messagesPosted.push(e)},receiveMessage:function(e){var t,i=/^---destpub-to-parent---/;"string"==typeof e&&i.test(e)&&(t=e.replace(i,"").split("|"),"canSetThirdPartyCookies"===t[0]&&(this.canSetThirdPartyCookies="true"===t[1],this.receivedThirdPartyCookiesNotification=!0,this.requestToProcess()),this.messagesReceived.push(e))},processIDCallData:function(i){(null==this.url||i.subdomain&&"nosubdomainreturned"===this.subdomain)&&("string"==typeof e._subdomain&&e._subdomain.length?this.subdomain=e._subdomain:this.subdomain=i.subdomain||"",this.url=this.getUrl()),i.ibs instanceof Array&&i.ibs.length&&(this.doAttachIframe=!0),this.readyToAttachIframe()&&(e.idSyncAttachIframeOnWindowLoad?(t.windowLoaded||"complete"===u.readyState||"loaded"===u.readyState)&&this.attachIframe():this.attachIframeASAP()),"function"==typeof e.idSyncIDCallResult?e.idSyncIDCallResult(i):this.requestToProcess(i),"function"==typeof e.idSyncAfterIDCallResult&&e.idSyncAfterIDCallResult(i)},canMakeSyncIDCall:function(t,i){return e._forceSyncIDCall||!t||i-t>n.DAYS_BETWEEN_SYNC_ID_CALLS},attachIframeASAP:function(){function e(){t.startedAttachingIframe||(u.body?t.attachIframe():setTimeout(e,30))}var t=this;e()}}}}).call(this,"undefined"!=typeof window&&"undefined"!=typeof global&&window.global===global?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"../utils/constants":14,"../utils/utils":18,"./crossDomain":8}],11:[function(e,t,i){function n(e){for(var t=/^\d+$/,i=0,n=e.length;i<n;i++)if(!t.test(e[i]))return!1;return!0}function r(e,t){for(;e.length<t.length;)e.push("0");for(;t.length<e.length;)t.push("0")}function a(e,t){for(var i=0;i<e.length;i++){var n=parseInt(e[i],10),r=parseInt(t[i],10);if(n>r)return 1;if(r>n)return-1}return 0}function s(e,t){if(e===t)return 0;var i=e.toString().split("."),s=t.toString().split(".");return n(i.concat(s))?(r(i,s),a(i,s)):NaN}t.exports={compare:s,isLessThan:function(e,t){return s(e,t)<0},areVersionsDifferent:function(e,t){return 0!==s(e,t)},isGreaterThan:function(e,t){return s(e,t)>0},isEqual:function(e,t){return 0===s(e,t)}}},{}],12:[function(e,t,i){t.exports=function(e,t){function i(e){return function(i){n[e]=i,r++;var s=r===a;s&&t(n)}}var n={},r=0,a=Object.keys(e).length;Object.keys(e).forEach(function(t){var n=e[t];if(n.fn){var r=n.args||[];r.unshift(i(t)),n.fn.apply(n.context||null,r)}})}},{}],13:[function(e,t,i){function n(){return{callbacks:{},add:function(e,t){this.callbacks[e]=this.callbacks[e]||[];var i=this.callbacks[e].push(t)-1;return function(){this.callbacks[e].splice(i,1)}},execute:function(e,t){if(this.callbacks[e]){t="undefined"==typeof t?[]:t,t=t instanceof Array?t:[t];try{for(;this.callbacks[e].length;){var i=this.callbacks[e].shift();"function"==typeof i?i.apply(null,t):i instanceof Array&&i[1].apply(i[0],t)}delete this.callbacks[e]}catch(e){}}},executeAll:function(e,t){(t||e&&!r.isObjectEmpty(e))&&Object.keys(this.callbacks).forEach(function(t){var i=void 0!==e[t]?e[t]:"";this.execute(t,i)},this)},hasCallbacks:function(){return Boolean(Object.keys(this.callbacks).length)}}}var r=e("./utils");t.exports=n},{"./utils":18}],14:[function(e,t,i){(function(e){t.exports={POST_MESSAGE_ENABLED:!!e.postMessage,DAYS_BETWEEN_SYNC_ID_CALLS:1,MILLIS_PER_DAY:864e5,ADOBE_MC:"adobe_mc",ADOBE_MC_SDID:"adobe_mc_sdid",VALID_VISITOR_ID_REGEX:/^[0-9a-fA-F\-]+$/,ADOBE_MC_TTL_IN_MIN:5,VERSION_REGEX:/vVersion\|((\d+\.)?(\d+\.)?(\*|\d+))(?=$|\|)/}}).call(this,"undefined"!=typeof window&&"undefined"!=typeof global&&window.global===global?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}],15:[function(e,t,i){i.MESSAGES={HANDSHAKE:"HANDSHAKE",GETSTATE:"GETSTATE",PARENTSTATE:"PARENTSTATE"},i.STATE_KEYS_MAP={MCMID:"MCMID",MCAID:"MCAID",MCAAMB:"MCAAMB",MCAAMLH:"MCAAMLH",MCOPTOUT:"MCOPTOUT",CUSTOMERIDS:"CUSTOMERIDS"},i.ASYNC_API_MAP={MCMID:"getMarketingCloudVisitorID",MCAID:"getAnalyticsVisitorID",MCAAMB:"getAudienceManagerBlob",MCAAMLH:"getAudienceManagerLocationHint",MCOPTOUT:"getOptOut"},i.SYNC_API_MAP={CUSTOMERIDS:"getCustomerIDs"},i.ALL_APIS={MCMID:"getMarketingCloudVisitorID",MCAAMB:"getAudienceManagerBlob",MCAAMLH:"getAudienceManagerLocationHint",MCOPTOUT:"getOptOut",MCAID:"getAnalyticsVisitorID",CUSTOMERIDS:"getCustomerIDs"},i.FIELDGROUP_TO_FIELD={MC:"MCMID",A:"MCAID",AAM:"MCAAMB"},i.FIELDS={MCMID:"MCMID",MCOPTOUT:"MCOPTOUT",MCAID:"MCAID",MCAAMLH:"MCAAMLH",MCAAMB:"MCAAMB"},i.AUTH_STATE={UNKNOWN:0,AUTHENTICATED:1,LOGGED_OUT:2},i.OPT_OUT={GLOBAL:"global"}},{}],16:[function(e,t,i){(function(e){t.exports=function(t){var i;if(!t&&e.location&&(t=e.location.hostname),i=t)if(/^[0-9.]+$/.test(i))i="";else{var n=",ac,ad,ae,af,ag,ai,al,am,an,ao,aq,ar,as,at,au,aw,ax,az,ba,bb,be,bf,bg,bh,bi,bj,bm,bo,br,bs,bt,bv,bw,by,bz,ca,cc,cd,cf,cg,ch,ci,cl,cm,cn,co,cr,cu,cv,cw,cx,cz,de,dj,dk,dm,do,dz,ec,ee,eg,es,et,eu,fi,fm,fo,fr,ga,gb,gd,ge,gf,gg,gh,gi,gl,gm,gn,gp,gq,gr,gs,gt,gw,gy,hk,hm,hn,hr,ht,hu,id,ie,im,in,io,iq,ir,is,it,je,jo,jp,kg,ki,km,kn,kp,kr,ky,kz,la,lb,lc,li,lk,lr,ls,lt,lu,lv,ly,ma,mc,md,me,mg,mh,mk,ml,mn,mo,mp,mq,mr,ms,mt,mu,mv,mw,mx,my,na,nc,ne,nf,ng,nl,no,nr,nu,nz,om,pa,pe,pf,ph,pk,pl,pm,pn,pr,ps,pt,pw,py,qa,re,ro,rs,ru,rw,sa,sb,sc,sd,se,sg,sh,si,sj,sk,sl,sm,sn,so,sr,st,su,sv,sx,sy,sz,tc,td,tf,tg,th,tj,tk,tl,tm,tn,to,tp,tr,tt,tv,tw,tz,ua,ug,uk,us,uy,uz,va,vc,ve,vg,vi,vn,vu,wf,ws,yt,",r=i.split("."),a=r.length-1,s=a-1;if(a>1&&r[a].length<=2&&(2===r[a-1].length||n.indexOf(","+r[a]+",")<0)&&s--,s>0)for(i="";a>=s;)i=r[a]+(i?".":"")+i,a--}return i}}).call(this,"undefined"!=typeof window&&"undefined"!=typeof global&&window.global===global?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}],17:[function(e,t,i){Object.assign=Object.assign||function(e){for(var t,i,n=1;n<arguments.length;++n){i=arguments[n];for(t in i)Object.prototype.hasOwnProperty.call(i,t)&&(e[t]=i[t])}return e}},{}],18:[function(e,t,i){i.isObjectEmpty=function(e){return e===Object(e)&&0===Object.keys(e).length},i.isValueEmpty=function(e){return""===e||i.isObjectEmpty(e)},i.getIeVersion=function(){if(document.documentMode)return document.documentMode;for(var e=7;e>4;e--){var t=document.createElement("div");if(t.innerHTML="<!--[if IE "+e+"]><span></span><![endif]-->",t.getElementsByTagName("span").length)return t=null,e;t=null}return null},i.encodeAndBuildRequest=function(e,t){return e.map(encodeURIComponent).join(t)}},{}],19:[function(e,t,i){t.exports=function(e){var t,i,n="0123456789",r="",a="",s=8,o=10,l=10;if(1==e){for(n+="ABCDEF",t=0;16>t;t++)i=Math.floor(Math.random()*s),r+=n.substring(i,i+1),i=Math.floor(Math.random()*s),a+=n.substring(i,i+1),s=16;return r+"-"+a}for(t=0;19>t;t++)i=Math.floor(Math.random()*o),r+=n.substring(i,i+1),0===t&&9==i?o=3:(1==t||2==t)&&10!=o&&2>i?o=10:2<t&&(o=10),i=Math.floor(Math.random()*l),a+=n.substring(i,i+1),0===t&&9==i?l=3:(1==t||2==t)&&10!=l&&2>i?l=10:2<t&&(l=10);return r+a}},{}]},{},[1]);
 
 /************************* DO PLUGINS SECTION **************************/
-s.usePlugins=true
+s.usePlugins = true
+
 function s_doPlugins(s) {
-
-//Call Visitor ID Service
-var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
-    trackingServer: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServer
-    //trackingServerSecure: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServerSecure
-    // To enable CNAME support, add the following configuration variables
-    // If you are not using CNAME, DO NOT include these variables
-    //marketingCloudServer: "INSERT-TRACKING-SERVER-HERE",
-    //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
-    idSyncAttachIframeOnWindowLoad: true
-});
-//Get Parent Document Data TM
-s.server = parent.frames.document.location.host;
-s.pageURL = parent.frames.document.location.href;
-s.eVar2 = "D=g";
-s.prop2 = "D=v2";
-s.referrer = typeof parent.frames.document.referrer != "undefined" ? parent.frames.document.referrer : "";
-/* Time Parting */
-s.eVar14 = s.getTimeParting('n', '-4'); // Set day
-s.prop14 = "D=v14";
-/* Marketing Cloud ID -- Must be in Do Plugins */
-s.eVar10 = visitor.getAnalyticsVisitorID("1E701A795B111F550A495EAF@AdobeOrg");
-s.prop10 = "D=v10";
-//Actual value of ECID/MCID
-    
-                //Global Check of Profile ID. Present only after payment for single tickets
-                try {
-                        var tmpID = typeof parent.frames.digitalData.user[0].profile[0].profileInfo.profileID != "undefined" ? parent.frames.digitalData.user[0].profile[0].profileInfo.profileID : "" || typeof parent.frames.digitalData.transaction.profileID != "undefined" ? parent.frames.digitalData.transaction.profileID : "";
-                            if (tmpID !== undefined || tmpID !== "" || tmpID !== null) {
-                            s.eVar7 = tmpID;
-                            }
-                    } catch(err) {
-                        if (parent.frames.document.location.host === "oss.ticketmaster.com"){
-                            console.log('user not logged in - season ticket flow');
-                        } else {
-                            console.log('user not logged in - single ticket flow');
-                        }
-                        
-                    }
-
+    //Call Visitor ID Service
+    var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
+        trackingServer: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServer
+        //trackingServerSecure: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServerSecure
+        // To enable CNAME support, add the following configuration variables
+        // If you are not using CNAME, DO NOT include these variables
+        //marketingCloudServer: "INSERT-TRACKING-SERVER-HERE",
+        //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
+        idSyncAttachIframeOnWindowLoad: true
+    });
+    //Get Parent Document Data TM
+    s.server = parent.frames.document.location.host;
+    s.pageURL = parent.frames.document.location.href;
+    s.eVar2 = "D=g";
+    s.prop2 = "D=v2";
+    s.referrer = typeof parent.frames.document.referrer != "undefined" ? parent.frames.document.referrer : "";
+    /* Time Parting */
+    s.eVar14 = s.getTimeParting('n', '-4'); // Set day
+    s.prop14 = "D=v14";
+    /* Marketing Cloud ID -- Must be in Do Plugins */
+    s.eVar10 = visitor.getAnalyticsVisitorID("1E701A795B111F550A495EAF@AdobeOrg");
+    s.prop10 = "D=v10";
+    //Actual value of ECID/MCID
+    //Global Check of Profile ID. Present only after payment for single tickets
+    try {
+        var tmpID = typeof parent.frames.digitalData.user[0].profile[0].profileInfo.profileID != "undefined" ? parent.frames.digitalData.user[0].profile[0].profileInfo.profileID : "" || typeof parent.frames.digitalData.transaction.profileID != "undefined" ? parent.frames.digitalData.transaction.profileID : "";
+        if (tmpID !== undefined || tmpID !== "" || tmpID !== null) {
+            s.eVar7 = tmpID;
+        }
+    }
+    catch (err) {
+        if (parent.frames.document.location.host === "oss.ticketmaster.com") {
+            console.log('user not logged in - season ticket flow');
+        }
+        else {
+            console.log('user not logged in - single ticket flow');
+        }
+    }
 }
-s.doPlugins=s_doPlugins
-
-/************************* CUSTOM PAGE SECTION **************************/
-    
-//TM Clean Values   
+s.doPlugins = s_doPlugins
+    /************************* CUSTOM PAGE SECTION **************************/
+    //TM Clean Values   
 function cleanName(strName) {
     strName = strName.toString();
-    strName = strName.replace(/[\n\r]/g, "");
+    strName = strName.replace(/[\n\r]/g, "-");
     strName = strName.replace(/\t/g, "-");
     strName = strName.replace(/TM_US/g, "tmus");
     strName = strName.replace(/_/g, " "); /* comment changed underscore to hyphen*/
@@ -284,7 +281,6 @@ function getQueryParams(qs) {
     }
     return params;
 }
-
 //camefrom code tracking
 if (getQueryParams(parent.frames.document.location.search).camefrom !== "undefined") {
     var cfcparam = typeof getQueryParams(parent.frames.document.location.search).camefrom != "undefined" ? getQueryParams(parent.frames.document.location.search).camefrom : ""; //Internal Tracking Code Came From Codes
@@ -293,7 +289,6 @@ if (getQueryParams(parent.frames.document.location.search).camefrom !== "undefin
 else {
     console.log('no came from code query param')
 }
-
 //utm_source tracking
 if (getQueryParams(parent.frames.document.location.search).utm_source !== "undefined") {
     var sourceparam = typeof getQueryParams(parent.frames.document.location.search).utm_source != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_source : ""; //Campaign Source (utm)
@@ -302,7 +297,6 @@ if (getQueryParams(parent.frames.document.location.search).utm_source !== "undef
 else {
     console.log('no campaign source (utm)')
 }
-
 //utm_medium tracking
 if (getQueryParams(parent.frames.document.location.search).utm_medium !== "undefined") {
     var mediumparam = typeof getQueryParams(parent.frames.document.location.search).utm_medium != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_medium : ""; //Campaign Medium (utm)
@@ -311,7 +305,6 @@ if (getQueryParams(parent.frames.document.location.search).utm_medium !== "undef
 else {
     console.log('no campaign medium (utm)')
 }
-
 //utm_campaign tracking
 if (getQueryParams(parent.frames.document.location.search).utm_campaign !== "undefined") {
     var campaignparam = typeof getQueryParams(parent.frames.document.location.search).utm_campaign != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_campaign : ""; //Campaign Source (utm)
@@ -320,7 +313,6 @@ if (getQueryParams(parent.frames.document.location.search).utm_campaign !== "und
 else {
     console.log('no campaign name (utm)')
 }
-
 //utm_term tracking
 if (getQueryParams(parent.frames.document.location.search).utm_term !== "undefined") {
     var termparam = typeof getQueryParams(parent.frames.document.location.search).utm_term != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_term : ""; //Campaign Paid Search Term (utm)
@@ -329,7 +321,6 @@ if (getQueryParams(parent.frames.document.location.search).utm_term !== "undefin
 else {
     console.log('no campaign name (utm)')
 }
-
 //utm_content tracking
 if (getQueryParams(parent.frames.document.location.search).utm_content !== "undefined") {
     var contentparam = typeof getQueryParams(parent.frames.document.location.search).utm_content != "undefined" ? getQueryParams(parent.frames.document.location.search).utm_content : ""; //Campaign Content (utm)
@@ -359,10 +350,7 @@ var valeventid = typeof parent.frames.digitalData.page.attributes.eventID != "un
 //Artist ID
 var tmartistID = typeof parent.frames.digitalData.page.attributes.artistID != "undefined" ? parent.frames.digitalData.page.attributes.artistID : "";
 var valartistID = cleanName(tmartistID);
-
-
 /************************* SINGLE TICKET SECTION **************************/
-
 //Single Ticket Purchase Flow Try Catch
 try {
     //Primary Category
@@ -371,7 +359,6 @@ try {
     //Sub Category
     var tmsubcat = typeof parent.frames.digitalData.page.category.subCategory1 != "undefined" ? parent.frames.digitalData.page.category.subCategory1 : "";
     var valsubcat = cleanName(tmsubcat);
-    
     if (/ticketmaster.com/.test(parent.frames.document.location.href) && /oss.ticketmaster.com/.test(parent.frames.document.location.href) !== true) {
         //Get Global Ticketmaster Metrics    
         s.pageName = valPageName;
@@ -386,40 +373,40 @@ try {
         s.eVar44 = valprimcat;
         s.eVar45 = valsubcat;
         s.eVar46 = "D=pageName";
-                //Prod View Single Season Ticket Flow Try Catch
-                try {
-                    if (/event/.test(parent.frames.document.location.pathname)) {
-                        //Prod View
-                        /* ---- Product eCommerce Code ---- */
-                        var prodString = ';' + valeventid + '_' + valevent + ';' + ';' + ';' + ';' + ';'; //";ProductName;Qty;total_price"
-                        s.products = prodString;
+        //Prod View Single Season Ticket Flow Try Catch
+        try {
+            if (/event/.test(parent.frames.document.location.pathname)) {
+                //Prod View
+                /* ---- Product eCommerce Code ---- */
+                var prodString = ';' + valeventid + '_' + valevent + ';' + ';' + ';' + ';' + ';'; //";ProductName;Qty;total_price"
+                s.products = prodString;
+                //s.state="XX"
+                //s.zip="00000"
+                //s.purchaseID=valorderID;
+                s.events = "prodView";
+                //Checkout
+                /*
+                function checkout(){
+
+                var checkoutqty = parent.frames.document.getElementsByClassName('qty-picker__number qty-picker__number--lg')[0].innerText;
+
+                        s.products=';'+valeventid+'-'+valevent+';'+checkoutqty+';'+'';;
                         //s.state="XX"
                         //s.zip="00000"
-                        //s.purchaseID=valorderID;
-                        s.events = "prodView";
-                        //Checkout
-                        /*
-                        function checkout(){
-
-                        var checkoutqty = parent.frames.document.getElementsByClassName('qty-picker__number qty-picker__number--lg')[0].innerText;
-
-                                s.products=';'+valeventid+'-'+valevent+';'+checkoutqty+';'+'';;
-                                //s.state="XX"
-                                //s.zip="00000"
-                                s.events="scCheckout";
-                                s.linkTrackVars = "events,products";  
-                                s.linkTrackEvents = "scCheckout"; 
-                                s.tl('this', 'o', 'click to checkout')
-                                console.log("sc checkout event test");
-                        }
-
-                        parent.frames.document.getElementById("offer-card-buy-button").onclick=checkout();
-                        */
-                    }
+                        s.events="scCheckout";
+                        s.linkTrackVars = "events,products";  
+                        s.linkTrackEvents = "scCheckout"; 
+                        s.tl('this', 'o', 'click to checkout')
+                        console.log("sc checkout event test");
                 }
-                catch (err) {
-                    console.log('tm data - single purchase flow prodview failed')
-                }
+
+                parent.frames.document.getElementById("offer-card-buy-button").onclick=checkout();
+                */
+            }
+        }
+        catch (err) {
+            console.log('tm data - single purchase flow prodview failed')
+        }
         console.log('General Page Code Success: ' + valPageName);
         s.t();
     }
@@ -467,24 +454,20 @@ try {
 catch (err) {
     console.log('tm data - no single purchase flow data')
 }
-
 /************************* SEASON TICKET SECTION **************************/
-
 //Season Ticket Cart Page View -- https://oss.ticketmaster.com/aps/heat/EN/cart/review
-
-try{
+try {
     if (parent.frames.document.location.host === "oss.ticketmaster.com" && /cart\/review/.test(parent.frames.document.location.href) === true) {
-
         //Method 1 - Product Data Season Tickets
         var seasontktType = parent.frames.jQuery('#cart-table > tbody > tr td').eq(46).text().trim(); //Half vs Full Season
         var seasonPrice = typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[1] != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[1] : "" || typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text() != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text() : ""; //$500.00;
         seasonPrice = seasonPrice.split('$').join('').trim();
         var seasonQty = typeof parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[0].trim() != "undefined" ? parent.frames.jQuery('#cart-table > tbody > tr td').eq(47).text().split(' ').join('').split('x')[0].trim() : ""; // 1 ticket vs 2 ticktes, etc.
         seasonQty = parseInt(seasonQty);
-            //Single Item Shopping Cart
-            if (Number.isInteger(seasonQty) !== true) {
-                seasonQty = '1'
-            }
+        //Single Item Shopping Cart
+        if (Number.isInteger(seasonQty) !== true) {
+            seasonQty = '1'
+        }
         var seasontktName = parent.frames.jQuery('#cart-table > tbody > tr td').eq(1).find('b').text(); //"2018-19 Half Season Plan B"
         var seasontktDetails = parent.frames.jQuery('#cart-table > tbody > tr td').eq(45).text().split('Row').join(' Row').split('Seat').join(' Seat').split(' - ').join('-'); //"Section 401 Row 2 Seat 3-4"
         var seasonProdString = ';' + seasontktName + '_' + seasontktDetails + ';' + seasonQty + ';' + seasonPrice.split('$').join('') + ';'
@@ -516,74 +499,57 @@ try{
         console.log('test worked---->' + seasontktDetails);
         console.log('test prodstring---->' + seasonProdString);
         s.t();
-    } else if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) === true) {
+    }
+}
+catch (err) {
+    console.log('tm data - prodview shopping cart data not fired');
+}
+try {
+    if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) === true) {
         var datatable = jQuery("#listing #datatables > tbody > tr > td > table > tbody > tr:not([id^='events-list'])").toArray();
-             var i;
-             var str = [];
-                 for (i = 0; i < datatable.length; i++) {
-                     var item = datatable[i];
-                         item = item.innerText.toLowerCase().trim();
-                     //Breakout String More
-                     var breakout1 = item.split(/[\n\r]/g);
-                     
-                     //For Event Description
-                     var breakout3 = item.split('events');
-                     
-                     var scProdName = breakout1;
-                     var scDesc = breakout3.toString().split('season')[0].trim().replace(/[\n\r]/g, "-").replace(' ', '-').replace(' ', '-').replace(' ', '-').replace(' - ', '-').split('	')[0];
-                     var viewString = ';' + scProdName + '_' + scDesc + ';' + ';' +';' + ';' + ';';
-                     str.push(viewString); //pushes constructed string
-                     var seasonprodViewString = str.join(",");
-                     var realseasonprodViewString = cleanName(seasonprodViewString);
-                     
-                     s.products = realseasonprodViewString;
-                     //s.state="XX"
-                     //s.zip="00000"
-                     //Season Ticket Product View
-                     s.events = "prodView";
-                     //console.log('prodView test confirmed----->' + seasonprodViewString);
-                     //console.log('prodView test confirmed----->' + scProdName);
-                     
-                 }
-                    //Get Global Ticketmaster Metrics    
-                    s.pageName = valPageName;
-                    s.channel = valch;
-                    s.eVar30 = valeventid;
-                    s.eVar31 = valevent //TM Event Name "May only be in the cart"
-                    s.eVar32 = valvenue;
-                    s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
-                    s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
-                    s.eVar35 = valartist;
-                    s.eVar36 = valartistID;
-                    //s.eVar44 = valprimcat; //Not included in Season Ticket Flow
-                    //s.eVar45 = valsubcat; //Not included in Season Ticket Flow
-                    s.eVar46 = "D=pageName";
-                    s.eVar47 = cleanName(typeof parent.frames.digitalData.page.attributes.eventType != "undefined" ? parent.frames.digitalData.page.attributes.eventType : "");
-                     
-                    console.log('tm data - season ticket browse page code fires');
-                    s.t();
-             } else {
-                    //Get Global Ticketmaster Metrics    
-                    s.pageName = valPageName;
-                    s.channel = valch;
-                    s.eVar30 = valeventid;
-                    s.eVar31 = valevent //TM Event Name "May only be in the cart"
-                    s.eVar32 = valvenue;
-                    s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
-                    s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
-                    s.eVar35 = valartist;
-                    s.eVar36 = valartistID;
-                    //s.eVar44 = valprimcat; //Not included in Season Ticket Flow
-                    //s.eVar45 = valsubcat; //Not included in Season Ticket Flow
-                    s.eVar46 = "D=pageName";
-                    s.eVar47 = cleanName(typeof parent.frames.digitalData.page.attributes.eventType != "undefined" ? parent.frames.digitalData.page.attributes.eventType : "");
-                     
-                    console.log('tm data - generic season ticket page code fires');
-                    s.t();
-             }
-        
-    } catch (err) {
-        console.log('tm data - prodview shopping cart data not fired');
-    } 
+        var i;
+        var str = [];
+        for (i = 0; i < datatable.length; i++) {
+            var item = datatable[i];
+            item = item.innerText.toLowerCase().trim();
+            //Breakout String More
+            var breakout1 = item.split(/[\n\r]/g);
+            //For Event Description
+            var breakout3 = item.split('events');
+            var scProdName = breakout1;
+            var scDesc = breakout3.toString().split('season')[0].trim().replace(/[\n\r]/g, "-").replace(' ', '-').replace(' ', '-').replace(' ', '-').replace(' - ', '-').split('	')[0];
+            var viewString = ';' + scProdName + '_' + scDesc + ';' + ';' + ';' + ';' + ';';
+            str.push(viewString); //pushes constructed string
+            var seasonprodViewString = str.join(",");
+            var realseasonprodViewString = cleanName(seasonprodViewString);
+            s.products = realseasonprodViewString;
+            //s.state="XX"
+            //s.zip="00000"
+            //Season Ticket Product View
+            s.events = "prodView";
+            //console.log('prodView test confirmed----->' + seasonprodViewString);
+            //console.log('prodView test confirmed----->' + scProdName);
+        }
+        //Get Global Ticketmaster Metrics    
+        s.pageName = valPageName;
+        s.channel = valch;
+        s.eVar30 = valeventid;
+        s.eVar31 = valevent //TM Event Name "May only be in the cart"
+        s.eVar32 = valvenue;
+        s.eVar33 = typeof parent.frames.digitalData.page.attributes.eventDate != "undefined" ? parent.frames.digitalData.page.attributes.eventDate : "";
+        s.eVar34 = typeof parent.frames.digitalData.page.attributes.eventTime != "undefined" ? parent.frames.digitalData.page.attributes.eventTime : "";
+        s.eVar35 = valartist;
+        s.eVar36 = valartistID;
+        //s.eVar44 = valprimcat; //Not included in Season Ticket Flow
+        //s.eVar45 = valsubcat; //Not included in Season Ticket Flow
+        s.eVar46 = "D=pageName";
+        s.eVar47 = cleanName(typeof parent.frames.digitalData.page.attributes.eventType != "undefined" ? parent.frames.digitalData.page.attributes.eventType : "");
+        console.log('tm data - season ticket browse page code success');
+        s.t();
+    }
+}
+catch (err) {
+    console.log('tm data - season ticket browse page code failed');
+}
 
 
