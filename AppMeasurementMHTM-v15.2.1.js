@@ -188,7 +188,7 @@ function s_doPlugins(s) {
         // If you are not using CNAME, DO NOT include these variables
         //marketingCloudServer: "INSERT-TRACKING-SERVER-HERE",
         //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
-        //idSyncAttachIframeOnWindowLoad: true
+        idSyncAttachIframeOnWindowLoad: true
     });
     //Get Parent Document Data TM
     s.server = parent.frames.document.location.host;
