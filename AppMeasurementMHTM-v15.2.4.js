@@ -600,7 +600,7 @@ if (parent.frames.document.location.host === "oss.ticketmaster.com" && /promotio
     }  
 
 //Season Ticket General Page View -- https://oss.ticketmaster.com/aps/heat/EN/buy/browse
-if (parent.frames.document.location.host === "oss.ticketmaster.com" && /cart\/review/.test(parent.frames.document.location.href) !== true && /buy\/browse/.test(parent.frames.document.location.href) !== true && /checkout\/confirmation/.test(parent.frames.document.location.href) !== true && /promotion/.test(parent.frames.document.location.href) !== true) {
+if (parent.frames.document.location.host === "oss.ticketmaster.com" || parent.frames.document.location.host === "am.ticketmaster.com" && /cart\/review/.test(parent.frames.document.location.href) !== true && /buy\/browse/.test(parent.frames.document.location.href) !== true && /checkout\/confirmation/.test(parent.frames.document.location.href) !== true && /promotion/.test(parent.frames.document.location.href) !== true) {
     try {
         //Get Global Ticketmaster Metrics    
         s.pageName = valPageName;
