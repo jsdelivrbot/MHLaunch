@@ -330,12 +330,19 @@ else {
     console.log('no campaign name (utm)')
 }
 //TM Variables
+//event ID
+var valeventid = typeof parent.frames.digitalData.page.attributes.eventID != "undefined" ? parent.frames.digitalData.page.attributes.eventID : "";
+    valeventid = cleanName(valeventid);
 //PageName
 var tmpageName = typeof parent.frames.digitalData.page.pageInfo.pageID != "undefined" ? parent.frames.digitalData.page.pageInfo.pageID : "" || typeof parent.frames.digitalData.page.pageInfo.pageName != "undefined" ? parent.frames.digitalData.page.pageInfo.pageName : "";
+    var tmpageNameST = tmpageName.split(':');
+    tmpageNameST[3] = valeventid;
+var valPageNameST = tmpageNameST.join(':');
+    valPageNameST = cleanName(valPageNameST);
 var valPageName = cleanName(tmpageName);
 //Channel
 var tmchannel = typeof parent.frames.digitalData.page.pageInfo.pageChannel != "undefined" ? parent.frames.digitalData.page.pageInfo.pageChannel : "" || typeof parent.frames.digitalData.page.pageInfo.pageType != "undefined" ? parent.frames.digitalData.page.pageInfo.pageType : "";
-var valch = cleanName(tmchannel) + '| test 9-2018';
+var valch = cleanName(tmchannel) + '| test 10.8.18';
 //Event Name
 var tmevent = typeof parent.frames.digitalData.page.attributes.eventName != "undefined" ? parent.frames.digitalData.page.attributes.eventName : "";
 var valevent = cleanName(tmevent);
@@ -345,8 +352,6 @@ var valartist = cleanName(tmartist);
 //Venue Name
 var tmvenue = typeof parent.frames.digitalData.page.attributes.venueName != "undefined" ? parent.frames.digitalData.page.attributes.venueName : "";
 var valvenue = tmvenue.toLowerCase();
-//event ID
-var valeventid = typeof parent.frames.digitalData.page.attributes.eventID != "undefined" ? parent.frames.digitalData.page.attributes.eventID : "";
 //Artist ID
 var tmartistID = typeof parent.frames.digitalData.page.attributes.artistID != "undefined" ? parent.frames.digitalData.page.attributes.artistID : "";
 var valartistID = cleanName(tmartistID);
@@ -361,7 +366,7 @@ try {
     var valsubcat = cleanName(tmsubcat);
     if (/ticketmaster.com/.test(parent.frames.document.location.href) && /oss.ticketmaster.com/.test(parent.frames.document.location.href) !== true) {
         //Get Global Ticketmaster Metrics    
-        s.pageName = valPageName;
+        s.pageName = valPageNameST;
         s.channel = valch;
         s.eVar30 = valeventid;
         s.eVar31 = valevent; //TM Event Name "May only be in the cart"
@@ -407,7 +412,7 @@ try {
         catch (err) {
             console.log('tm data - single purchase flow prodview failed')
         }
-        console.log('General Page Code Success: ' + valPageName);
+        console.log('tm data - single ticket general page code success: ' + valPageName);
         s.t();
     }
     else if (/checkout/.test(parent.frames.document.location.pathname) === true) {
@@ -419,7 +424,7 @@ try {
         var valtkttype = typeof parent.frames.digitalData.cart.ticketType != "undefined" ? parent.frames.digitalData.cart.ticketType : "";
         var valorderID = typeof parent.frames.digitalData.transaction.orderID != "undefined" ? parent.frames.digitalData.transaction.orderID : ""; //TM Order ID - specific to after payment
         //Purchase Confirmation Page
-        s.pageName = valPageName;
+        s.pageName = valPageNameST;
         s.channel = valch;
         s.eVar30 = valeventid;
         s.eVar31 = valevent; //TM Event Name "May only be in the cart"
@@ -506,7 +511,8 @@ if (parent.frames.document.location.host === "oss.ticketmaster.com" && /cart\/re
 }
 
 //Season Ticket Cart Page View -- https://oss.ticketmaster.com/aps/heat/EN/buy/browse
-if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) === true) {
+if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) === true || /promotion/.test(parent.frames.document.location.href) === true ) {
+            //Browse Screen ProdView
             try {
                 var datatable = jQuery("#listing #datatables > tbody > tr > td > table > tbody > tr:not([id^='events-list'])").toArray();
                     var i;
@@ -533,7 +539,34 @@ if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/bro
                         //console.log('prodView test confirmed----->' + scProdName);
                         }
                 } catch(err){
-                    console.log('prodview string try catch failed')
+                    console.log('tm data - browse screen prodview string try catch failed')
+                }
+                //Promo Screen ProdView
+                try {
+                 var promodatatable = jQuery('#datatables-promo > tbody > tr').toArray();
+                    var i;
+                    var str = [];
+                    for (i = 0; i < promodatatable.length; i++) {
+                        var item = promodatatable[i];
+                        item = item.innerText.toLowerCase().trim();
+                        //Breakout String More
+                        var breakout1 = cleanName(item);
+                        //Clean Event Description
+                        var breakout2 = breakout1.replace('americanairlines-arenafind-tickets','');
+                        var scProdName = breakout2;
+                        var viewString = ';' + scProdName + ';' + ';' + ';' + ';' + ';';
+                        str.push(viewString); //pushes constructed string
+                        var promoseasonprodViewString = str.join(",");
+                       	//console.log( promoseasonprodViewString );
+                        s.products = promoseasonprodViewString;
+                        //s.state="XX"
+                        //s.zip="00000"
+                        //Season Ticket Product View
+                        s.events = "prodView";
+                          }
+                        
+                } catch(err){
+                    console.log('tm data - promo screen prodview string try catch failed')
                 }
     
                 //Get Global Ticketmaster Metrics    
@@ -555,7 +588,7 @@ if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/bro
     }  
 
 //Season Ticket General Page View -- https://oss.ticketmaster.com/aps/heat/EN/buy/browse
-if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) !== true && /buy\/browse/.test(parent.frames.document.location.href) !== true && /checkout\/confirmation/.test(parent.frames.document.location.href) !== true) {
+if (parent.frames.document.location.host === "oss.ticketmaster.com" && /buy\/browse/.test(parent.frames.document.location.href) !== true && /buy\/browse/.test(parent.frames.document.location.href) !== true && /checkout\/confirmation/.test(parent.frames.document.location.href) !== true && /promotion/.test(parent.frames.document.location.href) !== true) {
     try {
         //Get Global Ticketmaster Metrics    
         s.pageName = valPageName;
