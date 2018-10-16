@@ -29,28 +29,10 @@ s.trackingServerSecure="miamiheatlimitedpartnership.sc.omtrdc.net"
 
 /************************* CUSTOM METRICS SECTION **************************/
 
-var tm = digitalData;
 
 //Page Name Code
-s.pageName = tm.page.pageInfo.pageID;
-s.eVar30 = tm.page.attributes.eventID;
-s.eVar31 = ""; //TM Event Description
-s.eVar32 = tm.page.attributes.venueName;
-s.eVar33 = tm.page.attributes.eventDate;
-s.eVar34 = tm.page.attributes.eventTime;
-s.eVar35 = tm.page.attributes.artistName;
-s.eVar36 = tm.page.attributes.artistID;
-s.eVar37 = ""; //TM Tickets Purchased (QTY)
-s.eVar38 = ""; //TM Face Value
-s.eVar39 = ""; //TM Currency
-s.eVar40 = ""; //TM Order
-s.eVar41 = ""; //TM Confirmation Code
-s.eVar42 = ""; //TM Purchase Date
-s.eVar43 = ""; //TM Purchase Time
-s.eVar44 = tm.page.category.primaryCategory;
-s.eVar45 = tm.page.category.subCategory1;
-s.eVar46 = s.pageName;
-s.eVar47 = ""; // TM Inventory Type
+s.pageName = 'testpage-ecid';
+
 
 
 /************************* CODE/DO PLUGINS SECTION **************************/
