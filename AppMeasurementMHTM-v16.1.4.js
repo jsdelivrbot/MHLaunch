@@ -178,6 +178,9 @@ t=i+this.subdomain+".demdex.net/dest5.html"+n,this.iframeHost=this.getIframeHost
 /************************* CALL VISITOR **************************/
 
 try{
+//Call Visitor ID Service for Analytics
+    s.visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg");
+    
 //Call Visitor ID Service
     var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
         trackingServer: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServer
@@ -189,8 +192,6 @@ try{
         idSyncAttachIframeOnWindowLoad: true
     });
 
-//Call Visitor ID Service for Analytics
-    s.visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg");
 } catch(err) {
     console.log('visitor id - failed');
 }
