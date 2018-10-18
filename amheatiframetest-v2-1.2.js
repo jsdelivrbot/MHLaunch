@@ -26,6 +26,7 @@ s.linkInternalFilters="javascript:,"
 s.linkLeaveQueryString=false
 s.linkTrackVars="None"
 s.linkTrackEvents="None"
+s.visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg");
 
 /* WARNING: Changing any of the below variables will cause drastic
 changes to how your visitor data is collected.  Changes should only be
@@ -45,8 +46,18 @@ var e=function(){"use strict";function e(){return{callbacks:{},add:function(e,t)
 
 /************************* CALL VISITOR **************************/
 //Call Visitor ID Service
-    s.visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg");
+    //Call Visitor ID Service
+     var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
+     trackingServer: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServer
+     //trackingServerSecure: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServerSecure
 
+     // To enable CNAME support, add the following configuration variables
+     // If you are not using CNAME, DO NOT include these variables
+     //marketingCloudServer: "INSERT-TRACKING-SERVER-HERE",
+     //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
+    
+     idSyncAttachIframeOnWindowLoad: true
+    });
 /*
  Start ActivityMap Module
 
