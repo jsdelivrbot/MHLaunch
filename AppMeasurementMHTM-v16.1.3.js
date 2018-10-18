@@ -7,7 +7,7 @@
 Copyright 1996-2015 Adobe, Inc. All Rights Reserved
 More info available at http://www.omniture.com */
 
-console.log('Account Manager Test - Heat Selected 10.18.18');
+console.log('Account Manager Test - Heat Selected 10.6.18');
 
 var s_account="heatglobaldev";
 var s=s_gi(s_account);
@@ -33,6 +33,7 @@ made when instructed to do so by your account manager.*/
 s.visitorNamespace="miamiheatlimitedpartnership"
 s.trackingServer="miamiheatlimitedpartnership.sc.omtrdc.net"
 //s.trackingServerSecure="miamiheatlimitedpartnership.sc.omtrdc.net"
+
 
 /************************* PLUGINS SECTION **************************/
 
@@ -176,10 +177,7 @@ t=i+this.subdomain+".demdex.net/dest5.html"+n,this.iframeHost=this.getIframeHost
 
 /************************* CALL VISITOR **************************/
 
-
-//Call Visitor ID Service for Analytics
-    s.visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg");
-
+try{
 //Call Visitor ID Service
     var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
         trackingServer: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServer
@@ -191,7 +189,11 @@ t=i+this.subdomain+".demdex.net/dest5.html"+n,this.iframeHost=this.getIframeHost
         idSyncAttachIframeOnWindowLoad: true
     });
 
-
+//Call Visitor ID Service for Analytics
+    s.visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg");
+} catch(err) {
+    console.log('visitor id - failed');
+}
 
 /************************* DO PLUGINS SECTION **************************/
 s.usePlugins = true
