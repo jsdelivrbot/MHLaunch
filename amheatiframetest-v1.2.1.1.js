@@ -45,15 +45,7 @@ var e=function(){"use strict";function e(){return{callbacks:{},add:function(e,t)
 
 /************************* CALL VISITOR **************************/
 //Call Visitor ID Service
-    var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
-        trackingServer: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServer
-        //trackingServerSecure: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServerSecure
-        // To enable CNAME support, add the following configuration variables
-        // If you are not using CNAME, DO NOT include these variables
-        //marketingCloudServer: "INSERT-TRACKING-SERVER-HERE",
-        //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
-        idSyncAttachIframeOnWindowLoad: true
-    });
+    var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg");
 
 /*
  Start ActivityMap Module
