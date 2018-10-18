@@ -45,7 +45,7 @@ var e=function(){"use strict";function e(){return{callbacks:{},add:function(e,t)
 
 /************************* CALL VISITOR **************************/
 //Call Visitor ID Service
-    var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg");
+    s.visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg");
 
 /*
  Start ActivityMap Module
