@@ -38,7 +38,7 @@ s.trackingServer="miamiheatlimitedpartnership.sc.omtrdc.net"
 
 /************************* CALL VISITOR **************************/
 
-try{
+
 //Call Visitor ID Service for Analytics
     s.visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg");
     
@@ -53,9 +53,6 @@ try{
         idSyncAttachIframeOnWindowLoad: true
     });
 
-} catch(err) {
-    console.log('visitor id - failed');
-}
 
 /************************* DO PLUGINS SECTION **************************/
 
