@@ -192,7 +192,6 @@ function getQueryParams(qs) {
 if (getQueryParams(parent.frames.document.location.search).hecid !== "undefined") {  var heatECID = typeof getQueryParams(parent.frames.document.location.search).hecid != "undefined" ? getQueryParams(parent.frames.document.location.search).hecid : ""; //Internal Tracking Code Came From Codes
     //Call Visitor ID Service for Analytics
     s.marketingCloudVisitorID = heatECID;
-    s.visitor = heatECID;
 }
 else {
     console.log('no ECID from query param')
@@ -201,17 +200,16 @@ else {
 
     
 //Call Visitor ID Service
-/*
+
     var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
         trackingServer: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServer
-        //trackingServerSecure: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServerSecure
+        trackingServerSecure: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServerSecure
         // To enable CNAME support, add the following configuration variables
         // If you are not using CNAME, DO NOT include these variables
         //marketingCloudServer: "INSERT-TRACKING-SERVER-HERE",
         //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
         idSyncAttachIframeOnWindowLoad: true
     });
-*/
 } catch(err) {
     console.log('visitor id - failed');
 }
@@ -233,7 +231,7 @@ function s_doPlugins(s) {
     s.eVar14 = s.getTimeParting('n', '-4'); // Set day
     s.prop14 = "D=v14";
     /* Marketing Cloud ID -- Must be in Do Plugins */
-    s.eVar10 = visitor.getAnalyticsVisitorID("1E701A795B111F550A495EAF@AdobeOrg");
+    s.eVar10 = visitor.getMarketingCloudVisitorID();
     s.prop10 = "D=v10";
     //Actual value of ECID/MCID
     //Global Check of Profile ID. Present only after payment for single tickets
