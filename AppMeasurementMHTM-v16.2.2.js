@@ -192,6 +192,7 @@ function getQueryParams(qs) {
 if (getQueryParams(parent.frames.document.location.search).hecid !== "undefined") {  var heatECID = typeof getQueryParams(parent.frames.document.location.search).hecid != "undefined" ? getQueryParams(parent.frames.document.location.search).hecid : ""; //Internal Tracking Code Came From Codes
     //Call Visitor ID Service for Analytics
     s.marketingCloudVisitorID = heatECID;
+    s.visitor = heatECID;
 }
 else {
     console.log('no ECID from query param')
