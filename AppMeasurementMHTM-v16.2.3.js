@@ -201,6 +201,7 @@ else {
 
     
 //Call Visitor ID Service
+/*
     var visitor = Visitor.getInstance("1E701A795B111F550A495EAF@AdobeOrg", {
         trackingServer: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServer
         //trackingServerSecure: "miamiheatlimitedpartnership.sc.omtrdc.net", // same as s.trackingServerSecure
@@ -214,7 +215,7 @@ else {
 } catch(err) {
     console.log('visitor id - failed');
 }
-
+*/
 
 
 /************************* DO PLUGINS SECTION **************************/
