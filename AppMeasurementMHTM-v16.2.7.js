@@ -212,7 +212,7 @@ else {
         // If you are not using CNAME, DO NOT include these variables
         //marketingCloudServer: "INSERT-TRACKING-SERVER-HERE",
         //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
-        //idSyncAttachIframeOnWindowLoad: true
+        idSyncAttachIframeOnWindowLoad: true
     });
 } catch(err) {
     console.log('visitor id - failed');
