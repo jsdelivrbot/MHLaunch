@@ -192,6 +192,10 @@ function getQueryParams(qs) {
 if (getQueryParams(parent.frames.document.location.search).hecid !== "undefined") {  var heatECID = typeof getQueryParams(parent.frames.document.location.search).hecid != "undefined" ? getQueryParams(parent.frames.document.location.search).hecid : ""; //Internal Tracking Code Came From Codes
     //Call Visitor ID Service for Analytics
     s.marketingCloudVisitorID = heatECID;
+    /* Marketing Cloud ID -- Must be in Do Plugins */
+    s.eVar10 = s.marketingCloudVisitorID;
+    s.prop10 = "D=v10";
+    //Actual value of ECID/MCID                                                               
 }
 else {
     console.log('no ECID from query param')
@@ -208,7 +212,7 @@ else {
         // If you are not using CNAME, DO NOT include these variables
         //marketingCloudServer: "INSERT-TRACKING-SERVER-HERE",
         //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
-        idSyncAttachIframeOnWindowLoad: true
+        //idSyncAttachIframeOnWindowLoad: true
     });
 } catch(err) {
     console.log('visitor id - failed');
@@ -230,10 +234,6 @@ function s_doPlugins(s) {
     /* Time Parting */
     s.eVar14 = s.getTimeParting('n', '-4'); // Set day
     s.prop14 = "D=v14";
-    /* Marketing Cloud ID -- Must be in Do Plugins */
-    s.eVar10 = visitor.getMarketingCloudVisitorID();
-    s.prop10 = "D=v10";
-    //Actual value of ECID/MCID
     //Global Check of Profile ID. Present only after payment for single tickets
     try {
         var tmpID = typeof parent.frames.digitalData.user[0].profile[0].profileInfo.profileID != "undefined" ? parent.frames.digitalData.user[0].profile[0].profileInfo.profileID : "" || typeof parent.frames.digitalData.transaction.profileID != "undefined" ? parent.frames.digitalData.transaction.profileID : "";
