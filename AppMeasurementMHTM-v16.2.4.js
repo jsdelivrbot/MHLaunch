@@ -211,11 +211,11 @@ else {
         //marketingCloudServerSecure: "INSERT-SECURE-TRACKING-SERVER-HERE" // same as s.trackingServerSecure
         idSyncAttachIframeOnWindowLoad: true
     });
-
+*/
 } catch(err) {
     console.log('visitor id - failed');
 }
-*/
+
 
 
 /************************* DO PLUGINS SECTION **************************/
