@@ -153,5 +153,6 @@ function s_pgicq(){var r=window,a=r.s_giq,k,p,n;if(a)for(k=0;k<a.length;k++)p=a[
 console.log(parent.frames.location);
 console.log(window.location);
 console.log(window.parent.location);
-s.pageName = window.digitalData.pageInstanceID;
+console.log(window.digitalData);
+s.pageName = "test iframe page 10.24.18";
 s.t();
