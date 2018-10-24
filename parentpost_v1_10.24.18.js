@@ -22,3 +22,6 @@
         }
 
     })(window);
+
+var mcID = 123
+parent.postMessage('iframeTestPageLoad: ' + mcID, 'https://www.ticketmaster.com/venueartist/106601/805966');
