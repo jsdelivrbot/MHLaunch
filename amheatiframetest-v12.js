@@ -158,5 +158,6 @@ console.log(window.venueID);
 console.log(window.x_pagename);
 console.log(window.document.referrer);
 console.log(window.document);
+console.log(window.location.href);
 s.pageName = "test iframe page 10.24.18";
 s.t();
