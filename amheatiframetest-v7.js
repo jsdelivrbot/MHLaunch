@@ -150,8 +150,8 @@ function s_gi(r){var a,k=window.s_c_il,p,n,m=r.split(","),s,u,t=0;if(k)for(p=0;!
 function s_pgicq(){var r=window,a=r.s_giq,k,p,n;if(a)for(k=0;k<a.length;k++)p=a[k],n=s_gi(p.oun),n.setAccount(p.un),n.setTagContainer(p.tagContainerName);r.s_giq=0}s_pgicq();
 
 
-console.log("parent.frames.location");
-console.log("window.location");
-console.log("window.parent.location");
+console.log(parent.frames.location);
+console.log(window.location);
+console.log(window.parent.location);
 s.pageName = 'testiframe 10.16.18';
 s.t();
