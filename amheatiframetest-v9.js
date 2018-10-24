@@ -153,5 +153,5 @@ function s_pgicq(){var r=window,a=r.s_giq,k,p,n;if(a)for(k=0;k<a.length;k++)p=a[
 console.log(parent.frames.location);
 console.log(window.location);
 console.log(window.parent.location);
-s.pageName = 'testiframe 10.16.18';
+s.pageName = window.digitalData.pageInstanceID;
 s.t();
