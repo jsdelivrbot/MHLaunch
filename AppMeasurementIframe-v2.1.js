@@ -72,6 +72,23 @@ s.getDaysSinceLastVisit=new Function("c",""
 +"n f0;else if(cval_s!=f1&&cval_s!=f2&&cval_s!=f3&&cval_s!=f4&&cval_s"
 +"!=f5) return '';else return cval_s;");
 
+/*
+ * Plugin: getPreviousValue_v1.0 - return previous value of designated
+ *   variable (requires split utility)
+ */
+s.getPreviousValue=new Function("v","c","el",""
++"var s=this,t=new Date,i,j,r='';t.setTime(t.getTime()+1800000);if(el"
++"){if(s.events){i=s.split(el,',');j=s.split(s.events,',');for(x in i"
++"){for(y in j){if(i[x]==j[y]){if(s.c_r(c)) r=s.c_r(c);v?s.c_w(c,v,t)"
++":s.c_w(c,'no value',t);return r}}}}}else{if(s.c_r(c)) r=s.c_r(c);v?"
++"s.c_w(c,v,t):s.c_w(c,'no value',t);return r}");
+/*
+ * Utility Function: split v1.5 - split a string (JS 1.0 compatible)
+ */
+s.split=new Function("l","d",""
++"var i,x=0,a=new Array;while(l){i=l.indexOf(d);i=i>-1?i:l.length;a[x"
++"++]=l.substring(0,i);l=l.substring(i+d.length);}return a");
+
 /*============== DO NOT ALTER ANYTHING BELOW THIS LINE ! ===============*/
 
 /**
@@ -200,143 +217,123 @@ function s_pgicq(){var r=window,a=r.s_giq,k,p,n;if(a)for(k=0;k<a.length;k++)p=a[
 
 
 /**
-* Clean up names from url strings
-*/
+ * Clean up names from url strings
+ */
 function cleanName(strName) {
-	 
-	strName = strName.replace(/_/g,"-");/* comment changed underscore to hyphen*/
-	//strName = strName.replace(/-/g," ");/* comment out for hyphen delimeter to stay*/
-	strName = strName.replace(/\.php/g,"");
-	strName = strName.replace(/\.do/g,"");
-	strName = strName.replace(/\.jsp/g,"");
-	strName = strName.replace(/\.aspx/g,"");
-	strName = strName.replace(/\.html/g,"");
-	strName = strName.replace(/\.htm/g,"");
-	strName = strName.replace(/\.cgi/g,"");
-	
-	if (strName.indexOf("?") > -1) {
-		 
-		aryNoParam = strName.split("?");
-		strName = aryNoParam[0];
-		 
-	}
-	if (strName.indexOf("#") > -1) {
-		 
-		aryNoHash = strName.split("#");
-		strName = aryNoHash[0];
-		 
-	}
-	 
-	return strName;
+    strName = strName.replace(/_/g, "-"); /* comment changed underscore to hyphen*/
+    //strName = strName.replace(/-/g," ");/* comment out for hyphen delimeter to stay*/
+    strName = strName.replace(/\.php/g, "");
+    strName = strName.replace(/\.do/g, "");
+    strName = strName.replace(/\.jsp/g, "");
+    strName = strName.replace(/\.aspx/g, "");
+    strName = strName.replace(/\.html/g, "");
+    strName = strName.replace(/\.htm/g, "");
+    strName = strName.replace(/\.cgi/g, "");
+    if (strName.indexOf("?") > -1) {
+        aryNoParam = strName.split("?");
+        strName = aryNoParam[0];
+    }
+    if (strName.indexOf("#") > -1) {
+        aryNoHash = strName.split("#");
+        strName = aryNoHash[0];
+    }
+    return strName;
 }
-
-
 /**
-* sets the sections object
-*/
-
+ * sets the sections object
+ */
 function setSections() {
-  var urlBits = [];
-  var bitRef = 0;
-  var secString = "";
-  var pStr="";
-  var breaktest = "";
-  var sections = {};
-  //Check subdomain structure for meaningful patterns to determine the section
-  pUrl = document.referrer;
-  
-  pUrl = pUrl.split("?")[0];
-  pUrl = pUrl.split("#")[0];
-  pUrl = pUrl.split(".html")[0]; //HEAT - Remove trailing dot html 10.19.18
-  pUrl = pUrl.split("html")[0]; //HEAT - Remove trailing html 10.1.18
-  pUrl = pUrl.split("/");
-  pUrl = pUrl.filter(function(e){ return e === 0 || e }); //HEAT - Remove Empty Values in String Array 10.9.18
-  
-  for (i=0; i<pUrl.length; i++) {
-    pUrl[i] = pUrl[i].toLowerCase();
-  }
-  
-  for (var i=0; i<pUrl.length; i++) {
-    pUrlDot = pUrl[i].split(".");
-    for (var p=0; p<pUrlDot.length; p++) {
-      //check to see if we have found the TLD
-      if (pUrlDot[p].indexOf("com") > -1 || pUrlDot[p].indexOf("165") > -1 || pUrlDot[p].indexOf("undefined") > -1) {
-        breaktest = "break";
-        bitRef=i;
-        break;
-      }
+    var urlBits = [];
+    var bitRef = 0;
+    var secString = "";
+    var pStr = "";
+    var breaktest = "";
+    var sections = {};
+    //Check subdomain structure for meaningful patterns to determine the section
+    pUrl = document.referrer;
+    pUrl = pUrl.split("?")[0];
+    pUrl = pUrl.split("#")[0];
+    pUrl = pUrl.split(".html")[0]; //HEAT - Remove trailing dot html 10.19.18
+    pUrl = pUrl.split("html")[0]; //HEAT - Remove trailing html 10.1.18
+    pUrl = pUrl.split("/");
+    pUrl = pUrl.filter(function (e) {
+        return e === 0 || e
+    }); //HEAT - Remove Empty Values in String Array 10.9.18
+    for (i = 0; i < pUrl.length; i++) {
+        pUrl[i] = pUrl[i].toLowerCase();
     }
-    if (breaktest == "break") {
-      break;
+    for (var i = 0; i < pUrl.length; i++) {
+        pUrlDot = pUrl[i].split(".");
+        for (var p = 0; p < pUrlDot.length; p++) {
+            //check to see if we have found the TLD
+            if (pUrlDot[p].indexOf("com") > -1 || pUrlDot[p].indexOf("165") > -1 || pUrlDot[p].indexOf("undefined") > -1) {
+                breaktest = "break";
+                bitRef = i;
+                break;
+            }
+        }
+        if (breaktest == "break") {
+            break;
+        }
     }
-  }
-  pUrlLen = pUrl.length;
-  //Determine where in the array we should start looking at the URL structure
+    pUrlLen = pUrl.length;
+    //Determine where in the array we should start looking at the URL structure
+    /*
+    if(jQuery.inArray("webapp",pUrl) > -1) {
+      bitRef=bitRef+1; 
+    }
   
-  /*
-  if(jQuery.inArray("webapp",pUrl) > -1) {
-    bitRef=bitRef+1; 
-  }
+    if(jQuery.inArray("",pUrl) > -1) {
+      bitRef=bitRef+1; 
+    }
   
-  if(jQuery.inArray("",pUrl) > -1) {
-    bitRef=bitRef+1; 
-  }
+    if(jQuery.inArray("cgi-bin",pUrl) > -1) {
+      bitRef=bitRef+1; 
+    }
   
-  if(jQuery.inArray("cgi-bin",pUrl) > -1) {
-    bitRef=bitRef+1; 
-  }
-  
-  if(jQuery.inArray("hcp",pUrl) > -1) {
-    bitRef=bitRef+1; 
-    naf.set("server","hcp");
-  }
-  */
-  
-  
+    if(jQuery.inArray("hcp",pUrl) > -1) {
+      bitRef=bitRef+1; 
+      naf.set("server","hcp");
+    }
+    */
     if (document.location.host === "www.themiamiheatstore.com" || /shopifypreview.com/.test(window.location.href) === true) {
-      sections.basename = 'heatstore';
-    } else if (/ticketmaster.com/.test(document.referrer)) {
-      sections.basename = 'tmus';
-    } else if (document.location.host === "www.aaarena.com") {
-      sections.basename = 'aaarena';
-    } else if (/heat/.test(window.location.href) === true) {
-      sections.basename = 'nbaheat';
-    } else {
-      sections.basename = 'default';  
-    } 
- 
-    
-  
-  //Determine the subSection
-  if (pUrlLen > (bitRef +1) && pUrl[bitRef +1].length > 0) {
-    sections.section = cleanName(pUrl[bitRef +1]);
-  }
-  if (pUrlLen > (bitRef +2) && pUrl[bitRef +2].length > 0) {
-    sections.subSection = cleanName(pUrl[bitRef +2]);
-  }
-  if (pUrlLen > (bitRef +3) && pUrl[bitRef +3].length > 0) {
-    sections.subSubSection = cleanName(pUrl[bitRef +3]);
-  }
-  if (pUrlLen > (bitRef +4) && pUrl[bitRef +4].length > 0) {
-    sections.subSubSubSection = cleanName(pUrl[bitRef +4]);
-  }
-
- 
-  var lastItem = pUrl[pUrl.length - 1];
-  
-  if (typeof(lastItem) !== 'undefined') {
-  	sections.lastItem = cleanName(lastItem);
-  }
-  
-  
-  return sections;
-  
+        sections.basename = 'heatstore';
+    }
+    else if (/ticketmaster.com/.test(document.referrer)) {
+        sections.basename = 'tmus';
+    }
+    else if (document.location.host === "www.aaarena.com") {
+        sections.basename = 'aaarena';
+    }
+    else if (/heat/.test(window.location.href) === true) {
+        sections.basename = 'nbaheat';
+    }
+    else {
+        sections.basename = 'default';
+    }
+    //Determine the subSection
+    if (pUrlLen > (bitRef + 1) && pUrl[bitRef + 1].length > 0) {
+        sections.section = cleanName(pUrl[bitRef + 1]);
+    }
+    if (pUrlLen > (bitRef + 2) && pUrl[bitRef + 2].length > 0) {
+        sections.subSection = cleanName(pUrl[bitRef + 2]);
+    }
+    if (pUrlLen > (bitRef + 3) && pUrl[bitRef + 3].length > 0) {
+        sections.subSubSection = cleanName(pUrl[bitRef + 3]);
+    }
+    if (pUrlLen > (bitRef + 4) && pUrl[bitRef + 4].length > 0) {
+        sections.subSubSubSection = cleanName(pUrl[bitRef + 4]);
+    }
+    var lastItem = pUrl[pUrl.length - 1];
+    if (typeof (lastItem) !== 'undefined') {
+        sections.lastItem = cleanName(lastItem);
+    }
+    return sections;
 }
 //Parsed URL Value
 setSections();
-
 try {
-    if (document.referrer.split("?")[1] === undefined) {
+    if (document.referrer.split("?").length > 1) {
         //Get Query String Values
         function getQueryParams(qs) {
             qs = qs.replace(/\+/g, " ");
@@ -353,86 +350,85 @@ try {
 catch (err) {
     console.log("no query string param");
 }
-
 //Get Cookie Function
 function getCookieValue(a) {
     var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
     return b ? b.pop() : '';
 }
-    
 getCookieValue("AMCV_1E701A795B111F550A495EAF%40AdobeOrg");
-
-
-try{
-    var qstring = typeof document.referrer.split("?")[1].toLowerCase() != "undefined" ? document.referrer.split("?")[1].toLowerCase() : "";
-    getQueryParams(qstring);
-} catch(err){
+try {
+    if (document.referrer.split("?").length > 1) {
+        var qstring = typeof document.referrer.split("?")[1].toLowerCase() != "undefined" ? document.referrer.split("?")[1].toLowerCase() : "";
+        getQueryParams(qstring);
+    }
+    else {
+        console.log("no query params");
+    }
+}
+catch (err) {
     console.log("no query params");
 }
-
-
-
 //Page Name Code
 var parsep = setSections().basename + ":" + setSections().section + ":" + setSections().subSection + ":" + setSections().subSubSection;
 var product = "tm" + "_" + setSections().section + "_" + setSections().subSubSection;
-
-try{
-   var eventdate = setSections().section.split("-").filter(Number).join("-"); 
-} catch(err){
+try {
+    var eventdate = setSections().section.split("-").filter(Number).join("-");
+}
+catch (err) {
     console.log("no event date");
 }
-
-
 //Event Detail Page Code
-if (/event/g.test(document.referrer)){
-s.pageName = parsep;
-s.channel = setSections().basename + ":" + setSections().subSection;
-s.server = document.referrer.split("/")[2].toLowerCase();
-s.pageURL = document.referrer;
-s.referrer = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
-s.products = ";" + product + ";" + ";" + ";" + ";";
-s.events="event1,prodView";
-s.eVar2 = "D=g";
-s.prop2 = "D=v2";
-s.eVar10 = typeof visitor.getMarketingCloudVisitorID() ? visitor.getMarketingCloudVisitorID() : "";
-s.eVar48 = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
-s.eVar30 = typeof setSections().subSubSection != "undefined" ? setSections().subSubSection : "";
-s.eVar31 = typeof setSections().section != "undefined" ? setSections().section : "";
-s.eVar33 = typeof eventdate ? eventdate : "";
-s.eVar36 = typeof getQueryParams(qstring).artistid != "undefined" ? getQueryParams(qstring).artistid : "";
-s.eVar46 = parsep;
-s.t();
-console.log("event detail page data");
-} else if (/checkout\/order/g.test(document.referrer)){
-s.pageName = parsep;
-s.channel = setSections().basename + ":" + setSections().subSection;
-s.server = document.referrer.split("/")[2].toLowerCase();
-s.pageURL = document.referrer;
-s.referrer = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
-//s.products = ";" + product + ";" + ";" + ";" + ";";
-//s.events="purchase";
-s.eVar2 = "D=g";
-s.prop2 = "D=v2";
-s.eVar10 = typeof visitor.getMarketingCloudVisitorID() ? visitor.getMarketingCloudVisitorID() : "";
-s.eVar48 = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
-s.eVar33 = typeof eventdate ? eventdate : "";
-s.eVar36 = typeof getQueryParams(qstring).artistid != "undefined" ? getQueryParams(qstring).artistid : "";
-s.eVar46 = parsep;
-s.t();
-console.log("event detail page data");
-} else {
-s.pageName = parsep;
-s.channel = setSections().basename + ":" + setSections().section;
-s.server = document.referrer.split("/")[2].toLowerCase();
-s.pageURL = document.referrer;
-s.referrer = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
-s.eVar2 = "D=g";
-s.prop2 = "D=v2";
-s.eVar10 = typeof visitor.getMarketingCloudVisitorID() ? visitor.getMarketingCloudVisitorID() : "";
-s.eVar48 = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
-s.eVar30 = typeof setSections().subSubSection != "undefined" ? setSections().subSubSection : "";
-s.eVar31 = typeof setSections().section != "undefined" ? setSections().section : "";
-s.eVar36 = typeof getQueryParams(qstring).artistid != "undefined" ? getQueryParams(qstring).artistid : "";
-s.eVar46 = parsep;
-s.t();
+if (/event/g.test(document.referrer)) {
+    s.pageName = parsep;
+    s.channel = setSections().basename + ":" + setSections().subSection;
+    s.server = document.referrer.split("/")[2].toLowerCase();
+    s.pageURL = document.referrer;
+    s.referrer = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
+    s.products = ";" + product + ";" + ";" + ";" + ";";
+    s.events = "event1,prodView";
+    s.eVar2 = "D=g";
+    s.prop2 = "D=v2";
+    s.eVar10 = typeof visitor.getMarketingCloudVisitorID() ? visitor.getMarketingCloudVisitorID() : "";
+    s.eVar48 = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
+    s.eVar30 = typeof setSections().subSubSection != "undefined" ? setSections().subSubSection : "";
+    s.eVar31 = typeof setSections().section != "undefined" ? setSections().section : "";
+    s.eVar33 = typeof eventdate ? eventdate : "";
+    s.eVar36 = typeof getQueryParams(qstring).artistid != "undefined" ? getQueryParams(qstring).artistid : "";
+    s.eVar46 = parsep;
+    s.t();
+    console.log("event detail page data");
+}
+else if (/checkout\/order/g.test(document.referrer)) {
+    s.pageName = parsep;
+    s.channel = setSections().basename + ":" + setSections().subSection;
+    s.server = document.referrer.split("/")[2].toLowerCase();
+    s.pageURL = document.referrer;
+    s.referrer = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
+    //s.products = ";" + product + ";" + ";" + ";" + ";";
+    //s.events="purchase";
+    s.eVar2 = "D=g";
+    s.prop2 = "D=v2";
+    s.eVar10 = typeof visitor.getMarketingCloudVisitorID() ? visitor.getMarketingCloudVisitorID() : "";
+    s.eVar48 = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
+    s.eVar33 = typeof eventdate ? eventdate : "";
+    s.eVar36 = typeof getQueryParams(qstring).artistid != "undefined" ? getQueryParams(qstring).artistid : "";
+    s.eVar46 = parsep;
+    s.t();
+    console.log("event detail page data");
+}
+else {
+    s.pageName = parsep;
+    s.channel = setSections().basename + ":" + setSections().section;
+    s.server = document.referrer.split("/")[2].toLowerCase();
+    s.pageURL = document.referrer;
+    s.referrer = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
+    s.eVar2 = "D=g";
+    s.prop2 = "D=v2";
+    s.eVar10 = typeof visitor.getMarketingCloudVisitorID() ? visitor.getMarketingCloudVisitorID() : "";
+    s.eVar48 = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
+    s.eVar30 = typeof setSections().subSubSection != "undefined" ? setSections().subSubSection : "";
+    s.eVar31 = typeof setSections().section != "undefined" ? setSections().section : "";
+    s.eVar36 = typeof getQueryParams(qstring).artistid != "undefined" ? getQueryParams(qstring).artistid : "";
+    s.eVar46 = parsep;
+    s.t();
 }
