@@ -473,11 +473,11 @@ if (track === false) {
 
 
 
-
+var ihost = document.referrer.split("?")[0];
 
 
 //Event Detail Page Code
-if (/venueartist/g.test(document.referrer)) {
+if (/venueartist/g.test(ihost)) {
     s.pageName = parsep;
     s.campaign = newcString;
     s.channel = setSections().basename + ":" + setSections().section;
@@ -499,7 +499,7 @@ if (/venueartist/g.test(document.referrer)) {
     console.log("venue artist page data");
 }
 
-if (/event/g.test(document.referrer)) {
+if (/event/g.test(ihost)) {
     s.pageName = parsep;
     s.campaign = newcString;
     s.channel = setSections().basename + ":" + setSections().subSection;
@@ -526,7 +526,7 @@ if (/event/g.test(document.referrer)) {
     console.log("event detail page data");
 }
 
-if (/checkout\/order/g.test(document.referrer)) {
+if (/checkout\/order/g.test(ihost)) {
     s.pageName = parsep;
     s.channel = setSections().basename + ":" + setSections().subSection;
     s.server = document.referrer.split("/")[2].toLowerCase();
