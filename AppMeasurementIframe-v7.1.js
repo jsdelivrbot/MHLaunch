@@ -366,23 +366,24 @@ function setSections() {
 //Parsed URL Value
 setSections();
 
-try {
-    if (document.referrer.split("?").length > 1) {
-        //Get Query String Values
-        function getQueryParams(qs) {
-            qs = qs.replace(/\+/g, " ").toLowerCase();
-            var params = {}
-                , re = /[?&]?([^=]+)=([^&]*)/g
-                , tokens;
-            while (tokens = re.exec(qs)) {
-                params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]).toLowerCase();
-            }
-            return params;
+
+if (document.referrer.split("?").length > 1) {
+    //Get Query String Values
+    function getQueryParams(qs) {
+        qs = qs.replace(/\+/g, " ").toLowerCase();
+        var params = {}
+            , re = /[?&]?([^=]+)=([^&]*)/g
+            , tokens;
+        while (tokens = re.exec(qs)) {
+            params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]).toLowerCase();
         }
+        return params;
     }
+    var qstring = typeof document.referrer.split("?")[1].toLowerCase() != "undefined" ? document.referrer.split("?")[1].toLowerCase() : "";
+    getQueryParams(qstring);
 }
-catch (err) {
-    console.log("no query string param");
+else {
+    console.log("no query params");
 }
 
 
@@ -394,18 +395,6 @@ function getCookieValue(a) {
 //getCookieValue("AMCV_1E701A795B111F550A495EAF%40AdobeOrg");
 
 
-try {
-    if (document.referrer.split("?").length > 1) {
-        var qstring = typeof document.referrer.split("?")[1].toLowerCase() != "undefined" ? document.referrer.split("?")[1].toLowerCase() : "";
-        getQueryParams(qstring);
-    }
-    else {
-        console.log("no query params");
-    }
-}
-catch (err) {
-    console.log("no query params");
-}
 
 
 //Campaign Variable Code v0
@@ -463,13 +452,6 @@ else {
     console.log("utm_content data NOT avail");
 }
 
-//Set Email Campaign Tracking First
-if (email === "" || getQueryParams(qstring).deliveryname === undefined) {
-    console.log("no email campaign data available string");
-}
-else {
-    return "email" + ":" + email + ":" + "adobecampaign";
-}
 
 var camparr = [];
 camparr.push(medium);
@@ -479,17 +461,15 @@ camparr.push(content);
 camparr.push(term);
 var cString = camparr.join(":");
 
-if (cString === "nomedium:nocampaign:nosource:nocontent:noterm" || cString === undefined || cString === "") {
-    console.log('no query data - internal referrer');
-    var track = false;
-}
-else {
-    var track = true;
-}
 
-if (track === false) {
-    console.log('no query data - internal referrer OR no internal referrer');
-}else {
+
+if (email !== "" || getQueryParams(qstring).deliveryname !== undefined && cString === "nomedium:nocampaign:nosource:nocontent:noterm") {
+    var newcString = "email" + ":" + email + ":" + "adobecampaign";
+} 
+
+if (cString === "nomedium:nocampaign:nosource:nocontent:noterm") {
+    console.log("null values for campaign data")
+} else if (cString !== undefined) {
     var newcString = cString;
 }
 
