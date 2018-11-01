@@ -1,4 +1,3 @@
-
 //  10.2.28 - TM Version 1 - This version works for single tickets. Adding OSS Conditions for Season Tickets 
 //  10.5.18 - Added DOM Scraping for Purchase Funnel Flow
 //  10.6.18 - Moved All Custom Code to Bottom of Page to give a chance for all plugins and services to load. Modified prodView data to account for weird values.
@@ -359,6 +358,9 @@ function setSections() {
     if (pUrlLen > (bitRef + 4) && pUrl[bitRef + 4].length > 0) {
         sections.subSubSubSection = cleanName(pUrl[bitRef + 4]);
     }
+    if (pUrlLen > (bitRef + 5) && pUrl[bitRef + 5].length > 0) {
+        sections.subSection5 = cleanName(pUrl[bitRef + 5]);
+    }
     var lastItem = pUrl[pUrl.length - 1];
     if (typeof (lastItem) !== 'undefined') {
         sections.lastItem = cleanName(lastItem);
@@ -371,7 +373,7 @@ setSections();
 
 
 if (document.referrer.split("?").length > 1) {
-    //Get Query String Values
+    //Get Query String Values for Query Parameters for Marketing
     function getQueryParams(qs) {
         qs = qs.replace(/\+/g, " ").toLowerCase();
         var params = {}
@@ -384,6 +386,10 @@ if (document.referrer.split("?").length > 1) {
     }
     var qstring = typeof document.referrer.split("?")[1].toLowerCase() != "undefined" ? document.referrer.split("?")[1].toLowerCase() : "";
     getQueryParams(qstring);
+}
+else {
+    console.log("no query params");
+}
     
     //Campaign Variable Code v0
 if (getQueryParams(qstring).deliveryname !== undefined) {
@@ -460,22 +466,23 @@ if (cString === "nomedium:nocampaign:nosource:nocontent:noterm") {
 } else if (cString !== undefined) {
     var newcString = cString;
 }
-    return tm_data = getQueryParams(document.location.search);
-}
 else {
     console.log("no query params");
 }
 
 
-//Get Cookie Function
-function getCookieValue(a) {
-    var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
-    return b ? b.pop() : '';
-}
-//getCookieValue("AMCV_1E701A795B111F550A495EAF%40AdobeOrg");
-
-
-
+    function getQueryParams(qs) {
+        qs = String(qs);
+        qs = qs.replace(/\+/g, " ");
+        var params = {}
+            , re = /[?&]?([^=]+)=([^&]*)/g
+            , tokens;
+        while (tokens = re.exec(qs)) {
+            params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]).toLowerCase();
+        }
+        return params;
+    }
+    var tm_data = getQueryParams(document.location.search);
 
 
 
@@ -539,7 +546,7 @@ if (/venueartist/g.test(ihost)) {
     s.eVar43 = typeof tm_data.purchaset != "undefined" ? tm_data.purchaset : ""; 	//TM Purchase Time
     s.eVar44 = typeof tm_data.majorcat != "undefined" ? tm_data.minorcat : ""; 	//TM Major Category (Music, Sports)
     s.eVar45 = typeof tm_data.minorcat != "undefined" ? tm_data.minorcat : ""; //TM Minor Category (Rock, Baseball)
-    s.eVar46 = parsep;
+    s.eVar46 = s.pageName;
     s.eVar47 = typeof tm_data.inventory != "undefined" ? tm_data.inventory : ""; //TM Inventory Type (Primary, Resale)
     s.eVar48 = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
     s.t();
@@ -580,7 +587,7 @@ if (/event/g.test(ihost)) {
     s.eVar43 = typeof tm_data.purchaset != "undefined" ? tm_data.purchaset : ""; 	//TM Purchase Time
     s.eVar44 = typeof tm_data.majorcat != "undefined" ? tm_data.minorcat : ""; 	//TM Major Category (Music, Sports)
     s.eVar45 = typeof tm_data.minorcat != "undefined" ? tm_data.minorcat : ""; //TM Minor Category (Rock, Baseball)
-    s.eVar46 = parsep;
+    s.eVar46 = s.pageName;
     s.eVar47 = typeof tm_data.inventory != "undefined" ? tm_data.inventory : ""; //TM Inventory Type (Primary, Resale)
     s.eVar48 = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
     s.t();
@@ -615,7 +622,7 @@ if (/checkout\/order/g.test(ihost)) {
     s.eVar43 = typeof tm_data.purchaset != "undefined" ? tm_data.purchaset : ""; 	//TM Purchase Time
     s.eVar44 = typeof tm_data.majorcat != "undefined" ? tm_data.minorcat : ""; 	//TM Major Category (Music, Sports)
     s.eVar45 = typeof tm_data.minorcat != "undefined" ? tm_data.minorcat : ""; //TM Minor Category (Rock, Baseball)
-    s.eVar46 = parsep;
+    s.eVar46 = s.pageName;
     s.eVar47 = typeof tm_data.inventory != "undefined" ? tm_data.inventory : ""; //TM Inventory Type (Primary, Resale)
     s.eVar48 = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
     s.t();
@@ -623,9 +630,10 @@ if (/checkout\/order/g.test(ihost)) {
 }
 
 //Season Ticket Flow Tracking
-
-if(/oss.ticketmaster.com/g.test(ihost)){
-s.pageName = pagenameobj
+//Buy Detail Page
+if(/oss.ticketmaster.com/g.test(ihost) && /buy\/details/g.test(document.referrer)){
+var channel = "amus:buy-details";
+    s.pageName = pagenameobj
     s.channel = channel;
     s.server = document.referrer.split("/")[2].toLowerCase();
     s.pageURL = pageURL;
@@ -649,11 +657,11 @@ s.pageName = pagenameobj
     s.eVar43 = typeof tm_data.purchaset != "undefined" ? tm_data.purchaset : ""; 	//TM Purchase Time
     s.eVar44 = typeof tm_data.majorcat != "undefined" ? tm_data.minorcat : ""; 	//TM Major Category (Music, Sports)
     s.eVar45 = typeof tm_data.minorcat != "undefined" ? tm_data.minorcat : ""; //TM Minor Category (Rock, Baseball)
-    s.eVar46 = parsep;
+    s.eVar46 = s.pageName;
     s.eVar47 = typeof tm_data.inventory != "undefined" ? tm_data.inventory : ""; //TM Inventory Type (Primary, Resale)
     s.eVar48 = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
     s.t();
-    console.log("account manager page data");
+    console.log("season ticket purchase flow page data");
 
 }
 
@@ -683,7 +691,7 @@ if (/am.ticketmaster.com/g.test(ihost)){
     s.eVar43 = typeof tm_data.purchaset != "undefined" ? tm_data.purchaset : ""; 	//TM Purchase Time
     s.eVar44 = typeof tm_data.majorcat != "undefined" ? tm_data.minorcat : ""; 	//TM Major Category (Music, Sports)
     s.eVar45 = typeof tm_data.minorcat != "undefined" ? tm_data.minorcat : ""; //TM Minor Category (Rock, Baseball)
-    s.eVar46 = parsep;
+    s.eVar46 = s.pageName;
     s.eVar47 = typeof tm_data.inventory != "undefined" ? tm_data.inventory : ""; //TM Inventory Type (Primary, Resale)
     s.eVar48 = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
     s.t();
