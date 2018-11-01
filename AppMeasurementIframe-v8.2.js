@@ -511,7 +511,9 @@ var eventID =  cleanName(tm_data.eventid);
 var eventDate = tm_data.eventd.split("/").join("-");
 var randomN =  cleanName(tm_data.version);
 var ticketQTY = typeof tm_data.tktqty != "undefined" ? tm_data.tktqty : "";
-var revenue = typeof tm_data.faceval != "undefined" ? tm_data.faceval : "";
+var price = typeof tm_data.faceval != "undefined" ? tm_data.faceval : "";
+var calc = ticketQTY * price;
+var revenue = calc.toFixed(2);
 var confirmation = typeof tm_data.confirmcode != "undefined" ? tm_data.confirmcode : ""; 	//TM Confirmation Code;
 var orderID = "tm" + "_" + randomN + "_" + confirmation;
 
@@ -637,6 +639,8 @@ var channel = "amus:buy-details";
     s.channel = channel;
     s.server = document.referrer.split("/")[2].toLowerCase();
     s.pageURL = pageURL;
+    s.products = ";" + "tms" + "_" + eventName + "_" + eventID +  ";" + ";" + ";" + ";";
+    s.events = "event1,prodView";
     s.eVar2 = "D=g";
     s.prop2 = "D=v2";
     s.eVar10 = typeof visitor.getMarketingCloudVisitorID() ? visitor.getMarketingCloudVisitorID() : "";
@@ -662,13 +666,83 @@ var channel = "amus:buy-details";
     s.eVar48 = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
     s.t();
     console.log("season ticket purchase flow page data");
+}
 
+//Confirmation Page
+if(/oss.ticketmaster.com/g.test(ihost) && /checkout\/confirmation/g.test(ihost)){
+var channel = "amus:confirmation";
+    s.pageName = pagenameobj
+    s.channel = channel;
+    s.server = document.referrer.split("/")[2].toLowerCase();
+    s.pageURL = pageURL;
+    s.products = ";" + "tms" + "_" + eventID + "_" + eventName +  ";" + ticketQTY + ";" + revenue + ";" + ";";
+    s.events="purchase";
+    s.purchaseID = randomN;
+    s.eVar2 = "D=g";
+    s.prop2 = "D=v2";
+    s.eVar10 = typeof visitor.getMarketingCloudVisitorID() ? visitor.getMarketingCloudVisitorID() : "";
+    s.eVar22 = typeof orderID != "undefined" ? orderID : "";	//Order ID randomN + confirmation
+    s.eVar30 = typeof eventID != "undefined" ? eventID : ""; 	//TM Event Id
+    s.eVar31 = typeof eventName != "undefined" ? eventName : ""; 	//TM Event Name
+    s.eVar32 = typeof tm_data.venue != "undefined" ? tm_data.venue : ""; 	//TM Venue Name
+    s.eVar33 = typeof eventDate != "undefined" ? eventDate : ""; 	//TM Event Date
+    s.eVar34 = typeof tm_data.eventt != "undefined" ? tm_data.eventt : ""; 	//TM Event Time
+    s.eVar35 = typeof tm_data.artistn != "undefined" ? tm_data.artistn : ""; 	//TM Artist Name
+    s.eVar36 = typeof tm_data.artistid != "undefined" ? tm_data.artistid : ""; 	//TM Artist ID
+    s.eVar37 = typeof ticketQTY != "undefined" ? ticketQTY : ""; 	//TM Tickets Purchased (Quantity)
+    s.eVar38 = typeof revenue != "undefined" ? revenue : ""; 	//TM Face Value (Revenue without Fees)
+    s.eVar39 = typeof tm_data.currency != "undefined" ? tm_data.currency : ""; 	//TM Currency
+    s.eVar40 = typeof tm_data.order != "undefined" ? tm_data.order : ""; 	//TM Order
+    s.eVar41 = typeof confirmation != "undefined" ? confirmation : ""; 	//TM Confirmation Code
+    s.eVar42 = typeof tm_data.purchased != "undefined" ? tm_data.purchased : ""; 	//TM Purchase Date
+    s.eVar43 = typeof tm_data.purchaset != "undefined" ? tm_data.purchaset : ""; 	//TM Purchase Time
+    s.eVar44 = typeof tm_data.majorcat != "undefined" ? tm_data.minorcat : ""; 	//TM Major Category (Music, Sports)
+    s.eVar45 = typeof tm_data.minorcat != "undefined" ? tm_data.minorcat : ""; //TM Minor Category (Rock, Baseball)
+    s.eVar46 = s.pageName;
+    s.eVar47 = typeof tm_data.inventory != "undefined" ? tm_data.inventory : ""; //TM Inventory Type (Primary, Resale)
+    s.eVar48 = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
+    s.t();
+    console.log("season ticket purchase flow page data");
+}
+
+//Generic Page View
+if(/oss.ticketmaster.com/g.test(ihost) && /buy\/details/g.test(document.referrer) === false && /checkout\/confirmation/g.test(ihost) === false){
+var channel = "amus:buy-details";
+    s.pageName = pagenameobj
+    s.channel = channel;
+    s.server = document.referrer.split("/")[2].toLowerCase();
+    s.pageURL = pageURL;
+    s.eVar2 = "D=g";
+    s.prop2 = "D=v2";
+    s.eVar10 = typeof visitor.getMarketingCloudVisitorID() ? visitor.getMarketingCloudVisitorID() : "";
+    s.eVar22 = typeof orderID != "undefined" ? orderID : "";	//Order ID randomN + confirmation
+    s.eVar30 = typeof eventID != "undefined" ? eventID : ""; 	//TM Event Id
+    s.eVar31 = typeof eventName != "undefined" ? eventName : ""; 	//TM Event Name
+    s.eVar32 = typeof tm_data.venue != "undefined" ? tm_data.venue : ""; 	//TM Venue Name
+    s.eVar33 = typeof eventDate != "undefined" ? eventDate : ""; 	//TM Event Date
+    s.eVar34 = typeof tm_data.eventt != "undefined" ? tm_data.eventt : ""; 	//TM Event Time
+    s.eVar35 = typeof tm_data.artistn != "undefined" ? tm_data.artistn : ""; 	//TM Artist Name
+    s.eVar36 = typeof tm_data.artistid != "undefined" ? tm_data.artistid : ""; 	//TM Artist ID
+    s.eVar37 = typeof ticketQTY != "undefined" ? ticketQTY : ""; 	//TM Tickets Purchased (Quantity)
+    s.eVar38 = typeof revenue != "undefined" ? revenue : ""; 	//TM Face Value (Revenue without Fees)
+    s.eVar39 = typeof tm_data.currency != "undefined" ? tm_data.currency : ""; 	//TM Currency
+    s.eVar40 = typeof tm_data.order != "undefined" ? tm_data.order : ""; 	//TM Order
+    s.eVar41 = typeof confirmation != "undefined" ? confirmation : ""; 	//TM Confirmation Code
+    s.eVar42 = typeof tm_data.purchased != "undefined" ? tm_data.purchased : ""; 	//TM Purchase Date
+    s.eVar43 = typeof tm_data.purchaset != "undefined" ? tm_data.purchaset : ""; 	//TM Purchase Time
+    s.eVar44 = typeof tm_data.majorcat != "undefined" ? tm_data.minorcat : ""; 	//TM Major Category (Music, Sports)
+    s.eVar45 = typeof tm_data.minorcat != "undefined" ? tm_data.minorcat : ""; //TM Minor Category (Rock, Baseball)
+    s.eVar46 = s.pageName;
+    s.eVar47 = typeof tm_data.inventory != "undefined" ? tm_data.inventory : ""; //TM Inventory Type (Primary, Resale)
+    s.eVar48 = typeof getQueryParams(qstring).camefrom != "undefined" ? getQueryParams(qstring).camefrom : "";
+    s.t();
+    console.log("season ticket purchase flow page data");
 }
 
 //Account Manager General Page Tracking
 if (/am.ticketmaster.com/g.test(ihost)){
     s.pageName = pagenameobj
-    s.channel = channel;
+    s.channel = pagenameobj.split(":")[0] + ":" + pagenameobj.split(":")[2];
     s.server = document.referrer.split("/")[2].toLowerCase();
     s.pageURL = pageURL;
     s.eVar2 = "D=g";
