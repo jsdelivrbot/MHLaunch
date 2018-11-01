@@ -646,7 +646,6 @@ var channel = "amus:buy-details";
     s.eVar35 = typeof tm_data.artistn != "undefined" ? tm_data.artistn : ""; 	//TM Artist Name
     s.eVar36 = typeof tm_data.artistid != "undefined" ? tm_data.artistid : ""; 	//TM Artist ID
     s.eVar37 = typeof ticketQTY != "undefined" ? ticketQTY : ""; 	//TM Tickets Purchased (Quantity)
-    s.eVar38 = typeof revenue != "undefined" ? revenue : ""; 	//TM Face Value (Revenue without Fees)
     s.eVar39 = typeof tm_data.currency != "undefined" ? tm_data.currency : ""; 	//TM Currency
     s.eVar40 = typeof tm_data.order != "undefined" ? tm_data.order : ""; 	//TM Order
     s.eVar41 = typeof confirmation != "undefined" ? confirmation : ""; 	//TM Confirmation Code
