@@ -559,7 +559,7 @@ if (cleanname.length === 3){
     var basename = cleanname.join(":");
         basename = basename.replace("ccp-","").replace("rs","resale");
 }
-var eventpage = basename + "-" + newarr[3] + "_" + eventName + "-" + eventDate;
+var eventpage = basename + "-" + newarr[3] + "_" + eventID + "-" + eventName + "-" + eventDate;
 var channel = channel.replace("ccp-","").replace("rs","resale");
     s.pageName = eventpage.replace("ccp-","");
     s.campaign = newcString;
