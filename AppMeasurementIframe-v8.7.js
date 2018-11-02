@@ -9,7 +9,7 @@
 Copyright 1996-2015 Adobe, Inc. All Rights Reserved
 More info available at http://www.omniture.com */
 
-//console.log('Account Manager Test - Heat Selected 10.6.18');
+console.log('Build - 11.2.18');
 
 var s_account="heatglobaldev";
 var s=s_gi(s_account);
