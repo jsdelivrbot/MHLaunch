@@ -700,7 +700,7 @@ var channel = "amus:confirmation";
 
 //Generic Page View
 if(/oss.ticketmaster.com/g.test(ihost) && /buy\/details/g.test(document.referrer) === false && /checkout\/confirmation/g.test(ihost) === false){
-var channel = "amus:buy-details";
+var channel = pagenameobj.split(":")[0] + ":" + pagenameobj.split(":")[2] + "-" + pagenameobj.split(":")[3];
     s.pageName = pagenameobj
     s.channel = channel;
     s.server = document.referrer.split("/")[2].toLowerCase();
